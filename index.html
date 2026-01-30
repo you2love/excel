@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel文件结构 - Excel学习中心</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <h1>Excel 学习中心</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="pages/excel-structure.html" class="active">文件结构</a></li>
+                    <li><a href="pages/introduction.html">快速入门</a></li>
+                    <li><a href="pages/basics.html">基础操作</a></li>
+                    <li><a href="pages/formatting.html">格式化美化</a></li>
+                    <li><a href="pages/formulas.html">公式函数</a></li>
+                    <li><a href="pages/charts.html">图表制作</a></li>
+                    <li><a href="pages/pivottables.html">数据透视表</a></li>
+                    <li><a href="pages/programming.html">编程处理</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="tutorial-page">
+        <div class="tutorial-header">
+            <h1>Excel文件结构详解</h1>
+        </div>
+
+        <div class="tutorial-content">
+            <h2>1. Excel文件格式概述</h2>
+            <p>了解Excel文件的内部结构对于高级使用和编程处理非常重要。Excel使用多种文件格式，每种格式都有其特定的用途和特点。</p>
+
+            <h3>主要文件格式</h3>
+            <div class="code-block">
+                .xlsx - Excel工作簿（默认格式）<br/>
+                .xlsm - 启用宏的Excel工作簿<br/>
+                .xls - Excel 97-2003工作簿（旧格式）<br/>
+                .xlsb - Excel二进制工作簿<br/>
+                .csv - 逗号分隔值文件<br/>
+                .xltx - Excel模板<br/>
+                .xltm - 启用宏的Excel模板
+            </div>
+
+            <h3>.xlsx文件格式</h3>
+            <p>现代Excel使用.xlsx格式，这是一种基于Open XML标准的压缩格式。了解其内部结构有助于编程处理和文件恢复。</p>
+
+            <div class="tip-box">
+                <strong>重要提示：</strong>.xlsx文件本质上是一个ZIP压缩包，解压后可以看到其内部XML结构。
+            </div>
+
+            <h2>2. .xlsx文件内部结构</h2>
+            <p>当你解压一个.xlsx文件时，会看到以下目录结构：</p>
+
+            <div class="code-block">
+                workbook.xlsx/           <br/>
+                ├── [Content_Types].xml # 内容类型定义<br/>
+                ├── _rels/              # 关系目录<br/>
+                │   └── .rels          # 主关系文件<br/>
+                ├── docProps/           # 文档属性<br/>
+                │   ├── app.xml        # 应用程序属性<br/>
+                │   └── core.xml       # 核心属性（作者、创建时间等）<br/>
+                ├── xl/                 # 工作簿主要内容<br/>
+                │   ├── workbook.xml   # 工作簿定义<br/>
+                │   ├── _rels/         # 工作簿关系<br/>
+                │   ├── worksheets/    # 工作表目录<br/>
+                │   │   ├── sheet1.xml # 第一个工作表<br/>
+                │   │   ├── sheet2.xml # 第二个工作表<br/>
+                │   │   └── ...<br/>
+                │   ├── styles.xml     # 样式定义<br/>
+                │   ├── sharedStrings.xml # 共享字符串<br/>
+                │   ├── theme/         # 主题<br/>
+                │   │   └── theme1.xml<br/>
+                │   └── media/         # 媒体文件（图片等）<br/>
+            </div>
+
+            <h3>关键文件说明</h3>
+            <ul>
+                <li><strong>workbook.xml</strong>：定义工作簿的结构，包含所有工作表的引用</li>
+                <li><strong>sheet*.xml</strong>：包含每个工作表的实际数据、公式和格式</li>
+                <li><strong>styles.xml</strong>：定义单元格样式、字体、边框、填充等</li>
+                <li><strong>sharedStrings.xml</strong>：存储所有文本字符串，节省空间</li>
+                <li><strong>[Content_Types].xml</strong>：定义文件中各部分的MIME类型</li>
+            </ul>
+
+            <h2>3. 工作簿结构（workbook.xml）</h2>
+            <p>workbook.xml是Excel文件的核心，定义了整个工作簿的结构。</p>
+
+            <h3>主要组成部分</h3>
+            <div class="code-block">
+                &lt;workbook&gt;<br/>
+                    &lt;fileVersion .../&gt;          <!-- 文件版本信息 --><br/>
+                    &lt;workbookPr .../&gt;           <!-- 工作簿属性 --><br/>
+                    &lt;bookViews&gt;                  <!-- 视图设置 --><br/>
+                        &lt;workbookView .../&gt;<br/>
+                    &lt;/bookViews&gt;<br/>
+                    &lt;sheets&gt;                      <!-- 工作表列表 --><br/>
+                        &lt;sheet name="Sheet1" sheetId="1" r:id="rId1"/&gt;<br/>
+                        &lt;sheet name="Sheet2" sheetId="2" r:id="rId2"/&gt;<br/>
+                    &lt;/sheets&gt;<br/>
+                    &lt;definedNames&gt;                <!-- 定义名称 --><br/>
+                        &lt;definedName name="MyRange"&gt;Sheet1!$A$1:$C$10&lt;/definedName&gt;<br/>
+                    &lt;/definedNames&gt;<br/>
+                    &lt;calcPr .../&gt;                 <!-- 计算属性 --><br/>
+                &lt;/workbook&gt;
+            </div>
+
+            <h3>工作表引用</h3>
+            <p>每个工作表都有一个唯一的ID和关系ID，通过这些ID可以找到对应的工作表XML文件。</p>
+
+            <h2>4. 工作表结构（sheet.xml）</h2>
+            <p>每个工作表都有独立的XML文件，包含该工作表的所有数据、公式和格式信息。</p>
+
+            <h3>基本结构</h3>
+            <div class="code-block">
+                &lt;worksheet&gt;<br/>
+                    &lt;dimension ref="A1:D10"/&gt;      <!-- 工作表范围 --><br/>
+                    &lt;sheets&gt;                        <!-- 工作表视图 --><br/>
+                        &lt;sheetView .../&gt;<br/>
+                    &lt;/sheets&gt;<br/>
+                    &lt;cols&gt;                          <!-- 列宽设置 --><br/>
+                        &lt;col min="1" max="1" width="15"/&gt;<br/>
+                    &lt;/cols&gt;<br/>
+                    &lt;sheetData&gt;                     <!-- 工作表数据 --><br/>
+                        &lt;row r="1"&gt;                <!-- 第一行 --><br/>
+                            &lt;c r="A1"&gt;              <!-- A1单元格 --><br/>
+                                &lt;v&gt;123&lt;/v&gt;         <!-- 单元格值 --><br/>
+                            &lt;/c&gt;<br/>
+                            &lt;c r="B1" t="s"&gt;       <!-- B1单元格（字符串）--><br/>
+                                &lt;v&gt;0&lt;/v&gt;          <!-- 共享字符串索引 --><br/>
+                            &lt;/c&gt;<br/>
+                        &lt;/row&gt;<br/>
+                    &lt;/sheetData&gt;<br/>
+                    &lt;mergeCells&gt;                    <!-- 合并单元格 --><br/>
+                        &lt;mergeCell ref="A1:B1"/&gt;<br/>
+                    &lt;/mergeCells&gt;<br/>
+                    &lt;conditionalFormatting&gt;        <!-- 条件格式 --><br/>
+                        &lt;cfRule .../&gt;<br/>
+                    &lt;/conditionalFormatting&gt;<br/>
+                &lt;/worksheet&gt;
+            </div>
+
+            <h3>单元格数据类型</h3>
+            <p>单元格的type属性（t）定义了数据的类型：</p>
+
+            <div class="code-block">
+                无属性或t="n" - 数字<br/>
+                t="s"       - 字符串（引用sharedStrings.xml）<br/>
+                t="str"     - 内联字符串<br/>
+                t="b"       - 布尔值<br/>
+                t="e"       - 错误值<br/>
+                t="d"       - 日期<br/>
+            </div>
+
+            <h2>5. 共享字符串表（sharedStrings.xml）</h2>
+            <p>为了优化文件大小，Excel将所有文本字符串存储在一个共享字符串表中。</p>
+
+            <h3>结构示例</h3>
+            <div class="code-block">
+                &lt;sst xmlns="..." count="10" uniqueCount="5"&gt;<br/>
+                    &lt;si&gt;                          <!-- 字符串项 0 --><br/>
+                        &lt;t&gt;产品名称&lt;/t&gt;<br/>
+                    &lt;/si&gt;<br/>
+                    &lt;si&gt;                          <!-- 字符串项 1 --><br/>
+                        &lt;t&gt;数量&lt;/t&gt;<br/>
+                    &lt;/si&gt;<br/>
+                    &lt;si&gt;                          <!-- 字符串项 2 --><br/>
+                        &lt;t&gt;单价&lt;/t&gt;<br/>
+                    &lt;/si&gt;<br/>
+                    &lt;si&gt;                          <!-- 字符串项 3 --><br/>
+                        &lt;t&gt;合计&lt;/t&gt;<br/>
+                    &lt;/si&gt;<br/>
+                    &lt;si&gt;                          <!-- 字符串项 4 --><br/>
+                        &lt;t&gt;总计&lt;/t&gt;<br/>
+                    &lt;/si&gt;<br/>
+                &lt;/sst&gt;
+            </div>
+
+            <div class="tip-box">
+                <strong>优化技巧：</strong>当多个单元格包含相同的文本时，使用共享字符串表可以显著减少文件大小。
+            </div>
+
+            <h2>6. 样式定义（styles.xml）</h2>
+            <p>styles.xml定义了工作簿中使用的所有样式，包括字体、填充、边框、数字格式等。</p>
+
+            <h3>样式结构</h3>
+            <div class="code-block">
+                &lt;styleSheet xmlns="..."&gt;<br/>
+                    &lt;numFmts count="2"&gt;          <!-- 数字格式 --><br/>
+                        &lt;numFmt numFmtId="164" formatCode="#,##0.00"/&gt;<br/>
+                    &lt;/numFmts&gt;<br/>
+                    &lt;fonts count="3"&gt;            <!-- 字体 --><br/>
+                        &lt;font&gt;<br/>
+                            &lt;sz val="11"/&gt;       <!-- 字体大小 --><br/>
+                            &lt;name val="Calibri"/&gt; <!-- 字体名称 --><br/>
+                            &lt;b/&gt;                   <!-- 加粗 --><br/>
+                            &lt;color rgb="FF0000"/&gt; <!-- 字体颜色 --><br/>
+                        &lt;/font&gt;<br/>
+                    &lt;/fonts&gt;<br/>
+                    &lt;fills count="2"&gt;            <!-- 填充 --><br/>
+                        &lt;fill&gt;<br/>
+                            &lt;patternFill patternType="solid"&gt;<br/>
+                                &lt;fgColor rgb="4CAF50"/&gt;<br/>
+                            &lt;/patternFill&gt;<br/>
+                        &lt;/fill&gt;<br/>
+                    &lt;/fills&gt;<br/>
+                    &lt;borders count="1"&gt;          <!-- 边框 --><br/>
+                        &lt;border&gt;<br/>
+                            &lt;left style="thin"&gt;<br/>
+                                &lt;color rgb="000000"/&gt;<br/>
+                            &lt;/left&gt;<br/>
+                        &lt;/border&gt;<br/>
+                    &lt;/borders&gt;<br/>
+                    &lt;cellXfs count="5"&gt;          <!-- 单元格格式 --><br/>
+                        &lt;xf numFmtId="0" fontId="0" fillId="0" borderId="0"/&gt;<br/>
+                        &lt;xf numFmtId="164" fontId="1" fillId="1" borderId="1"/&gt;<br/>
+                    &lt;/cellXfs&gt;<br/>
+                    &lt;cellStyles count="1"&gt;        <!-- 单元格样式 --><br/>
+                        &lt;cellStyle xfId="0" name="Normal"/&gt;<br/>
+                    &lt;/cellStyles&gt;<br/>
+                &lt;/styleSheet&gt;
+            </div>
+
+            <h2>7. 公式存储</h2>
+            <p>公式存储在工作表XML文件的&lt;c&gt;元素中，使用&lt;f&gt;标签表示。</p>
+
+            <h3>公式示例</h3>
+            <div class="code-block">
+                &lt;c r="D2"&gt;<br/>
+                    &lt;f&gt;B2*C2&lt;/f&gt;              <!-- 公式：=B2*C2 --><br/>
+                    &lt;v&gt;5000&lt;/v&gt;               <!-- 计算结果 --><br/>
+                &lt;/c&gt;<br/><br/>
+                &lt;c r="D3"&gt;<br/>
+                    &lt;f t="shared" ref="D2:D10" si="0"&gt;B3*C3&lt;/f&gt;<br/>
+                    &lt;!-- 共享公式 --&gt;<br/>
+                &lt;/c&gt;
+            </div>
+
+            <h3>公式类型</h3>
+            <ul>
+                <li><strong>普通公式</strong>：t属性不存在或为空</li>
+                <li><strong>共享公式</strong>：t="shared"，用于优化相似公式的存储</li>
+                <li><strong>数组公式</strong>：t="array"</li>
+                <li><strong>数据表公式</strong>：t="dataTable"</li>
+            </ul>
+
+            <h2>8. 关系文件（_rels）</h2>
+            <p>关系文件定义了文件内部各部分之间的关联关系，是Open XML格式的重要组成部分。</p>
+
+            <h3>主关系文件</h3>
+            <div class="code-block">
+                &lt;Relationships xmlns="..."&gt;<br/>
+                    &lt;Relationship Id="rId1"<br/>
+                        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"<br/>
+                        Target="xl/workbook.xml"/&gt;<br/>
+                    &lt;Relationship Id="rId2"<br/>
+                        Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"<br/>
+                        Target="docProps/core.xml"/&gt;<br/>
+                    &lt;Relationship Id="rId3"<br/>
+                        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"<br/>
+                        Target="docProps/app.xml"/&gt;<br/>
+                &lt;/Relationships&gt;
+            </div>
+
+            <h2>9. 媒体文件</h2>
+            <p>Excel文件中的图片、图表等媒体文件存储在xl/media目录中。</p>
+
+            <h3>媒体类型</h3>
+            <div class="code-block">
+                xl/media/<br/>
+    ├── image1.png      <!-- 图片文件 --><br/>
+    ├── image2.jpg      <!-- 图片文件 --><br/>
+    ├── chart1.xml      <!-- 图表定义 --><br/>
+    └── ...
+            </div>
+
+            <h2>10. .xlsm与.xlsx的区别</h2>
+            <p>.xlsm文件是启用宏的工作簿，与.xlsx的主要区别在于：</p>
+
+            <ul>
+                <li><strong>包含宏代码</strong>：可以存储VBA代码</li>
+                <li><strong>额外的文件</strong>：包含vbaProject.bin文件</li>
+                <li><strong>安全警告</strong>：打开时会显示安全警告</li>
+            </ul>
+
+            <h3>.xlsm文件结构</h3>
+            <div class="code-block">
+                workbook.xlsm/<br/>
+    ├── [Content_Types].xml<br/>
+    ├── _rels/<br/>
+    ├── docProps/<br/>
+    ├── xl/<br/>
+    │   ├── workbook.xml<br/>
+    │   ├── worksheets/<br/>
+    │   ├── styles.xml<br/>
+    │   ├── sharedStrings.xml<br/>
+    │   ├── vbaProject.bin    <!-- VBA项目文件 --><br/>
+    │   └── _rels/<br/>
+    │       └── workbook.xml.rels<br/>
+            </div>
+
+            <h2>11. .xls旧格式</h2>
+            <p>.xls是Excel 97-2003使用的二进制格式，称为BIFF（Binary Interchange File Format）。</p>
+
+            <h3>特点</h3>
+            <ul>
+                <li>二进制格式，不能直接查看内容</li>
+                <li>最大行数限制为65536行</li>
+                <li>最大列数限制为256列</li>
+                <li>不支持现代Excel功能</li>
+                <li>兼容性更好，但功能受限</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>注意：</strong>.xls格式已经过时，建议使用.xlsx格式，除非有特殊的兼容性需求。
+            </div>
+
+            <h2>12. .xlsb二进制格式</h2>
+            <p>.xlsb是Excel二进制工作簿格式，结合了二进制和XML的优点。</p>
+
+            <h3>特点</h3>
+            <ul>
+                <li>文件体积更小，加载速度更快</li>
+                <li>支持现代Excel功能</li>
+                <li>不适合版本控制和内容查看</li>
+                <li>适合大型数据集</li>
+            </ul>
+
+            <h2>13. CSV格式</h2>
+            <p>CSV（Comma-Separated Values）是一种简单的文本格式，常用于数据交换。</p>
+
+            <h3>CSV示例</h3>
+            <div class="code-block">
+                产品名称,数量,单价,金额<br/>
+    产品A,100,50,5000<br/>
+    产品B,200,80,16000<br/>
+    产品C,150,60,9000
+            </div>
+
+            <h3>特点</h3>
+            <ul>
+                <li>纯文本格式，易于处理</li>
+                <li>不包含格式和公式</li>
+                <li>兼容性极好</li>
+                <li>适合数据导入导出</li>
+            </ul>
+
+            <h2>14. Excel文件操作最佳实践</h2>
+
+            <h3>文件管理</h3>
+            <ul>
+                <li>定期备份重要文件</li>
+                <li>使用有意义的文件名</li>
+                <li>保持文件结构简洁</li>
+                <li>避免过度使用合并单元格</li>
+            </ul>
+
+            <h3>性能优化</h3>
+            <ul>
+                <li>减少不必要的格式设置</li>
+                <li>避免使用过多的条件格式</li>
+                <li>清理未使用的样式和名称</li>
+                <li>对于大数据集，考虑使用Excel表格</li>
+            </ul>
+
+            <h3>版本控制</h3>
+            <ul>
+                <li>使用.xlsx格式便于版本控制</li>
+                <li>避免使用.xlsm进行版本控制（二进制内容难以比较）</li>
+                <li>考虑使用CSV进行数据版本控制</li>
+            </ul>
+
+            <h2>15. 本章小结</h2>
+            <p>本章详细介绍了Excel文件的内部结构，你现在应该了解：</p>
+            <ul>
+                <li>Excel的主要文件格式及其用途</li>
+                <li>.xlsx文件的内部XML结构</li>
+                <li>工作簿、工作表、单元格的层次关系</li>
+                <li>数据、样式、公式的存储方式</li>
+                <li>共享字符串表的作用</li>
+                <li>不同格式的优缺点</li>
+                <li>文件管理的最佳实践</li>
+            </ul>
+
+            <div class="note-box">
+                <strong>学习建议：</strong>了解Excel文件结构对于编程处理Excel文件非常重要。如果你打算使用Python或GoLang处理Excel，建议深入理解这些概念。
+            </div>
+
+            <p>在下一章中，我们将开始学习Excel的基本操作，包括数据输入、编辑和管理等内容。</p>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

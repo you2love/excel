@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编程处理Excel - Excel学习中心</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <h1>Excel 学习中心</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="excel-structure.html">文件结构</a></li>
+                    <li><a href="introduction.html">快速入门</a></li>
+                    <li><a href="basics.html">基础操作</a></li>
+                    <li><a href="formatting.html">格式化美化</a></li>
+                    <li><a href="formulas.html">公式函数</a></li>
+                    <li><a href="charts.html">图表制作</a></li>
+                    <li><a href="pivottables.html">数据透视表</a></li>
+                    <li><a href="programming.html" class="active">编程处理</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="tutorial-page">
+        <div class="tutorial-header">
+            <h1>第七章：编程处理</h1>
+        </div>
+
+        <div class="tutorial-content">
+            <h2>7.1 为什么用编程处理Excel</h2>
+            <p>除了在Excel中使用公式和函数，我们还可以使用编程语言来处理Excel文件。这种方式特别适合批量处理、自动化任务和复杂的数据分析。</p>
+
+            <h3>编程处理Excel的优势</h3>
+            <ul>
+                <li><strong>批量处理</strong>：可以一次性处理成百上千个Excel文件</li>
+                <li><strong>自动化</strong>：可以定时自动生成报表，减少人工操作</li>
+                <li><strong>复杂数据处理</strong>：编程语言提供更强大的数据处理能力</li>
+                <li><strong>集成</strong>：可以轻松集成到其他系统和工作流中</li>
+                <li><strong>性能</strong>：处理大数据量时，程序通常比Excel更快</li>
+                <li><strong>版本控制</strong>：代码可以进行版本控制和团队协作</li>
+                <li><strong>复用性</strong>：编写的代码可以重复使用，提高效率</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>适用场景：</strong>
+                <ul>
+                    <li>定期需要生成相同格式的报表</li>
+                    <li>需要处理大量Excel文件</li>
+                    <li>数据需要与其他系统集成</li>
+                    <li>需要复杂的数据清洗和分析</li>
+                    <li>需要自动化任务调度</li>
+                </ul>
+            </div>
+
+            <h2>7.2 Python处理Excel</h2>
+            <p>Python有多个强大的库可以处理Excel文件，最常用的是openpyxl、pandas和xlsxwriter。</p>
+
+            <div class="note-box">
+                <strong>Python选择建议：</strong>Python适合数据分析、机器学习、快速原型开发，生态系统非常丰富，有大量的第三方库支持。
+            </div>
+
+            <h3>7.2.1 使用openpyxl</h3>
+            <p>openpyxl是一个用于读写Excel 2010 xlsx/xlsm/xltx/xltm文件的Python库。</p>
+
+            <h4>安装</h4>
+            <div class="code-block">
+                pip install openpyxl
+            </div>
+
+            <h4>基本操作</h4>
+            <div class="code-block">
+                from openpyxl import Workbook, load_workbook<br/><br/>
+
+                # 创建新工作簿<br/>
+                wb = Workbook()<br/>
+                ws = wb.active<br/>
+                ws.title = "销售数据"<br/><br/>
+
+                # 写入数据<br/>
+                headers = ["产品", "数量", "单价", "金额"]<br/>
+                ws.append(headers)<br/><br/>
+
+                # 添加数据行<br/>
+                data = [<br/>
+                    ["产品A", 100, 50, 5000],<br/>
+                    ["产品B", 200, 80, 16000],<br/>
+                    ["产品C", 150, 60, 9000]<br/>
+                ]<br/><br/>
+
+                for row in data:<br/>
+                    ws.append(row)<br/><br/>
+
+                # 使用公式计算金额<br/>
+                for row in range(2, 5):<br/>
+                    ws[f"D{row}"] = f"=B{row}*C{row}"<br/><br/>
+
+                # 保存文件<br/>
+                wb.save("销售数据.xlsx")
+            </div>
+
+            <h4>读取现有文件</h4>
+            <div class="code-block">
+                from openpyxl import load_workbook<br/><br/>
+
+                # 读取现有Excel文件<br/>
+                wb = load_workbook("销售数据.xlsx")<br/>
+                ws = wb.active<br/><br/>
+
+                # 读取数据<br/>
+                for row in ws.iter_rows(min_row=2, values_only=True):<br/>
+                    print(f"产品: {row[0]}, 数量: {row[1]}, 单价: {row[2]}, 金额: {row[3]}")
+            </div>
+
+            <h4>样式设置</h4>
+            <div class="code-block">
+                from openpyxl.styles import PatternFill, Font, Alignment<br/><br/>
+                wb = load_workbook("销售数据.xlsx")<br/>
+                ws = wb.active<br/><br/>
+
+                # 设置标题样式<br/>
+                header_fill = PatternFill(start_color="4CAF50", end_color="4CAF50", fill_type="solid")<br/>
+                header_font = Font(bold=True, color="FFFFFF")<br/>
+                header_alignment = Alignment(horizontal="center")<br/><br/>
+
+                for cell in ws[1]:<br/>
+                    cell.fill = header_fill<br/>
+                    cell.font = header_font<br/>
+                    cell.alignment = header_alignment<br/><br/>
+
+                # 设置条件格式<br/>
+                red_fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")<br/><br/>
+                for row in ws.iter_rows(min_row=2):<br/>
+                    if row[3].value > 10000:  # 如果金额大于10000<br/>
+                        row[3].fill = red_fill<br/><br/>
+
+                wb.save("销售数据_格式化.xlsx")
+            </div>
+
+            <h3>7.2.2 使用pandas处理Excel</h3>
+            <p>pandas是数据分析的神器，非常适合处理Excel数据。</p>
+
+            <h4>安装</h4>
+            <div class="code-block">
+                pip install pandas openpyxl
+            </div>
+
+            <h4>读取Excel文件</h4>
+            <div class="code-block">
+                import pandas as pd<br/><br/>
+
+                # 读取Excel文件<br/>
+                df = pd.read_excel("销售数据.xlsx", sheet_name="销售数据")<br/><br/>
+
+                # 查看数据<br/>
+                print(df.head())<br/>
+                print(df.info())<br/>
+                print(df.describe())
+            </div>
+
+            <h4>数据分析</h4>
+            <div class="code-block">
+                # 计算统计信息<br/>
+                total_sales = df["金额"].sum()<br/>
+                avg_price = df["单价"].mean()<br/>
+                max_amount = df["金额"].max()<br/><br/>
+
+                print(f"总销售额: {total_sales}")<br/>
+                print(f"平均单价: {avg_price}")<br/>
+                print(f"最大金额: {max_amount}")<br/><br/>
+
+                # 数据筛选<br/>
+                high_sales = df[df["金额"] > 10000]<br/>
+                print("高销售额产品:")<br/>
+                print(high_sales)<br/><br/>
+
+                # 数据分组<br/>
+                product_stats = df.groupby("产品").agg({<br/>
+                    "数量": "sum",<br/>
+                    "金额": "sum"<br/>
+                })<br/>
+                print("产品统计:")<br/>
+                print(product_stats)
+            </div>
+
+            <h4>数据处理</h4>
+            <div class="code-block">
+                # 添加新列（类似Excel公式）<br/>
+                df["折扣后金额"] = df["金额"] * 0.9  # 9折<br/>
+                df["销售等级"] = df["金额"].apply(<br/>
+                    lambda x: "高" if x > 10000 else ("中" if x > 5000 else "低")<br/>
+                )<br/><br/>
+
+                # 数据清洗<br/>
+                # 删除空值<br/>
+                df_clean = df.dropna()<br/><br/>
+                # 删除重复值<br/>
+                df_unique = df.drop_duplicates()<br/><br/>
+                # 填充空值<br/>
+                df_filled = df.fillna(0)
+            </div>
+
+            <h4>保存到Excel</h4>
+            <div class="code-block">
+                # 保存到Excel<br/>
+                df.to_excel("销售数据_处理后.xlsx", index=False)<br/><br/>
+
+                # 多个sheet写入<br/>
+                with pd.ExcelWriter("销售报表.xlsx") as writer:<br/>
+                    df.to_excel(writer, sheet_name="原始数据", index=False)<br/>
+                    high_sales.to_excel(writer, sheet_name="高销售额", index=False)<br/>
+                    product_stats.to_excel(writer, sheet_name="产品统计")
+            </div>
+
+            <h4>与Excel公式结合</h4>
+            <div class="code-block">
+                from openpyxl import load_workbook<br/><br/>
+
+                # 保存数据<br/>
+                df.to_excel("销售数据_带公式.xlsx", index=False)<br/><br/>
+                # 使用openpyxl添加公式<br/>
+                wb = load_workbook("销售数据_带公式.xlsx")<br/>
+                ws = wb.active<br/><br/>
+                # 在Excel中添加公式列<br/>
+                ws["E1"] = "折扣金额"<br/>
+                for row in range(2, len(df) + 2):<br/>
+                    ws[f"E{row}"] = f"=D{row}*0.1"<br/><br/>
+                wb.save("销售数据_带公式.xlsx")
+            </div>
+
+            <h3>7.2.3 使用xlsxwriter创建报表</h3>
+            <p>xlsxwriter专门用于创建Excel文件，支持图表和丰富的格式。</p>
+
+            <h4>安装</h4>
+            <div class="code-block">
+                pip install xlsxwriter
+            </div>
+
+            <h4>创建带格式的报表</h4>
+            <div class="code-block">
+                import xlsxwriter<br/><br/>
+
+                # 创建新工作簿<br/>
+                workbook = xlsxwriter.Workbook("月度报表.xlsx")<br/>
+                worksheet = workbook.add_worksheet("销售报表")<br/><br/>
+
+                # 定义格式<br/>
+                header_format = workbook.add_format({<br/>
+                    "bold": True,<br/>
+                    "bg_color": "#4CAF50",<br/>
+                    "font_color": "white",<br/>
+                    "border": 1<br/>
+                })<br/><br/>
+
+                number_format = workbook.add_format({<br/>
+                    "num_format": "#,##0.00",<br/>
+                    "border": 1<br/>
+                })<br/><br/>
+
+                percent_format = workbook.add_format({<br/>
+                    "num_format": "0.0%",<br/>
+                    "border": 1<br/>
+                })<br/><br/>
+
+                # 写入标题<br/>
+                headers = ["月份", "销售额", "成本", "利润", "利润率"]<br/>
+                for col, header in enumerate(headers):<br/>
+                    worksheet.write(0, col, header, header_format)<br/><br/>
+
+                # 写入数据<br/>
+                data = [<br/>
+                    ["1月", 100000, 60000, 40000],<br/>
+                    ["2月", 120000, 70000, 50000],<br/>
+                    ["3月", 150000, 85000, 65000],<br/>
+                    ["4月", 180000, 100000, 80000]<br/>
+                ]<br/><br/>
+                for row_idx, row_data in enumerate(data, start=1):<br/>
+                    worksheet.write(row_idx, 0, row_data[0])<br/>
+                    worksheet.write(row_idx, 1, row_data[1], number_format)<br/>
+                    worksheet.write(row_idx, 2, row_data[2], number_format)<br/>
+                    worksheet.write_formula(row_idx, 3, f"B{row_idx+1}-C{row_idx+1}", number_format)<br/>
+                    worksheet.write_formula(row_idx, 4, f"D{row_idx+1}/B{row_idx+1}", percent_format)
+            </div>
+
+            <h4>添加条件格式</h4>
+            <div class="code-block">
+                # 添加条件格式<br/>
+                worksheet.conditional_format("D2:D5", {<br/>
+                    "type": "cell",<br/>
+                    "criteria": ">",<br/>
+                    "value": 50000,<br/>
+                    "format": workbook.add_format({"bg_color": "#FFC107"})<br/>
+                })
+            </div>
+
+            <h4>创建图表</h4>
+            <div class="code-block">
+                # 创建图表<br/>
+                chart = workbook.add_chart({"type": "column"})<br/>
+                chart.add_series({<br/>
+                    "name": "销售额",<br/>
+                    "categories": ["销售报表", 0, 0, 0, 3],<br/>
+                    "values": ["销售报表", 1, 1, 4, 1],<br/>
+                    "fill": {"color": "#4CAF50"}<br/>
+                })<br/>
+                chart.add_series({<br/>
+                    "name": "成本",<br/>
+                    "categories": ["销售报表", 0, 0, 0, 3],<br/>
+                    "values": ["销售报表", 1, 2, 4, 2],<br/>
+                    "fill": {"color": "#FF5722"}<br/>
+                })<br/>
+                chart.set_title({"name": "月度销售图表"})<br/>
+                chart.set_x_axis({"name": "月份"})<br/>
+                chart.set_y_axis({"name": "金额"})<br/>
+                worksheet.insert_chart("F2", chart)<br/><br/>
+
+                workbook.close()
+            </div>
+
+            <h2>7.3 GoLang处理Excel</h2>
+            <p>Go语言也有优秀的Excel处理库，最常用的是excelize。</p>
+
+            <div class="note-box">
+                <strong>GoLang选择建议：</strong>Go适合高性能服务、并发处理、企业级应用，性能优秀，部署简单，适合构建稳定的后端服务。
+            </div>
+
+            <h3>7.3.1 使用excelize</h3>
+            <p>excelize是Go语言中最流行的Excel处理库，功能强大且性能优秀。</p>
+
+            <h4>安装</h4>
+            <div class="code-block">
+                go get github.com/xuri/excelize/v2
+            </div>
+
+            <h4>创建Excel文件</h4>
+            <div class="code-block">
+                package main<br/><br/>
+
+                import (<br/>
+                    "fmt"<br/><br/>
+                    "github.com/xuri/excelize/v2"<br/>
+                )<br/><br/>
+
+                func main() {<br/>
+                    // 创建新工作簿<br/>
+                    f := excelize.NewFile()<br/><br/>
+                    // 设置工作表名称<br/>
+                    f.SetSheetName("Sheet1", "销售数据")<br/><br/>
+                    // 设置标题行<br/>
+                    headers := []string{"产品", "数量", "单价", "金额"}<br/>
+                    for i, header := range headers {<br/>
+                        cell, _ := excelize.CoordinatesToCellName(i+1, 1)<br/>
+                        f.SetCellValue("销售数据", cell, header)<br/>
+                    }<br/><br/>
+                    // 添加数据行<br/>
+                    data := [][]interface{}{<br/>
+                        {"产品A", 100, 50},<br/>
+                        {"产品B", 200, 80},<br/>
+                        {"产品C", 150, 60},<br/>
+                        {"产品D", 300, 45},<br/>
+                        {"产品E", 250, 70},<br/>
+                    }<br/><br/>
+                    for i, row := range data {<br/>
+                        for j, value := range row {<br/>
+                            cell, _ := excelize.CoordinatesToCellName(j+1, i+2)<br/>
+                            f.SetCellValue("销售数据", cell, value)<br/>
+                        }<br/>
+                    }<br/><br/>
+                    // 使用公式计算金额<br/>
+                    for i := 2; i <= len(data)+1; i++ {<br/>
+                        cell, _ := excelize.CoordinatesToCellName(4, i)<br/>
+                        formula := fmt.Sprintf("=B%d*C%d", i, i)<br/>
+                        f.SetCellFormula("销售数据", cell, formula)<br/>
+                    }<br/><br/>
+                    // 保存文件<br/>
+                    if err := f.SaveAs("销售数据.xlsx"); err != nil {<br/>
+                        fmt.Println(err)<br/>
+                    }<br/>
+                }
+            </div>
+
+            <h4>设置样式</h4>
+            <div class="code-block">
+                package main<br/><br/>
+
+                import (<br/>
+                    "fmt"<br/><br/>
+                    "github.com/xuri/excelize/v2"<br/>
+                )<br/><br/>
+
+                func main() {<br/>
+                    f := excelize.NewFile()<br/>
+                    // ... 写入数据代码 ...<br/><br/>
+                    // 设置标题样式<br/>
+                    headerStyle, _ := f.NewStyle(&excelize.Style{<br/>
+                        Font: &excelize.Font{<br/>
+                            Bold:   true,<br/>
+                            Color:  "FFFFFFFF",<br/>
+                        },<br/>
+                        Fill: excelize.Fill{<br/>
+                            Type:    "pattern",<br/>
+                            Color:   []string{"#4CAF50"},<br/>
+                            Pattern: 1,<br/>
+                        },<br/>
+                        Alignment: &excelize.Alignment{<br/>
+                            Horizontal: "center",<br/>
+                        },<br/>
+                    })<br/>
+                    f.SetCellStyle("销售数据", "A1", "D1", headerStyle)<br/><br/>
+                    // 设置数字格式<br/>
+                    numberStyle, _ := f.NewStyle(&excelize.Style{<br/>
+                        NumFmt: 34, // 千分位格式<br/>
+                    })<br/>
+                    f.SetCellStyle("销售数据", "C2", "D6", numberStyle)<br/><br/>
+                    // 添加边框<br/>
+                    borderStyle, _ := f.NewStyle(&excelize.Style{<br/>
+                        Border: []excelize.Border{<br/>
+                            {Type: "left", Color: "000000", Style: 1},<br/>
+                            {Type: "top", Color: "000000", Style: 1},<br/>
+                            {Type: "bottom", Color: "000000", Style: 1},<br/>
+                            {Type: "right", Color: "000000", Style: 1},<br/>
+                        },<br/>
+                    })<br/>
+                    f.SetCellStyle("销售数据", "A1", "D6", borderStyle)<br/><br/>
+                    // 调整列宽<br/>
+                    f.SetColWidth("销售数据", "A", "A", 12)<br/>
+                    f.SetColWidth("销售数据", "B", "B", 10)<br/>
+                    f.SetColWidth("销售数据", "C", "C", 12)<br/>
+                    f.SetColWidth("销售数据", "D", "D", 15)<br/><br/>
+                    if err := f.SaveAs("销售数据.xlsx"); err != nil {<br/>
+                        fmt.Println(err)<br/>
+                    }<br/>
+                }
+            </div>
+
+            <h4>读取Excel文件</h4>
+            <div class="code-block">
+                package main<br/><br/>
+
+                import (<br/>
+                    "fmt"<br/>
+                    "log"<br/><br/>
+                    "github.com/xuri/excelize/v2"<br/>
+                )<br/><br/>
+
+                func main() {<br/>
+                    // 打开Excel文件<br/>
+                    f, err := excelize.OpenFile("销售数据.xlsx")<br/>
+                    if err != nil {<br/>
+                        log.Fatal(err)<br/>
+                    }<br/>
+                    defer func() {<br/>
+                        if err := f.Close(); err != nil {<br/>
+                            fmt.Println(err)<br/>
+                        }<br/>
+                    }()<br/><br/>
+                    // 获取所有工作表<br/>
+                    sheets := f.GetSheetList()<br/>
+                    fmt.Println("工作表列表:", sheets)<br/><br/>
+                    // 读取数据<br/>
+                    rows, err := f.GetRows("销售数据")<br/>
+                    if err != nil {<br/>
+                        log.Fatal(err)<br/>
+                    }<br/><br/>
+                    fmt.Println("销售数据:")<br/>
+                    for i, row := range rows {<br/>
+                        for j, cell := range row {<br/>
+                            fmt.Printf("[%d,%d]: %s\t", i, j, cell)<br/>
+                        }<br/>
+                        fmt.Println()<br/>
+                    }<br/><br/>
+                    // 获取单元格值<br/>
+                    cellValue, _ := f.GetCellValue("销售数据", "D2")<br/>
+                    fmt.Printf("D2单元格的值: %s\n", cellValue)<br/><br/>
+                    // 获取公式<br/>
+                    formula, _ := f.GetCellFormula("销售数据", "D2")<br/>
+                    fmt.Printf("D2单元格的公式: %s\n", formula)<br/>
+                }
+            </div>
+
+            <h4>数据分析和统计</h4>
+            <div class="code-block">
+                package main<br/><br/>
+
+                import (<br/>
+                    "fmt"<br/>
+                    "log"<br/>
+                    "sort"<br/><br/>
+                    "github.com/xuri/excelize/v2"<br/>
+                )<br/><br/>
+
+                type SalesData struct {<br/>
+                    Product string<br/>
+                    Quantity int<br/>
+                    Price    float64<br/>
+                    Amount   float64<br/>
+                }<br/><br/>
+
+                func main() {<br/>
+                    f, err := excelize.OpenFile("销售数据.xlsx")<br/>
+                    if err != nil {<br/>
+                        log.Fatal(err)<br/>
+                    }<br/>
+                    defer f.Close()<br/><br/>
+                    // 读取数据到结构体切片<br/>
+                    var sales []SalesData<br/>
+                    rows, _ := f.GetRows("销售数据")<br/><br/>
+                    // 跳过标题行<br/>
+                    for _, row := range rows[1:] {<br/>
+                        if len(row) >= 4 {<br/>
+                            data := SalesData{<br/>
+                                Product: row[0],<br/>
+                                Quantity: parseInt(row[1]),<br/>
+                                Price:    parseFloat(row[2]),<br/>
+                                Amount:   parseFloat(row[3]),<br/>
+                            }<br/>
+                            sales = append(sales, data)<br/>
+                        }<br/>
+                    }<br/><br/>
+                    // 计算统计信息<br/>
+                    var totalAmount float64<br>
+                    var maxAmount float64
+                    var minAmount float64 = sales[0].Amount<br/><br/>
+                    for _, s := range sales {<br/>
+                        totalAmount += s.Amount<br/>
+                        if s.Amount > maxAmount {<br/>
+                            maxAmount = s.Amount<br/>
+                        }
+                        if s.Amount < minAmount {<br/>
+                            minAmount = s.Amount<br/>
+                        }
+                    }<br/><br/>
+                    avgAmount := totalAmount / float64(len(sales))<br/><br/>
+                    fmt.Printf("总销售额: %.2f\n", totalAmount)<br/>
+                    fmt.Printf("平均销售额: %.2f\n", avgAmount)<br/>
+                    fmt.Printf("最大销售额: %.2f\n", maxAmount)<br/>
+                    fmt.Printf("最小销售额: %.2f\n\n", minAmount)<br/><br/>
+                    // 按销售额排序<br/>
+                    sort.Slice(sales, func(i, j int) bool {<br/>
+                        return sales[i].Amount > sales[j].Amount<br/>
+                    })<br/><br/>
+                    fmt.Println("销售额排行:")<br/>
+                    for i, s := range sales {<br/>
+                        fmt.Printf("%d. %s: %.2f\n", i+1, s.Product, s.Amount)<br/>
+                    }<br/>
+                }<br/><br/>
+                // 辅助函数<br/>
+                func parseInt(s string) int {<br/>
+                    var n int<br/>
+                    fmt.Sscanf(s, "%d", &n)<br/>
+                    return n<br/>
+                }<br/><br/>
+                func parseFloat(s string) float64 {<br/>
+                    var f float64<br/>
+                    fmt.Sscanf(s, "%f", &f)<br/>
+                    return f<br/>
+                }
+            </div>
+
+            <h4>创建图表</h4>
+            <div class="code-block">
+                package main<br/><br/>
+
+                import (<br/>
+                    "fmt"<br/><br/>
+                    "github.com/xuri/excelize/v2"<br/>
+                )<br/><br/>
+
+                func main() {<br/>
+                    f := excelize.NewFile()<br/>
+                    f.SetSheetName("Sheet1", "数据")<br/><br/>
+                    // 准备数据<br/>
+                    data := [][]interface{}{<br/>
+                        {"月份", "销售额", "成本", "利润"},<br/>
+                        {"1月", 100000, 60000, 40000},<br/>
+                        {"2月", 120000, 70000, 50000},<br/>
+                        {"3月", 150000, 85000, 65000},<br/>
+                        {"4月", 180000, 100000, 80000},<br/>
+                        {"5月", 200000, 110000, 90000},<br/>
+                    }<br/><br/>
+                    // 写入数据<br/>
+                    for i, row := range data {<br/>
+                        for j, value := range row {<br/>
+                            cell, _ := excelize.CoordinatesToCellName(j+1, i+1)<br/>
+                            f.SetCellValue("数据", cell, value)<br/>
+                        }<br/>
+                    }<br/><br/>
+                    // 创建柱状图<br/>
+                    if err := f.AddChart("数据", "F2", &excelize.Chart{<br/>
+                        Type: excelize.Col,<br/>
+                        Series: []excelize.ChartSeries{<br/>
+                            {<br/>
+                                Name:       "数据!$B$1",<br/>
+                                Categories: "数据!$A$2:$A$6",<br/>
+                                Values:     "数据!$B$2:$B$6",<br/>
+                                Format: excelize.ChartFormat{<br/>
+                                    Fill: excelize.Fill{Color: []string{"#4CAF50"}},<br/>
+                                },<br/>
+                            },<br/>
+                            {<br/>
+                                Name:       "数据!$C$1",<br/>
+                                Categories: "数据!$A$2:$A$6",<br/>
+                                Values:     "数据!$C$2:$C$6",<br/>
+                                Format: excelize.ChartFormat{<br/>
+                                    Fill: excelize.Fill{Color: []string{"#FF5722"}},<br/>
+                                },<br/>
+                            },<br/>
+                        },<br/>
+                        Format: excelize.ChartFormat{<br/>
+                            Legend: excelize.ChartLegend{<br/>
+                                Position: "bottom",<br/>
+                            },<br/>
+                        },<br/>
+                        Title: []excelize.ChartTitle{{<br/>
+                            Name: "月度销售数据",<br/>
+                        }},<br/>
+                        XAxis: excelize.ChartAxis{<br/>
+                            Name: "月份",<br/>
+                        },<br/>
+                        YAxis: excelize.ChartAxis{<br/>
+                            Name: "金额",<br/>
+                        },<br/>
+                    }); err != nil {<br/>
+                        fmt.Println(err)<br/>
+                    }<br/><br/>
+                    // 创建折线图<br/>
+                    if err := f.AddChart("数据", "F20", &excelize.Chart{<br/>
+                        Type: excelize.Line,<br/>
+                        Series: []excelize.ChartSeries{<br/>
+                            {<br/>
+                                Name:       "数据!$D$1",<br/>
+                                Categories: "数据!$A$2:$A$6",<br/>
+                                Values:     "数据!$D$2:$D$6",<br/>
+                                Format: excelize.ChartFormat{<br/>
+                                    Fill: excelize.Fill{Color: []string{"#2196F3"}},<br/>
+                                },<br/>
+                                Marker: excelize.ChartMarker{<br/>
+                                    Symbol: "circle",<br/>
+                                    Size:   8,<br/>
+                                },<br/>
+                            },<br/>
+                        },<br/>
+                        Title: []excelize.ChartTitle{{<br/>
+                            Name: "利润趋势",<br/>
+                        }},<br/>
+                        XAxis: excelize.ChartAxis{<br/>
+                            Name: "月份",<br/>
+                        },<br/>
+                        YAxis: excelize.ChartAxis{<br/>
+                            Name: "利润",<br/>
+                        },<br/>
+                    }); err != nil {<br/>
+                        fmt.Println(err)<br/>
+                    }<br/><br/>
+                    // 保存文件<br/>
+                    if err := f.SaveAs("图表示例.xlsx"); err != nil {<br/>
+                        fmt.Println(err)<br/>
+                    }<br/>
+                }
+            </div>
+
+            <h2>7.4 实践练习</h2>
+            <p>让我们通过一个实际案例来练习编程处理Excel：</p>
+
+            <h3>Python练习</h3>
+            <ol>
+                <li>创建一个包含销售数据的Excel文件（产品、数量、单价、金额）</li>
+                <li>使用openpyxl设置样式和条件格式</li>
+                <li>使用pandas读取数据并进行分析</li>
+                <li>筛选出销售额前3的产品</li>
+                <li>按产品类别进行分组统计</li>
+                <li>使用xlsxwriter创建带图表的月度报表</li>
+            </ol>
+
+            <h3>GoLang练习</h3>
+            <ol>
+                <li>使用excelize创建销售数据Excel文件</li>
+                <li>设置单元格样式和数字格式</li>
+                <li>读取数据并计算统计信息</li>
+                <li>按销售额进行排序</li>
+                <li>创建柱状图和折线图</li>
+                <li>将处理后的数据保存到新的Excel文件</li>
+            </ol>
+
+            <h2>7.5 本章小结</h2>
+            <p>本章介绍了如何使用编程语言处理Excel文件，你现在应该能够：</p>
+            <ul>
+                <li>理解编程处理Excel的优势和适用场景</li>
+                <li>使用Python的openpyxl库创建和修改Excel文件</li>
+                <li>使用Python的pandas库进行数据分析和处理</li>
+                <li>使用Python的xlsxwriter库创建带图表的报表</li>
+                <li>使用GoLang的excelize库处理Excel文件</li>
+                <li>设置单元格样式、公式和条件格式</li>
+                <li>创建各种类型的图表</li>
+                <li>进行数据分析和统计</li>
+            </ul>
+
+            <div class="note-box">
+                <strong>选择建议总结：</strong>
+                <ul>
+                    <li><strong>Python</strong>：适合数据分析、机器学习、快速原型开发，生态丰富</li>
+                    <li><strong>GoLang</strong>：适合高性能服务、并发处理、企业级应用，性能优秀</li>
+                    <li><strong>混合使用</strong>：可以用Python做数据分析，用Go做服务端处理</li>
+                </ul>
+            </div>
+
+            <p>编程处理Excel是一个非常强大的技能，掌握后可以大大提高工作效率，实现自动化的数据处理和报表生成。建议多实践，探索更多高级功能！</p>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
