@@ -1493,31 +1493,31 @@ flowchart TB
                 <div class="mermaid">
 flowchart TD
     A[公式返回错误] --> B{错误类型？}
-    
-    B -->|#VALUE!| C[检查参数类型]
+
+    B -->|"#VALUE!"| C[检查参数类型]
     C --> D[确保数值运算使用数字]
     D --> E[文本连接使用&或 TEXTJOIN]
-    
-    B -->|#DIV/0!| F[检查除数]
+
+    B -->|"#DIV/0!"| F[检查除数]
     F --> G[使用 IFERROR 处理]
-    G --> H[=IFERROR(A1/B1, 0)]
-    
-    B -->|#REF!| I[检查引用]
+    G --> H["=IFERROR(A1/B1, 0)"]
+
+    B -->|"#REF!"| I[检查引用]
     I --> J[单元格是否被删除？]
     J --> K[修复或重建引用]
-    
-    B -->|#NAME?| L[检查名称]
+
+    B -->|"#NAME?"| L[检查名称]
     L --> M[函数名拼写正确？]
     M --> N[名称是否已定义？]
-    
-    B -->|#N/A| O[查找失败]
+
+    B -->|"#N/A"| O[查找失败]
     O --> P[数据是否存在？]
     P --> Q[使用 IFNA 处理]
-    
-    B -->|#NUM!| R[数值问题]
+
+    B -->|"#NUM!"| R[数值问题]
     R --> S[检查数值范围]
     S --> T[确保参数有效]
-    
+
     E --> U[问题解决]
     H --> U
     K --> U
@@ -1668,46 +1668,5 @@ flowchart TD
             </div>
         </div>
     </section>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>📊 ExcelLearn</h4>
-                    <p>全面的 Excel 学习资源，帮助你从入门到精通</p>
-                </div>
-                <div class="footer-section">
-                    <h4>快速链接</h4>
-                    <ul>
-                        <li><a href="#intro">简介</a></li>
-                        <li><a href="#basics">核心概念</a></li>
-                        <li><a href="#functions">函数公式</a></li>
-                        <li><a href="#visualization">数据可视化</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>学习资源</h4>
-                    <ul>
-                        <li><a href="pages/introduction.html">入门教程</a></li>
-                        <li><a href="pages/basics.html">基础操作</a></li>
-                        <li><a href="pages/formulas.html">公式函数</a></li>
-                        <li><a href="pages/charts.html">图表制作</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>联系我们</h4>
-                    <p>如有问题或建议，欢迎反馈</p>
-                </div>
-            </div>
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
-                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
-                    最后更新：2026 年 2 月 | 基于 Excel 2026 最新版本
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/main.js?v=2026022604"></script>
 </body>
 </html>
