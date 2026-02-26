@@ -1546,5 +1546,71 @@ flowchart TD
             </div>
         </div>
     </section>
+
+    <!-- Chart.js 图表初始化脚本 -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // 销售趋势图
+        const salesCtx = document.getElementById('salesChart');
+        if (salesCtx && typeof Chart !== 'undefined') {
+          new Chart(salesCtx, {
+            type: 'line',
+            data: {
+              labels: ['1 月', '2 月', '3 月', '4 月', '5 月', '6 月', '7 月', '8 月', '9 月', '10 月', '11 月', '12 月'],
+              datasets: [{
+                label: '2025 年销售额',
+                data: [120, 150, 180, 220, 200, 250, 280, 300, 320, 350, 380, 420],
+                borderColor: '#107c41',
+                backgroundColor: 'rgba(16, 124, 65, 0.1)',
+                tension: 0.4,
+                fill: true
+              }, {
+                label: '2026 年销售额',
+                data: [180, 200, 240, 280, 320, 380, 420, 450, 480, 520, 560, 600],
+                borderColor: '#2b88d8',
+                backgroundColor: 'rgba(43, 136, 216, 0.1)',
+                tension: 0.4,
+                fill: true
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'bottom' }
+              },
+              scales: {
+                y: { beginAtZero: true },
+                x: { grid: { display: false } }
+              }
+            }
+          });
+        }
+
+        // 产品占比饼图
+        const pieCtx = document.getElementById('pieChart');
+        if (pieCtx && typeof Chart !== 'undefined') {
+          new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+              labels: ['电子产品', '办公用品', '家具', '服务', '其他'],
+              datasets: [{
+                data: [35, 25, 20, 15, 5],
+                backgroundColor: ['#107c41', '#21a366', '#2b88d8', '#8b5cf6', '#d83b01'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'bottom' }
+              }
+            }
+          });
+        }
+      });
+    </script>
 </body>
 </html>
