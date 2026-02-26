@@ -3,14 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公式与函数 - Excel学习中心</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>公式与函数 - Excel 学习中心</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+      /* 页面特定样式 */
+      .tutorial-page {
+        padding-top: 100px;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f3f2f1 0%, #ffffff 100%);
+      }
+
+      .tutorial-header {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 3rem 0;
+        text-align: center;
+      }
+
+      .tutorial-header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+      }
+
+      .tutorial-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      .tutorial-content h2 {
+        color: #107c41;
+        border-bottom: 3px solid #107c41;
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+      }
+
+      .tutorial-content h3 {
+        color: #21a366;
+        margin-top: 1.5rem;
+      }
+
+      .tip-box {
+        background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%);
+        border-left: 4px solid #107c41;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .warning-box {
+        background: linear-gradient(135deg, #fff3cd 0%, #fffbf0 100%);
+        border-left: 4px solid #ffc107;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .note-box {
+        background: linear-gradient(135deg, #e7f3ff 0%, #f0f7ff 100%);
+        border-left: 4px solid #2b88d8;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .code-block {
+        background: #f8f9fa;
+        border: 1px solid #e1dfdd;
+        border-radius: 6px;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.9rem;
+        line-height: 1.8;
+      }
+
+      .mermaid-wrapper {
+        background: white;
+        border: 1px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .diagram-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #24292e;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .function-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .function-card {
+        background: white;
+        border: 2px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: all 0.3s;
+      }
+
+      .function-card:hover {
+        border-color: #107c41;
+        box-shadow: 0 4px 12px rgba(16, 124, 65, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .function-card h4 {
+        color: #107c41;
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .function-syntax {
+        background: #f8f9fa;
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.85rem;
+        margin: 1rem 0;
+        border: 1px solid #e1dfdd;
+        overflow-x: auto;
+      }
+
+      .function-syntax code {
+        color: #107c41;
+      }
+
+      .version-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .version-new {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+      }
+
+      .version-ai {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        background: white;
+      }
+
+      .comparison-table th {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+      }
+
+      .comparison-table td {
+        padding: 0.75rem 1rem;
+        border: 1px solid #e1dfdd;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .comparison-table tr:hover {
+        background: #e6f2ea;
+      }
+
+      .formula-highlight {
+        background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%);
+        border: 2px solid #107c41;
+        border-radius: 6px;
+        padding: 1rem;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.95rem;
+        margin: 1rem 0;
+        overflow-x: auto;
+      }
+
+      .cell-ref {
+        display: inline-block;
+        background: #cce8d6;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-family: monospace;
+        font-weight: 600;
+        color: #0b5a32;
+      }
+
+      .site-header {
+        background: white;
+        border-bottom: 2px solid #107c41;
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(16, 124, 65, 0.1);
+      }
+
+      .site-header .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .site-header .logo h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #107c41;
+      }
+
+      .main-nav ul {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .main-nav a {
+        color: #24292e;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        position: relative;
+      }
+
+      .main-nav a:hover,
+      .main-nav a.active {
+        color: #107c41;
+      }
+
+      .main-nav a.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #107c41;
+      }
+
+      .error-table code {
+        background: #ffeef0;
+        color: #d93025;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-weight: 600;
+      }
+
+      .ai-feature-box {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        border: 2px solid #667eea;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .ai-feature-box h3 {
+        color: #667eea;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .main-nav ul {
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .function-card-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <!-- Mermaid 图表库 -->
+    <script src="../lib/mermaid.min.js"></script>
+    <script type="module">
+      window.mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis', useMaxWidth: true },
+        sequence: { useMaxWidth: true, wrap: true }
+      });
+    </script>
 </head>
 <body>
     <header class="site-header">
         <div class="container">
             <div class="logo">
-                <h1>Excel 学习中心</h1>
+                <h1>📊 Excel 学习中心</h1>
             </div>
             <nav class="main-nav">
                 <ul>
@@ -28,16 +334,59 @@
     </header>
 
     <main class="tutorial-page">
-<div class="tutorial-header">
+        <div class="tutorial-header">
             <h1>第四章：公式函数</h1>
+            <p style="margin: 1rem 0 0; opacity: 0.9;">掌握 Excel 的核心计算能力，从基础到 AI 辅助</p>
         </div>
 
         <div class="tutorial-content">
+            <!-- Mermaid 序列图：公式计算完整流程 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">Excel 公式计算完整流程（时序图）</h3>
+                <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant C as 单元格
+    participant P as 解析器
+    participant T as 词法分析
+    participant S as 语法分析
+    participant D as 依赖追踪
+    participant E as 计算引擎
+    participant R as 结果缓存
+
+    U->>C: 输入 =SUM(A1:A10)*B1+100
+    C->>P: 发送公式字符串
+    P->>T: 词法分析
+    T->>T: 识别标记<br/>(SUM, (, A1, :, A10, ), *, B1, +, 100)
+    T-->>S: 标记流
+    S->>S: 构建 AST<br/>抽象语法树
+    S->>D: 识别依赖单元格
+    D->>D: A1:A10 (10 个单元格)<br/>B1 (1 个单元格)
+    D->>D: 构建依赖树
+    D-->>S: 依赖关系图
+    S-->>C: 存储公式+AST+ 依赖
+    Note over C,E: 当依赖项变化时触发重算
+    D->>E: 通知需要重算
+    E->>R: 检查缓存
+    R-->>E: 缓存未命中
+    E->>C: 读取 A1:A10 值
+    E->>E: 执行 SUM 计算
+    E->>C: 读取 B1 值
+    E->>E: 执行乘法
+    E->>E: 执行加法
+    E->>R: 更新缓存
+    E-->>C: 返回计算结果
+    C-->>U: 显示最终结果
+    Note over U,R: 下次相同计算<br/>可直接使用缓存
+                </div>
+            </div>
+
             <h2>4.1 公式基础</h2>
-            <p>公式是Excel的核心功能，让我们能够进行各种计算和数据分析。</p>
+            <p>公式是 Excel 的核心功能，让我们能够进行各种计算和数据分析。</p>
 
             <h3>公式的基本结构</h3>
-            <p>Excel公式总是以等号（=）开头，包含以下元素：</p>
+            <p>Excel 公式总是以等号（=）开头，包含以下元素：</p>
             <ul>
                 <li><strong>运算符</strong>：+、-、*、/、^ 等</li>
                 <li><strong>单元格引用</strong>：A1、B2、C1:C10 等</li>
@@ -51,24 +400,24 @@
                 <li>选中要输入公式的单元格</li>
                 <li>输入等号（=）开始公式</li>
                 <li>输入公式内容</li>
-                <li>按Enter完成输入</li>
+                <li>按 Enter 完成输入</li>
             </ol>
 
             <h3>基本运算符</h3>
             <div class="code-block">
-                +（加法）：=A1+B1<br/>
-                -（减法）：=A1-B1<br/>
-                *（乘法）：=A1*10%<br/>
-                /（除法）：=A1/B1<br/>
-                ^（乘方）：=A1^2<br/>
-                %（百分比）：=50%<br/>
-                &（连接）：="总计："&A1
+<span style="color: #107c41; font-weight: 600;">+（加法）</span>      =A1+B1
+<span style="color: #107c41; font-weight: 600;">-（减法）</span>      =A1-B1
+<span style="color: #107c41; font-weight: 600;">*（乘法）</span>      =A1*10%
+<span style="color: #107c41; font-weight: 600;">/（除法）</span>      =A1/B1
+<span style="color: #107c41; font-weight: 600;">^（乘方）</span>      =A1^2
+<span style="color: #107c41; font-weight: 600;">%（百分比）</span>    =50%
+<span style="color: #107c41; font-weight: 600;">&（连接）</span>      ="总计："&A1
             </div>
 
             <h3>运算符优先级</h3>
-            <p>Excel按照以下顺序执行运算：</p>
+            <p>Excel 按照以下顺序执行运算：</p>
             <ol>
-                <li>括号（()</li>
+                <li>括号（()）</li>
                 <li>引用运算符（: , 空格）</li>
                 <li>负数（-）</li>
                 <li>百分比（%）</li>
@@ -86,29 +435,75 @@
             <h2>4.2 单元格引用</h2>
             <p>理解不同类型的单元格引用对编写正确公式至关重要。</p>
 
+            <!-- Mermaid 流程图：引用类型选择 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">单元格引用类型选择流程图</h3>
+                <div class="mermaid">
+flowchart TD
+    A[需要引用单元格？] --> B{复制公式时<br/>引用如何变化？}
+    
+    B -->|行列都变化 | C[相对引用<br/>A1]
+    B -->|行列都不变 | D[绝对引用<br/>$A$1]
+    B -->|只固定列 | E[混合引用<br/>$A1]
+    B -->|只固定行 | F[混合引用<br/>A$1]
+    
+    C --> G{使用场景？}
+    G -->|批量计算 | H[✓ 适合]
+    G -->|固定参数 | I[✗ 不适合]
+    
+    D --> J{使用场景？}
+    J -->|固定参数 | K[✓ 适合]
+    J -->|批量计算 | L[✗ 不适合]
+    
+    E --> M{使用场景？}
+    M -->|乘法表 | N[✓ 适合]
+    M -->|矩阵计算 | O[✓ 适合]
+    
+    F --> P{使用场景？}
+    P -->|跨列比较 | Q[✓ 适合]
+    P -->|横向填充 | R[✓ 适合]
+    
+    B -->|引用表格列 | S[结构化引用<br/>Table1[Column1]]
+    S --> T{使用场景？}
+    T -->|表格数据 | U[✓ 推荐]
+    T -->|动态范围 | V[✓ 推荐]
+    
+    H --> W[完成选择]
+    I --> W
+    K --> W
+    L --> W
+    N --> W
+    O --> W
+    Q --> W
+    R --> W
+    U --> W
+    V --> W
+                </div>
+            </div>
+
             <h3>相对引用</h3>
             <p>默认的引用方式，复制公式时会自动调整引用位置。</p>
             <div class="code-block">
-                在C1中输入：=A1+B1<br/>
-                复制到C2，会变为：=A2+B2
+在 C1 中输入：<span style="color: #107c41;">=A1+B1</span>
+复制到 C2，会变为：<span style="color: #107c41;">=A2+B2</span>
             </div>
 
             <h3>绝对引用</h3>
-            <p>使用$符号固定行或列，复制时不会改变。</p>
+            <p>使用 $ 符号固定行或列，复制时不会改变。</p>
             <div class="code-block">
-                在C1中输入：=$A$1+B1<br/>
-                复制到C2，会变为：=$A$1+B2
+在 C1 中输入：<span style="color: #107c41;">=$A$1+B1</span>
+复制到 C2，会变为：<span style="color: #107c41;">=$A$1+B2</span>
             </div>
 
             <h3>混合引用</h3>
             <p>部分使用绝对引用，部分使用相对引用。</p>
             <div class="code-block">
-                $A1：固定列A，行相对变化<br/>
-                A$1：固定行1，列相对变化
+<span style="color: #107c41;">$A1</span>：固定列 A，行相对变化
+<span style="color: #107c41;">A$1</span>：固定行 1，列相对变化
             </div>
 
             <h3>引用快捷键</h3>
-            <p>选中引用后按F4键，可以在不同引用类型间切换：</p>
+            <p>选中引用后按 F4 键，可以在不同引用类型间切换：</p>
             <ul>
                 <li>A1 → $A$1（完全绝对引用）</li>
                 <li>$A$1 → A$1（混合引用，固定行）</li>
@@ -120,240 +515,353 @@
                 <strong>小技巧：</strong>在编辑公式时，点击引用区域可以自动选择该区域。
             </div>
 
-            <h2>4.3 常用函数</h2>
-            <p>Excel提供了数百个内置函数，以下是日常工作最常用的函数。</p>
+            <h2>4.3 常用函数大全</h2>
+            <p>Excel 提供了数百个内置函数，以下是日常工作最常用的函数。</p>
 
-            <h3>数学函数</h3>
-            <div class="code-block">
-                SUM(range)：求和<br/>
-                AVERAGE(range)：平均值<br/>
-                MAX(range)：最大值<br/>
-                MIN(range)：最小值<br/>
-                COUNT(range)：计数数字<br/>
-                COUNTA(range)：计数非空单元格<br/>
-                ROUND(number, digits)：四舍五入<br/>
-                INT(number)：向下取整<br/>
-                MOD(number, divisor)：求余数
+            <div class="function-card-grid">
+                <div class="function-card">
+                    <h4>📊 数学函数</h4>
+                    <div class="function-syntax">
+                        <code>SUM, AVERAGE, MAX, MIN</code>
+                    </div>
+                    <ul>
+                        <li><code>SUM(range)</code> - 求和</li>
+                        <li><code>AVERAGE(range)</code> - 平均值</li>
+                        <li><code>MAX(range)</code> - 最大值</li>
+                        <li><code>MIN(range)</code> - 最小值</li>
+                        <li><code>ROUND(n, d)</code> - 四舍五入</li>
+                        <li><code>MOD(n, d)</code> - 求余数</li>
+                    </ul>
+                </div>
+
+                <div class="function-card">
+                    <h4>📝 文本函数</h4>
+                    <div class="function-syntax">
+                        <code>LEFT, RIGHT, MID, TEXT</code>
+                    </div>
+                    <ul>
+                        <li><code>LEFT(text, n)</code> - 从左提取</li>
+                        <li><code>RIGHT(text, n)</code> - 从右提取</li>
+                        <li><code>MID(text, s, n)</code> - 从中间提取</li>
+                        <li><code>LEN(text)</code> - 文本长度</li>
+                        <li><code>TEXTJOIN(d, i, r)</code> - 连接文本</li>
+                    </ul>
+                </div>
+
+                <div class="function-card">
+                    <h4>📅 日期函数</h4>
+                    <div class="function-syntax">
+                        <code>TODAY, NOW, DATEDIF</code>
+                    </div>
+                    <ul>
+                        <li><code>TODAY()</code> - 当前日期</li>
+                        <li><code>NOW()</code> - 当前日期时间</li>
+                        <li><code>DATE(y, m, d)</code> - 创建日期</li>
+                        <li><code>DATEDIF(s, e, u)</code> - 日期差</li>
+                        <li><code>WORKDAY(s, d)</code> - 工作日</li>
+                    </ul>
+                </div>
+
+                <div class="function-card">
+                    <h4>🔍 查找函数</h4>
+                    <div class="function-syntax">
+                        <code>XLOOKUP, FILTER, INDEX</code>
+                    </div>
+                    <ul>
+                        <li><code>XLOOKUP(...)</code> - 增强查找</li>
+                        <li><code>FILTER(a, i)</code> - 筛选数据</li>
+                        <li><code>INDEX(a, r, c)</code> - 返回指定值</li>
+                        <li><code>MATCH(v, a, t)</code> - 查找位置</li>
+                    </ul>
+                </div>
+
+                <div class="function-card">
+                    <h4>🧮 逻辑函数</h4>
+                    <div class="function-syntax">
+                        <code>IF, IFS, AND, OR</code>
+                    </div>
+                    <ul>
+                        <li><code>IF(c, t, f)</code> - 条件判断</li>
+                        <li><code>IFS(...)</code> - 多条件判断</li>
+                        <li><code>AND(...)</code> - 与逻辑</li>
+                        <li><code>OR(...)</code> - 或逻辑</li>
+                        <li><code>SWITCH(...)</code> - 多值匹配</li>
+                    </ul>
+                </div>
+
+                <div class="function-card">
+                    <h4>📈 统计函数</h4>
+                    <div class="function-syntax">
+                        <code>COUNTIF, SUMIFS</code>
+                    </div>
+                    <ul>
+                        <li><code>COUNTIF(r, c)</code> - 条件计数</li>
+                        <li><code>COUNTIFS(...)</code> - 多条件计数</li>
+                        <li><code>SUMIF(r, c, s)</code> - 条件求和</li>
+                        <li><code>SUMIFS(...)</code> - 多条件求和</li>
+                    </ul>
+                </div>
+
+                <div class="function-card">
+                    <h4>🔄 动态数组 <span class="version-badge version-new">2019+</span></h4>
+                    <div class="function-syntax">
+                        <code>SORT, UNIQUE, FILTER</code>
+                    </div>
+                    <ul>
+                        <li><code>SORT(a, i, o)</code> - 排序</li>
+                        <li><code>UNIQUE(a)</code> - 唯一值</li>
+                        <li><code>FILTER(a, i)</code> - 筛选</li>
+                        <li><code>SORTBY(...)</code> - 多列排序</li>
+                        <li><code>SEQUENCE(...)</code> - 生成序列</li>
+                    </ul>
+                </div>
+
+                <div class="function-card">
+                    <h4>🚀 LAMBDA 函数 <span class="version-badge version-new">2021+</span></h4>
+                    <div class="function-syntax">
+                        <code>LAMBDA, LET</code>
+                    </div>
+                    <ul>
+                        <li><code>LAMBDA(p..., calc)</code> - 自定义函数</li>
+                        <li><code>LET(n, v, calc)</code> - 变量命名</li>
+                        <li><code>MAKEARRAY(...)</code> - 创建数组</li>
+                        <li><code>REDUCE(...)</code> - 累积计算</li>
+                        <li><code>MAP(...)</code> - 映射转换</li>
+                    </ul>
+                </div>
             </div>
 
-            <h3>文本函数</h3>
-            <div class="code-block">
-                LEFT(text, [num_chars])：从左提取字符<br/>
-                RIGHT(text, [num_chars])：从右提取字符<br/>
-                MID(text, start_num, num_chars)：从中间提取字符<br/>
-                LEN(text)：计算文本长度<br/>
-                CONCAT(text1, text2, ...)：连接文本<br/>
-                TRIM(text)：删除多余空格<br/>
-                UPPER(text)：转换为大写<br/>
-                LOWER(text)：转换为小写<br/>
-                PROPER(text)：首字母大写
-            </div>
-
-            <h3>日期函数</h3>
-            <div class="code-block">
-                TODAY()：当前日期<br/>
-                NOW()：当前日期和时间<br/>
-                DATE(year, month, day)：创建日期<br/>
-                DATEDIF(start_date, end_date, unit)：计算日期差<br/>
-                EOMONTH(start_date, months)：月末日期<br/>
-                WORKDAY(start_date, days)：工作日
-            </div>
-
-            <h3>查找函数</h3>
-            <div class="code-block">
-                VLOOKUP(lookup_value, table_array, col_index, [range_lookup])：垂直查找<br/>
-                HLOOKUP(lookup_value, table_array, row_index, [range_lookup])：水平查找<br/>
-                INDEX(array, row_num, [col_num])：返回指定位置的值<br/>
-                MATCH(lookup_value, lookup_array, [match_type])：查找位置
-            </div>
-
-            <h2>4.4 逻辑函数</h2>
+            <h2>4.4 逻辑函数详解</h2>
             <p>逻辑函数用于进行条件判断，是数据分析的重要工具。</p>
 
-            <h3>IF函数</h3>
+            <h3>IF 函数</h3>
             <p>根据条件返回不同值：</p>
-            <div class="code-block">
-                =IF(A1>60, "及格", "不及格")<br/>
-                =IF(AND(A1>60, B1>60), "双及格", "不及格")<br/>
-                =IF(OR(A1>60, B1>60), "单科及格", "都不及格")
+            <div class="formula-highlight">
+=IF(A1>60, "及格", "不及格")<br/>
+=IF(AND(A1>60, B1>60), "双及格", "不及格")<br/>
+=IF(OR(A1>60, B1>60), "单科及格", "都不及格")
             </div>
 
-            <h3>AND函数</h3>
-            <p>所有条件都为TRUE时返回TRUE：</p>
+            <h3>AND 函数</h3>
+            <p>所有条件都为 TRUE 时返回 TRUE：</p>
             <div class="code-block">
-                =AND(A1>60, B1>60)<br/>
-                =AND(A1>0, A1<100)
+=AND(A1>60, B1>60)<br/>
+=AND(A1>0, A1<100)
             </div>
 
-            <h3>OR函数</h3>
-            <p>任一条件为TRUE时返回TRUE：</p>
+            <h3>OR 函数</h3>
+            <p>任一条件为 TRUE 时返回 TRUE：</p>
             <div class="code-block">
-                =OR(A1>60, B1>60)<br/>
-                =OR(A1="优秀", A1="良好")
+=OR(A1>60, B1>60)<br/>
+=OR(A1="优秀", A1="良好")
             </div>
 
-            <h3>NOT函数</h3>
-            <p>取反逻辑：</p>
+            <h3>嵌套 IF</h3>
+            <p>IF 函数可以嵌套使用进行多重判断：</p>
             <div class="code-block">
-                =NOT(A1=0)<br/>
-                =NOT(OR(A1>60, B1>60))
-            </div>
-
-            <h3>嵌套IF</h3>
-            <p>IF函数可以嵌套使用进行多重判断：</p>
-            <div class="code-block">
-                =IF(A1>=90, "优秀", IF(A1>=80, "良好", IF(A1>=60, "及格", "不及格")))
+=IF(A1>=90, "优秀", IF(A1>=80, "良好", IF(A1>=60, "及格", "不及格")))
             </div>
 
             <div class="note-box">
-                <strong>注意：</strong>Excel支持最多64层IF嵌套，但建议使用其他函数简化复杂逻辑。
+                <strong>注意：</strong>Excel 支持最多 64 层 IF 嵌套，但建议使用 IFS 函数简化复杂逻辑。
             </div>
 
-            <h2>4.5 IF函数替代方案</h2>
-            <p>Excel引入了更简洁的IF函数替代方案，让逻辑判断更易读。</p>
+            <h2>4.5 IF 函数替代方案</h2>
+            <p>Excel 引入了更简洁的 IF 函数替代方案，让逻辑判断更易读。</p>
 
-            <h3>IFS函数</h3>
-            <p>替代多层IF嵌套：</p>
-            <div class="code-block">
-                =IFS(A1>=90, "优秀", A1>=80, "良好", A1>=60, "及格", TRUE, "不及格")
+            <h3>IFS 函数</h3>
+            <p>替代多层 IF 嵌套：</p>
+            <div class="formula-highlight">
+=IFS(A1>=90, "优秀", A1>=80, "良好", A1>=60, "及格", TRUE, "不及格")
             </div>
 
-            <h3>SWITCH函数</h3>
+            <h3>SWITCH 函数</h3>
             <p>根据值返回不同结果：</p>
-            <div class="code-block">
-                =SWITCH(A1, "A", "优秀", "B", "良好", "C", "及格", "不及格")
+            <div class="formula-highlight">
+=SWITCH(A1, "A", "优秀", "B", "良好", "C", "及格", "不及格")
             </div>
 
-            <h2>4.6 统计函数</h2>
-            <p>统计函数用于数据分析和计算。</p>
-
-            <div class="code-block">
-                COUNT(range)：计数数字<br/>
-                COUNTA(range)：计数非空单元格<br/>
-                COUNTBLANK(range)：计数空单元格<br/>
-                COUNTIF(range, criteria)：条件计数<br/>
-                COUNTIFS(range1, criteria1, [range2, criteria2], ...)：多条件计数<br/>
-                SUMIF(range, criteria, [sum_range])：条件求和<br/>
-                SUMIFS(sum_range, range1, criteria1, [range2, criteria2], ...)：多条件求和<br/>
-                AVERAGEIF(range, criteria, [average_range])：条件平均<br/>
-                AVERAGEIFS(average_range, range1, criteria1, [range2, criteria2], ...)：多条件平均
+            <!-- Mermaid 决策树：逻辑函数选择 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">逻辑函数选择决策树</h3>
+                <div class="mermaid">
+flowchart TD
+    A[需要条件判断？] --> B{条件数量？}
+    
+    B -->|单个条件 | C[使用 IF]
+    C --> D{需要错误处理？}
+    D -->|是 | E[IFERROR 或 IFNA]
+    D -->|否 | F[完成]
+    
+    B -->|多个条件<br/>全部满足 | G[使用 AND+IF]
+    G --> H[=IF(AND(c1,c2), t, f)]
+    
+    B -->|多个条件<br/>任一满足 | I[使用 OR+IF]
+    I --> J[=IF(OR(c1,c2), t, f)]
+    
+    B -->|多层判断 | K{判断类型？}
+    K -->|范围判断 | L[使用 IFS]
+    K -->|等值匹配 | M[使用 SWITCH]
+    
+    L --> N[=IFS(c1,t1, c2,t2, ...)]
+    M --> O[=SWITCH(v, c1,t1, c2,t2, ...)]
+    
+    E --> F
+    H --> F
+    J --> F
+    N --> F
+    O --> F
+                </div>
             </div>
 
-            <h3>SUMIFS示例</h3>
-            <div class="code-block">
-                =SUMIFS(C:C, A:A, "销售部", B:B, ">1000")<br/>
-                计算A列为"销售部"且B列大于1000的C列总和
+            <h2>4.6 动态数组函数（2026 重点）</h2>
+            <p>Excel 的数组公式功能得到显著增强，这是 2026 版本的核心特性。</p>
+
+            <h3>UNIQUE 函数</h3>
+            <p>返回唯一值列表：</p>
+            <div class="formula-highlight">
+=UNIQUE(A1:A10)<br/>
+<span style="color: #586069; font-size: 0.85rem;">返回 A1 到 A10 中的唯一值列表</span>
             </div>
 
-            <h2>4.7 文本连接函数</h2>
-            <p>Excel 2026提供了多种文本连接方法。</p>
-
-            <h3>CONCAT函数</h3>
-            <p>连接多个文本字符串：</p>
-            <div class="code-block">
-                =CONCAT(A1, " ", B1)<br/>
-                =CONCAT("姓名：", A1, " 部门：", B1)
+            <h3>FILTER 函数</h3>
+            <p>根据条件筛选数据：</p>
+            <div class="formula-highlight">
+=FILTER(A1:B10, B1:B10>60)<br/>
+<span style="color: #586069; font-size: 0.85rem;">返回 B 列大于 60 的所有行，包含 A 列和 B 列</span>
             </div>
 
-            <h3>TEXTJOIN函数</h3>
-            <p>用分隔符连接多个文本：</p>
-            <div class="code-block">
-                =TEXTJOIN("、", TRUE, A1:A5)<br/>
-                用顿号连接A1到A5的文本，忽略空值
+            <h3>SORT 函数</h3>
+            <p>对数据进行排序：</p>
+            <div class="formula-highlight">
+=SORT(A1:B10, 2, -1)<br/>
+<span style="color: #586069; font-size: 0.85rem;">按第 2 列降序排序</span>
             </div>
 
-            <h2>4.8 数组公式</h2>
-            <p>Excel的数组公式功能得到显著增强。</p>
-
-            <h3>动态数组函数</h3>
-            <p>Excel支持多种动态数组函数：</p>
-
-            <div class="code-block">
-                UNIQUE(array)：返回唯一值<br/>
-                SORT(array, [sort_index], [sort_order])：排序<br/>
-                FILTER(array, include, [if_empty])：筛选<br/>
-                SORTBY(array, by_array1, [sort_order1], ...)：按多列排序<br/>
-                RANDARRAY([rows], [columns], [min], [max], [integer])：生成随机数<br/>
-                SEQUENCE(rows, [columns], [start], [step])：生成序列<br/>
-                XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found], [match_mode], [search_mode])：增强查找<br/>
-                XMATCH(lookup_value, lookup_array, [match_mode], [search_mode])：增强匹配
+            <h3>SEQUENCE 函数</h3>
+            <p>生成数字序列：</p>
+            <div class="formula-highlight">
+=SEQUENCE(5, 3, 1, 1)<br/>
+<span style="color: #586069; font-size: 0.85rem;">生成 5 行 3 列的序列，从 1 开始，步长为 1</span>
             </div>
 
-            <h3>UNIQUE函数示例</h3>
-            <div class="code-block">
-                =UNIQUE(A1:A10)<br/>
-                返回A1到A10中的唯一值列表
-            </div>
-
-            <h3>FILTER函数示例</h3>
-            <div class="code-block">
-                =FILTER(A1:B10, B1:B10>60)<br/>
-                返回B列大于60的所有行，包含A列和B列
-            </div>
-
-            <h2>4.9 错误处理</h2>
+            <h2>4.7 错误处理</h2>
             <p>了解和处理常见的公式错误很重要。</p>
 
             <h3>常见错误类型</h3>
-            <ul>
-                <li><strong>#VALUE!</strong>：参数类型错误</li>
-                <li><strong>#DIV/0!</strong>：除以零</li>
-                <li><strong>#REF!</strong>：引用无效</li>
-                <li><strong>#NAME?</strong>：名称未定义</li>
-                <li><strong>#N/A</strong>：值不可用</li>
-                <li><strong>#NUM!</strong>：数值错误</li>
-                <li><strong>#NULL!</strong>：空交集</li>
-            </ul>
+            <table class="comparison-table error-table">
+                <thead>
+                    <tr>
+                        <th width="20%">错误</th>
+                        <th width="30%">含义</th>
+                        <th width="25%">常见原因</th>
+                        <th width="25%">解决方案</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>#VALUE!</code></td>
+                        <td>参数类型错误</td>
+                        <td>文本参与数值运算</td>
+                        <td>使用 VALUE() 转换</td>
+                    </tr>
+                    <tr>
+                        <td><code>#DIV/0!</code></td>
+                        <td>除以零</td>
+                        <td>除数为 0 或空</td>
+                        <td>IFERROR 处理</td>
+                    </tr>
+                    <tr>
+                        <td><code>#REF!</code></td>
+                        <td>引用无效</td>
+                        <td>单元格被删除</td>
+                        <td>修复引用</td>
+                    </tr>
+                    <tr>
+                        <td><code>#NAME?</code></td>
+                        <td>名称未定义</td>
+                        <td>函数名拼写错误</td>
+                        <td>检查拼写</td>
+                    </tr>
+                    <tr>
+                        <td><code>#N/A</code></td>
+                        <td>值不可用</td>
+                        <td>查找值不存在</td>
+                        <td>IFNA 处理</td>
+                    </tr>
+                    <tr>
+                        <td><code>#NUM!</code></td>
+                        <td>数值错误</td>
+                        <td>参数超出范围</td>
+                        <td>检查数值范围</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <h3>错误处理函数</h3>
             <div class="code-block">
-                IFERROR(value, value_if_error)：处理所有错误<br/>
-                IFNA(value, value_if_na)：只处理#N/A错误<br/>
-                ERROR.TYPE(error_val)：返回错误类型编号<br/>
-                ISERROR(value)：检查是否为错误<br/>
-                ISNA(value)：检查是否为#N/A
+<span style="color: #107c41; font-weight: 600;">IFERROR(value, error_value)</span> - 处理所有错误
+<span style="color: #107c41; font-weight: 600;">IFNA(value, na_value)</span> - 只处理#N/A 错误
+<span style="color: #107c41; font-weight: 600;">ERROR.TYPE(error_val)</span> - 返回错误类型编号
+<span style="color: #107c41; font-weight: 600;">ISERROR(value)</span> - 检查是否为错误
+<span style="color: #107c41; font-weight: 600;">ISNA(value)</span> - 检查是否为#N/A
             </div>
 
-            <h3>IFERROR示例</h3>
-            <div class="code-block">
-                =IFERROR(VLOOKUP(A1, D:E, 2, FALSE), "未找到")<br/>
-                如果VLOOKUP返回错误，显示"未找到"
+            <h3>IFERROR 示例</h3>
+            <div class="formula-highlight">
+=IFERROR(VLOOKUP(A1, D:E, 2, FALSE), "未找到")<br/>
+<span style="color: #586069; font-size: 0.85rem;">如果 VLOOKUP 返回错误，显示"未找到"</span>
             </div>
 
-            <h2>4.10 实践练习</h2>
+            <!-- AI 辅助公式功能 -->
+            <div class="ai-feature-box">
+                <h3>🤖 AI 辅助公式功能 <span class="version-badge version-ai">2026 新特性</span></h3>
+                <p>Excel 2026 引入的 AI 辅助功能让公式编写更加智能和高效。</p>
+
+                <h4>自然语言公式生成</h4>
+                <p>用自然语言描述想要的计算，Excel 自动生成公式：</p>
+                <div class="code-block">
+输入："计算 A 列的平均值"
+Excel 生成：<span style="color: #107c41;">=AVERAGE(A:A)</span>
+
+输入："找出 B 列大于 100 的所有行"
+Excel 生成：<span style="color: #107c41;">=FILTER(A:C, B:B>100)</span>
+                </div>
+
+                <h4>智能公式建议</h4>
+                <ul>
+                    <li>开始输入函数时，AI 根据上下文推荐合适的函数</li>
+                    <li>分析数据结构，提供最优公式方案</li>
+                    <li>识别常见计算模式，一键插入公式</li>
+                </ul>
+
+                <h4>公式解释和优化</h4>
+                <ul>
+                    <li>AI 可以解释复杂公式的含义</li>
+                    <li>提供公式性能优化建议</li>
+                    <li>识别潜在的公式错误</li>
+                </ul>
+            </div>
+
+            <h2>4.8 实践练习</h2>
             <p>让我们通过一个实际案例来练习公式和函数的使用：</p>
 
             <ol>
                 <li>创建一个销售数据表，包含：产品名称、数量、单价、折扣、金额</li>
                 <li>使用公式计算金额：金额 = 数量 * 单价 * (1-折扣)</li>
-                <li>使用SUM函数计算总金额</li>
-                <li>使用AVERAGE函数计算平均单价</li>
-                <li>使用IF函数判断销售状态：数量>10为"畅销"，否则为"普通"</li>
-                <li>使用COUNTIF统计畅销产品数量</li>
-                <li>使用SUMIF计算畅销产品的总金额</li>
-                <li>使用VLOOKUP查找特定产品的信息</li>
-                <li>使用UNIQUE函数提取不重复的产品名称</li>
-                <li>使用FILTER函数筛选出金额大于1000的记录</li>
+                <li>使用 SUM 函数计算总金额</li>
+                <li>使用 AVERAGE 函数计算平均单价</li>
+                <li>使用 IFS 函数判断销售状态：数量>10 为"畅销"，5-10 为"一般"，否则为"滞销"</li>
+                <li>使用 COUNTIF 统计畅销产品数量</li>
+                <li>使用 SUMIFS 计算畅销产品的总金额</li>
+                <li>使用 XLOOKUP 查找特定产品的信息</li>
+                <li>使用 UNIQUE 函数提取不重复的产品名称</li>
+                <li>使用 FILTER 函数筛选出金额大于 1000 的记录</li>
+                <li>使用 SORT 函数对结果进行排序</li>
             </ol>
 
-            <h2>4.11 AI辅助公式功能</h2>
-            <p>Excel的AI辅助功能让公式编写更加智能。</p>
-
-            <h3>智能公式建议</h3>
-            <p>当开始输入函数时，Excel会根据上下文推荐合适的函数。</p>
-
-            <h3>自然语言公式</h3>
-            <p>可以用自然语言描述想要的计算，Excel自动生成公式：</p>
-            <ul>
-                <li>输入："计算A列的平均值"</li>
-                <li>Excel生成：=AVERAGE(A:A)</li>
-            </ul>
-
-            <h3>公式解释</h3>
-            <p>Excel可以解释复杂公式的含义，帮助理解公式逻辑。</p>
-
-            <h2>4.12 本章小结</h2>
-            <p>本章介绍了Excel的公式和函数功能，你现在应该能够：</p>
+            <h2>4.9 本章小结</h2>
+            <p>本章介绍了 Excel 的公式和函数功能，你现在应该能够：</p>
             <ul>
                 <li>创建和使用基本公式</li>
                 <li>理解并正确使用不同类型的单元格引用</li>
@@ -361,13 +869,20 @@
                 <li>使用逻辑函数进行条件判断</li>
                 <li>运用动态数组函数进行高级数据处理</li>
                 <li>处理和调试公式错误</li>
-                <li>利用AI辅助功能提高公式编写效率</li>
+                <li>利用 AI 辅助功能提高公式编写效率</li>
             </ul>
 
-            <p>在下一章中，我们将学习如何创建专业的图表，让数据可视化更加直观和吸引人。</p>
+            <div class="tip-box" style="background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%); border-left-color: #21a366;">
+                <strong>下一步：</strong>在下一章中，我们将学习如何创建专业的图表，让数据可视化更加直观和吸引人。
+            </div>
         </div>
     </main>
 
-    <script src="../js/main.js"></script>
+    <script>
+      // Mermaid 初始化
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Excel Formulas 页面已加载');
+      });
+    </script>
 </body>
 </html>

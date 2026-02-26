@@ -3,14 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图表制作 - Excel学习中心</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>图表制作 - Excel 学习中心</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+      .tutorial-page {
+        padding-top: 100px;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f3f2f1 0%, #ffffff 100%);
+      }
+
+      .tutorial-header {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 3rem 0;
+        text-align: center;
+      }
+
+      .tutorial-header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+      }
+
+      .tutorial-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      .tutorial-content h2 {
+        color: #107c41;
+        border-bottom: 3px solid #107c41;
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+      }
+
+      .tutorial-content h3 {
+        color: #21a366;
+        margin-top: 1.5rem;
+      }
+
+      .tip-box {
+        background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%);
+        border-left: 4px solid #107c41;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .warning-box {
+        background: linear-gradient(135deg, #fff3cd 0%, #fffbf0 100%);
+        border-left: 4px solid #ffc107;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .note-box {
+        background: linear-gradient(135deg, #e7f3ff 0%, #f0f7ff 100%);
+        border-left: 4px solid #2b88d8;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .mermaid-wrapper {
+        background: white;
+        border: 1px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .diagram-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #24292e;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .chart-type-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .chart-type-card {
+        background: white;
+        border: 2px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: all 0.3s;
+      }
+
+      .chart-type-card:hover {
+        border-color: #107c41;
+        box-shadow: 0 4px 12px rgba(16, 124, 65, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .chart-type-card h4 {
+        color: #107c41;
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .chart-icon {
+        font-size: 1.5rem;
+      }
+
+      .scenario-box {
+        background: #f8f9fa;
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+      }
+
+      .scenario-box strong {
+        color: #107c41;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        background: white;
+      }
+
+      .comparison-table th {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+      }
+
+      .comparison-table td {
+        padding: 0.75rem 1rem;
+        border: 1px solid #e1dfdd;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .comparison-table tr:hover {
+        background: #e6f2ea;
+      }
+
+      .site-header {
+        background: white;
+        border-bottom: 2px solid #107c41;
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(16, 124, 65, 0.1);
+      }
+
+      .site-header .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .site-header .logo h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #107c41;
+      }
+
+      .main-nav ul {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .main-nav a {
+        color: #24292e;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        position: relative;
+      }
+
+      .main-nav a:hover,
+      .main-nav a.active {
+        color: #107c41;
+      }
+
+      .main-nav a.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #107c41;
+      }
+
+      .version-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .version-new {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .ai-feature-box {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        border: 2px solid #667eea;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .ai-feature-box h3 {
+        color: #667eea;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .flowchart-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin: 1.5rem 0;
+      }
+
+      .flowchart-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: white;
+        border: 2px solid #e1dfdd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 120px;
+      }
+
+      .flowchart-step:hover,
+      .flowchart-step.active {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        border-color: #107c41;
+        transform: translateY(-2px);
+      }
+
+      .flowchart-step:hover .step-number,
+      .flowchart-step.active .step-number {
+        background: white;
+        color: #107c41;
+      }
+
+      .flowchart-step:hover h4,
+      .flowchart-step.active h4,
+      .flowchart-step:hover p,
+      .flowchart-step.active p {
+        color: white;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        margin: 0 0 0.25rem 0;
+        font-size: 0.95rem;
+        color: #24292e;
+      }
+
+      .step-content p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #586069;
+      }
+
+      .flowchart-detail {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        border-radius: 8px;
+        padding: 1.5rem;
+        border: 1px solid #e1dfdd;
+        margin-top: 1rem;
+      }
+
+      .flowchart-detail h4 {
+        color: #107c41;
+        margin-top: 0;
+      }
+
+      @media (max-width: 768px) {
+        .main-nav ul {
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .chart-type-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flowchart-steps {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .flowchart-step {
+          flex-direction: row;
+          gap: 1rem;
+        }
+
+        .step-number {
+          margin-bottom: 0;
+        }
+
+        .step-content {
+          text-align: left;
+        }
+      }
+    </style>
+    <!-- Mermaid 图表库 -->
+    <script src="../lib/mermaid.min.js"></script>
+    <script type="module">
+      window.mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis', useMaxWidth: true }
+      });
+    </script>
 </head>
 <body>
     <header class="site-header">
         <div class="container">
             <div class="logo">
-                <h1>Excel 学习中心</h1>
+                <h1>📊 Excel 学习中心</h1>
             </div>
             <nav class="main-nav">
                 <ul>
@@ -30,16 +388,86 @@
     <main class="tutorial-page">
         <div class="tutorial-header">
             <h1>第五章：图表制作</h1>
+            <p style="margin: 1rem 0 0; opacity: 0.9;">让数据说话 — Excel 2026 数据可视化完全指南</p>
         </div>
 
         <div class="tutorial-content">
+            <!-- Mermaid 决策树：图表选择完整指南 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">图表类型选择完整决策树</h3>
+                <div class="mermaid">
+flowchart TD
+    A[需要可视化数据？] --> B{展示目的？}
+    
+    B -->|比较大小 | C{比较维度？}
+    C -->|类别间比较 | D{类别数量？}
+    D -->|少 ≤5| E[📊 柱状图]
+    D -->|多 >5| F[📊 条形图]
+    D -->|时间序列 | G[📈 折线图]
+    
+    C -->|时间趋势 | H{时间跨度？}
+    H -->|短期 ≤12 期 | I[📈 折线图]
+    H -->|长期 >12 期 | J[📈 面积图]
+    H -->|预测未来 | K[📈 带趋势线折线图]
+    
+    B -->|占比关系 | L{数据特点？}
+    L -->|单时间点 | M{类别数量？}
+    M -->|少 ≤5| N[🥧 饼图]
+    M -->|多 >5| O[🍩 环形图]
+    L -->|多时间点 | P[📊 堆积柱状图]
+    L -->|百分比变化 | Q[📊 百分比堆积图]
+    
+    B -->|数据分布 | R{数据类型？}
+    R -->|连续数据 | S[📊 直方图]
+    R -->|离散数据 | T[📦 箱线图]
+    R -->|两个变量 | U[⚡ 散点图]
+    R -->|三个变量 | V[🎈 气泡图]
+    
+    B -->|关系分析 | W{变量数量？}
+    W -->|两个变量 | X[⚡ 散点图]
+    W -->|多个变量 | Y[🔥 热力图]
+    W -->|相关性矩阵 | Z[🔥 相关矩阵图]
+    
+    B -->|流程展示 | AA{流程类型？}
+    AA -->|步骤流程 | AB[📋 流程图]
+    AA -->|时间流程 | AC[📅 甘特图]
+    AA -->|转化流程 | AD[📊 漏斗图]
+    AA -->|增减变化 | AE[💧 瀑布图]
+    
+    B -->|地理数据 | AF[🗺️ 地图图表]
+    
+    E --> AG[完成选择]
+    F --> AG
+    G --> AG
+    I --> AG
+    J --> AG
+    K --> AG
+    N --> AG
+    O --> AG
+    P --> AG
+    Q --> AG
+    S --> AG
+    T --> AG
+    U --> AG
+    V --> AG
+    X --> AG
+    Y --> AG
+    Z --> AG
+    AB --> AG
+    AC --> AG
+    AD --> AG
+    AE --> AG
+    AF --> AG
+                </div>
+            </div>
+
             <h2>5.1 图表基础</h2>
             <p>图表是数据可视化的重要工具，能够将复杂的数据以直观的方式呈现出来。</p>
 
             <h3>为什么要使用图表</h3>
             <ul>
                 <li><strong>直观展示</strong>：将抽象的数据转换为视觉图形</li>
-                <li><strong>发现趋势</strong：更容易识别数据模式和变化趋势</li>
+                <li><strong>发现趋势</strong>：更容易识别数据模式和变化趋势</li>
                 <li><strong>突出重点</strong>：强调关键信息和异常值</li>
                 <li><strong>便于理解</strong>：让非专业人士也能理解复杂数据</li>
                 <li><strong>专业展示</strong>：提升报告和演示的专业性</li>
@@ -50,15 +478,33 @@
                 <li><strong>图表区</strong>：整个图表的背景区域</li>
                 <li><strong>绘图区</strong>：显示数据的实际区域</li>
                 <li><strong>数据系列</strong>：图表中的数据集合</li>
-                <li><strong>坐标轴</strong>：X轴（分类轴）和Y轴（数值轴）</li>
+                <li><strong>坐标轴</strong>：X 轴（分类轴）和 Y 轴（数值轴）</li>
                 <li><strong>图例</strong>：说明数据系列含义的说明</li>
                 <li><strong>标题</strong>：图表的主标题和轴标题</li>
                 <li><strong>数据标签</strong>：显示具体数值的标签</li>
                 <li><strong>网格线</strong>：帮助读取数值的参考线</li>
             </ul>
 
+            <!-- Mermaid 流程图：图表制作完整流程 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">图表制作完整流程图</h3>
+                <div class="mermaid">
+flowchart LR
+    A[准备数据] --> B[选择数据区域]
+    B --> C[插入图表]
+    C --> D[选择图表类型]
+    D --> E[调整数据源]
+    E --> F[添加图表元素]
+    F --> G[美化设计]
+    G --> H[检查优化]
+    H --> I{是否满意？}
+    I -->|否 | E
+    I -->|是 | J[完成图表]
+                </div>
+            </div>
+
             <h2>5.2 创建图表</h2>
-            <p>Excel提供了多种创建图表的方法。</p>
+            <p>Excel 提供了多种创建图表的方法。</p>
 
             <h3>使用功能区创建图表</h3>
             <ol>
@@ -83,73 +529,193 @@
             </ul>
 
             <div class="tip-box">
-                <strong>小技巧：</strong>选中数据后按F11可以快速在单独的工作表中创建图表，适合复杂图表的制作。
+                <strong>小技巧：</strong>选中数据后按 F11 可以快速在单独的工作表中创建图表，适合复杂图表的制作。
             </div>
 
-            <h2>5.3 常用图表类型</h2>
-            <p>Excel提供了丰富的图表类型，选择合适的图表类型是制作优秀图表的关键。</p>
+            <h2>5.3 常用图表类型详解</h2>
+            <p>Excel 提供了丰富的图表类型，选择合适的图表类型是制作优秀图表的关键。</p>
 
-            <h3>柱状图</h3>
-            <p><strong>适用场景：</strong>比较不同类别的数值大小</p>
-            <ul>
-                <li>簇状柱形图：并排显示多个数据系列</li>
-                <li>堆积柱形图：显示各部分占总体的比例</li>
-                <li>百分比堆积柱形图：显示各部分占总体的百分比</li>
-            </ul>
+            <div class="chart-type-grid">
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">📊</span> 柱状图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>比较不同类别的数值大小
+                    </div>
+                    <ul>
+                        <li>簇状柱形图：并排显示多个数据系列</li>
+                        <li>堆积柱形图：显示各部分占总体的比例</li>
+                        <li>百分比堆积柱形图：显示百分比</li>
+                    </ul>
+                </div>
 
-            <h3>折线图</h3>
-            <p><strong>适用场景：</strong>显示数据随时间变化的趋势</p>
-            <ul>
-                <li>折线图：基本的趋势线</li>
-                <li>带数据标记的折线图：显示具体数据点</li>
-                <li>堆积折线图：显示累计趋势</li>
-            </ul>
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">📈</span> 折线图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示数据随时间变化的趋势
+                    </div>
+                    <ul>
+                        <li>折线图：基本的趋势线</li>
+                        <li>带数据标记的折线图：显示数据点</li>
+                        <li>堆积折线图：显示累计趋势</li>
+                    </ul>
+                </div>
 
-            <h3>饼图</h3>
-            <p><strong>适用场景：</strong>显示各部分占总体的比例</p>
-            <ul>
-                <li>饼图：基本的比例显示</li>
-                <li>环形图：中心的空洞可以显示总计</li>
-                <li>复合饼图：突出显示特定部分</li>
-            </ul>
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">🥧</span> 饼图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示各部分占总体的比例
+                    </div>
+                    <ul>
+                        <li>饼图：基本的比例显示</li>
+                        <li>环形图：中心可显示总计</li>
+                        <li>复合饼图：突出特定部分</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">📊</span> 条形图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>类别名称较长时的比较
+                    </div>
+                    <ul>
+                        <li>簇状条形图：横向并排比较</li>
+                        <li>堆积条形图：横向堆积显示</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">📈</span> 面积图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示数量随时间变化及总量趋势
+                    </div>
+                    <ul>
+                        <li>面积图：基本面积显示</li>
+                        <li>堆积面积图：显示累计</li>
+                        <li>百分比面积图：显示占比趋势</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">⚡</span> 散点图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示两个变量之间的关系
+                    </div>
+                    <ul>
+                        <li>散点图：基本的 XY 关系图</li>
+                        <li>带平滑线的散点图：显示趋势</li>
+                        <li>气泡图：三维数据比较</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">📊</span> 直方图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示数据的分布情况
+                    </div>
+                    <ul>
+                        <li>频率分布分析</li>
+                        <li>数据集中趋势</li>
+                        <li>正态分布检验</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">📦</span> 箱线图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>统计分析，显示数据分散情况
+                    </div>
+                    <ul>
+                        <li>显示中位数</li>
+                        <li>显示四分位数</li>
+                        <li>识别异常值</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">💧</span> 瀑布图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示初始值如何受正负值影响
+                    </div>
+                    <ul>
+                        <li>财务分析</li>
+                        <li>利润构成分析</li>
+                        <li>增减变化展示</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">📊</span> 漏斗图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示数据在多个阶段递减
+                    </div>
+                    <ul>
+                        <li>销售漏斗</li>
+                        <li>转化流程</li>
+                        <li>筛选过程</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">🔥</span> 热力图</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>显示数据密度和相关性
+                    </div>
+                    <ul>
+                        <li>相关性矩阵</li>
+                        <li>数据密度图</li>
+                        <li>地理热力分布</li>
+                    </ul>
+                </div>
+
+                <div class="chart-type-card">
+                    <h4><span class="chart-icon">🗺️</span> 地图图表</h4>
+                    <div class="scenario-box">
+                        <strong>适用场景：</strong>地理数据可视化
+                    </div>
+                    <ul>
+                        <li>区域销售分布</li>
+                        <li>人口密度图</li>
+                        <li>市场覆盖图</li>
+                    </ul>
+                </div>
+            </div>
 
             <div class="note-box">
-                <strong>注意：</strong>饼图不宜显示过多的类别，建议不超过5-7个，否则难以阅读。
+                <strong>注意：</strong>饼图不宜显示过多的类别，建议不超过 5-7 个，否则难以阅读。
             </div>
 
-            <h3>条形图</h3>
-            <p><strong>适用场景：</strong>与柱状图类似，但类别名称较长时更合适</p>
+            <!-- Mermaid 序列图：图表创建和更新流程 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">图表创建和数据更新序列图</h3>
+                <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant D as 数据区域
+    participant C as 图表引擎
+    participant R as 图表对象
+    participant E as 图表元素
 
-            <h3>面积图</h3>
-            <p><strong>适用场景：</strong>显示数量随时间的变化，同时显示总量的变化趋势</p>
+    U->>D: 选中数据区域
+    U->>C: 点击插入图表
+    C->>C: 分析数据结构
+    C->>C: 推荐图表类型
+    U->>C: 选择图表类型
+    C->>R: 创建图表对象
+    R->>D: 读取数据
+    R->>R: 生成图表
+    R->>E: 添加默认元素
+    E-->>U: 显示初始图表
+    Note over U,D: 数据变化时
+    D->>D: 数据更新
+    D->>R: 触发重绘事件
+    R->>R: 重新计算
+    R->>E: 更新图表元素
+    E-->>U: 显示更新后图表
+                </div>
+            </div>
 
-            <h3>散点图</h3>
-            <p><strong>适用场景：</strong>显示两个变量之间的关系和相关性</p>
-            <ul>
-                <li>散点图：基本的XY关系图</li>
-                <li>带平滑线的散点图：显示趋势线</li>
-            </ul>
-
-            <h3>直方图</h3>
-            <p><strong>适用场景：</strong>显示数据的分布情况</p>
-
-            <h3>箱线图</h3>
-            <p><strong>适用场景：</strong>统计分析，显示数据的中位数、四分位数和异常值</p>
-
-            <h3>瀑布图</h3>
-            <p><strong>适用场景：</strong>显示初始值如何受正负值影响达到最终值</p>
-
-            <h3>漏斗图</h3>
-            <p><strong>适用场景：</strong>显示数据在多个阶段递减的情况，如销售漏斗</p>
-
-            <h3>组合图</h3>
-            <p><strong>适用场景：</strong>结合不同类型的图表显示多个数据系列</p>
-            <ul>
-                <li>簇状柱形图-折线图：结合比较和趋势</li>
-                <li>堆积面积图-簇状柱形图：显示构成和比较</li>
-            </ul>
-
-            <h2>5.4 图表设计</h2>
+            <h2>5.4 图表设计原则</h2>
             <p>创建图表后，可以通过设计选项卡进行美化和定制。</p>
 
             <h3>更改图表类型</h3>
@@ -168,7 +734,7 @@
             </ol>
 
             <h3>切换行/列</h3>
-            <p>点击"图表设计" > "切换行/列"，交换X轴和Y轴的数据。</p>
+            <p>点击"图表设计" > "切换行/列"，交换 X 轴和 Y 轴的数据。</p>
 
             <h3>选择数据</h3>
             <p>点击"图表设计" > "选择数据"，可以：</p>
@@ -184,7 +750,7 @@
             </div>
 
             <h2>5.5 图表元素</h2>
-            <p>Excel图表包含多个可自定义的元素。</p>
+            <p>Excel 图表包含多个可自定义的元素。</p>
 
             <h3>添加图表元素</h3>
             <ol>
@@ -194,17 +760,57 @@
             </ol>
 
             <h3>常用图表元素</h3>
-            <ul>
-                <li><strong>坐标轴标题</strong>：说明坐标轴含义</li>
-                <li><strong>图表标题</strong>：图表的主标题</li>
-                <li><strong>数据标签</strong>：显示数据点的具体值</li>
-                <li><strong>数据表</strong>：在图表下方显示数据表</li>
-                <li><strong>误差线</strong>：显示数据的误差范围</li>
-                <li><strong>网格线</strong>：辅助读取数值</li>
-                <li><strong>图例</strong>：说明数据系列</li>
-                <li><strong>趋势线</strong>：显示数据趋势</li>
-                <li><strong>涨/跌柱线</strong>：在折线图中显示变化</li>
-            </ul>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th width="25%">元素</th>
+                        <th width="35%">作用</th>
+                        <th width="40%">使用建议</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>坐标轴标题</strong></td>
+                        <td>说明坐标轴含义</td>
+                        <td>始终添加，确保读者理解数据</td>
+                    </tr>
+                    <tr>
+                        <td><strong>图表标题</strong></td>
+                        <td>图表的主标题</td>
+                        <td>简洁明了，概括图表内容</td>
+                    </tr>
+                    <tr>
+                        <td><strong>数据标签</strong></td>
+                        <td>显示数据点的具体值</td>
+                        <td>数据点少时添加，多时省略</td>
+                    </tr>
+                    <tr>
+                        <td><strong>数据表</strong></td>
+                        <td>在图表下方显示数据表</td>
+                        <td>需要精确数值时添加</td>
+                    </tr>
+                    <tr>
+                        <td><strong>误差线</strong></td>
+                        <td>显示数据的误差范围</td>
+                        <td>统计分析时使用</td>
+                    </tr>
+                    <tr>
+                        <td><strong>网格线</strong></td>
+                        <td>辅助读取数值</td>
+                        <td>保留主要网格线，删除次要</td>
+                    </tr>
+                    <tr>
+                        <td><strong>图例</strong></td>
+                        <td>说明数据系列</td>
+                        <td>多数据系列时必需</td>
+                    </tr>
+                    <tr>
+                        <td><strong>趋势线</strong></td>
+                        <td>显示数据趋势</td>
+                        <td>分析趋势时添加</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <h3>格式化图表元素</h3>
             <ol>
@@ -212,6 +818,52 @@
                 <li>右键点击，选择"格式化..."</li>
                 <li>在格式化面板中进行设置</li>
             </ol>
+
+            <!-- 交互式流程图：图表美化步骤 -->
+            <div class="interactive-flowchart">
+                <h3 style="margin-bottom: 1.5rem; text-align: center;">图表美化五步法（点击步骤查看详情）</h3>
+                <div class="flowchart-steps">
+                    <div class="flowchart-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>简化</h4>
+                            <p>删除多余元素</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>配色</h4>
+                            <p>选择协调颜色</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>标注</h4>
+                            <p>添加必要说明</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>对齐</h4>
+                            <p>确保布局整齐</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>检查</h4>
+                            <p>验证可读性</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowchart-detail" id="flowchartDetail">
+                    <h4>步骤 1: 简化</h4>
+                    <p>删除不必要的图表元素：移除多余的网格线、简化图例、删除 3D 效果和阴影。保持图表简洁，让数据成为主角。记住：少即是多。</p>
+                </div>
+            </div>
 
             <h2>5.6 趋势线和误差线</h2>
             <p>趋势线和误差线是数据分析的重要工具。</p>
@@ -242,7 +894,7 @@
                 <li>标准误差误差线</li>
             </ul>
 
-            <h2>5.3 迷你图</h2>
+            <h2>5.7 迷你图</h2>
             <p>迷你图是在单元格中创建的小型图表，适合显示趋势概览。</p>
 
             <h3>创建迷你图</h3>
@@ -261,16 +913,6 @@
                 <li><strong>盈亏图</strong>：显示正负值</li>
             </ul>
 
-            <h3>迷你图设置</h3>
-            <p>在"迷你图设计"选项卡中可以：</p>
-            <ul>
-                <li>编辑数据范围</li>
-                <li>更改图表类型</li>
-                <li>显示标记点</li>
-                <li>设置高低点颜色</li>
-                <li>设置坐标轴</li>
-            </ul>
-
             <div class="tip-box">
                 <strong>小技巧：</strong>将迷你图与数据表格配合使用，可以快速创建仪表板风格的报告。
             </div>
@@ -287,10 +929,37 @@
 
             <h3>基于命名范围的动态图表</h3>
             <ol>
-                <li>定义动态命名范围（使用OFFSET或INDEX函数）</li>
+                <li>定义动态命名范围（使用 OFFSET 或 INDEX 函数）</li>
                 <li>创建基于命名范围的图表</li>
                 <li>数据变化时图表自动更新</li>
             </ol>
+
+            <!-- AI 功能 -->
+            <div class="ai-feature-box">
+                <h3>🤖 AI 图表建议 <span class="version-badge version-new">2026 新特性</span></h3>
+                <p>Excel 2026 引入 AI 驱动的图表推荐和自动美化功能。</p>
+
+                <h4>智能图表推荐</h4>
+                <ul>
+                    <li>AI 分析数据类型和结构</li>
+                    <li>自动推荐最适合的图表类型</li>
+                    <li>提供多种图表方案供选择</li>
+                </ul>
+
+                <h4>自动美化</h4>
+                <ul>
+                    <li>一键应用专业配色方案</li>
+                    <li>自动调整布局和字体大小</li>
+                    <li>智能添加必要的图表元素</li>
+                </ul>
+
+                <h4>自然语言创建图表</h4>
+                <p>用自然语言描述想要的图表，AI 自动创建：</p>
+                <div class="code-block" style="background: white; border: 1px solid #e1dfdd; padding: 1rem; border-radius: 6px;">
+输入："创建一个显示每月销售趋势的折线图"<br/>
+Excel: 自动创建折线图并配置数据
+                </div>
+            </div>
 
             <h2>5.9 图表美化技巧</h2>
             <p>专业的图表不仅要有准确的数据，还要有良好的视觉效果。</p>
@@ -298,7 +967,7 @@
             <h3>颜色搭配</h3>
             <ul>
                 <li>使用协调的颜色方案</li>
-                <li>避免使用过多颜色（建议不超过5-6种）</li>
+                <li>避免使用过多颜色（建议不超过 5-6 种）</li>
                 <li>使用对比色突出重要数据</li>
                 <li>保持与品牌颜色一致</li>
             </ul>
@@ -319,53 +988,14 @@
             </ul>
 
             <div class="note-box">
-                <strong>设计原则：</strong>好的图表应该简单、清晰、准确，让读者能够在3秒内理解图表传达的信息。
+                <strong>设计原则：</strong>好的图表应该简单、清晰、准确，让读者能够在 3 秒内理解图表传达的信息。
             </div>
 
-            <h2>5.10 图表模板</h2>
-            <p>可以将设计好的图表保存为模板，方便重复使用。</p>
-
-            <h3>保存图表模板</h3>
-            <ol>
-                <li>点击要保存为模板的图表</li>
-                <li>右键点击，选择"另存为模板"</li>
-                <li>输入模板名称</li>
-                <li>点击保存</li>
-            </ol>
-
-            <h3>应用图表模板</h3>
-            <ol>
-                <li>创建新图表</li>
-                <li>点击"更改图表类型"</li>
-                <li>点击"所有图表"选项卡</li>
-                <li>点击"模板"</li>
-                <li>选择要应用的模板</li>
-            </ol>
-
-            <h2>5.11 Excel图表新特性</h2>
-            <p>Excel引入了多项图表功能增强。</p>
-
-            <h3>AI图表建议</h3>
-            <p>Excel会基于数据类型和特征智能推荐最合适的图表类型。</p>
-
-            <h3>增强的地图图表</h3>
-            <p>地图图表功能更加完善，支持更多地理数据和地图样式。</p>
-
-            <h3>改进的交互功能</h3>
-            <ul>
-                <li>更流畅的缩放和平移</li>
-                <li>增强的筛选交互</li>
-                <li>改进的工具提示</li>
-            </ul>
-
-            <h3>更多图表类型</h3>
-            <p>新增了更多专业图表类型，适合特定领域的数据分析。</p>
-
-            <h2>5.12 实践练习</h2>
+            <h2>5.10 实践练习</h2>
             <p>让我们通过一个实际案例来练习图表制作：</p>
 
             <ol>
-                <li>创建一个12个月的销售数据表</li>
+                <li>创建一个 12 个月的销售数据表</li>
                 <li>创建折线图显示销售趋势</li>
                 <li>添加数据标签显示具体数值</li>
                 <li>添加趋势线分析增长趋势</li>
@@ -374,56 +1004,71 @@
                 <li>创建饼图显示各产品类别的销售占比</li>
                 <li>为销售数据表添加迷你图</li>
                 <li>美化图表，应用专业的颜色和字体</li>
-                <li>将设计好的图表保存为模板</li>
+                <li>使用 AI 功能优化图表设计</li>
             </ol>
 
-            <h2>5.13 图表常见问题</h2>
-
-            <h3>如何处理过多的数据系列？</h3>
-            <p>建议：</p>
+            <h2>5.11 本章小结</h2>
+            <p>本章介绍了 Excel 的图表制作功能，你现在应该能够：</p>
             <ul>
-                <li>使用次坐标轴区分不同量级的数据</li>
-                <li>拆分为多个图表</li>
-                <li>使用小倍数图表（small multiples）</li>
-            </ul>
-
-            <h3>如何选择合适的图表类型？</h3>
-            <p>选择原则：</p>
-            <ul>
-                <li>比较：柱状图、条形图</li>
-                <li>趋势：折线图</li>
-                <li>占比：饼图、环形图</li>
-                <li>关系：散点图</li>
-                <li>分布：直方图、箱线图</li>
-            </ul>
-
-            <h3>如何让图表更专业？</h3>
-            <p>专业图表要素：</p>
-                <ul>
-                <li>清晰的标题和说明</li>
-                <li>适当的数据标签</li>
-                <li>简洁的网格线</li>
-                <li>协调的颜色方案</li>
-                <li>合理的图例位置</li>
-            </ul>
-
-            <h2>5.14 本章小结</h2>
-            <p>本章介绍了Excel的图表制作功能，你现在应该能够：</p>
-            <ul>
-                <li>创建各种类型的图表</li>
                 <li>根据数据特点选择合适的图表类型</li>
+                <li>创建各种类型的图表</li>
                 <li>美化和定制图表元素</li>
                 <li>添加趋势线和误差线</li>
                 <li>创建迷你图</li>
                 <li>制作动态图表</li>
                 <li>应用专业的图表设计原则</li>
-                <li>保存和使用图表模板</li>
+                <li>使用 AI 功能辅助图表创建</li>
             </ul>
 
-            <p>在下一章中，我们将学习数据透视表，这是Excel最强大的数据分析工具之一。</p>
+            <div class="tip-box" style="background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%); border-left-color: #21a366;">
+                <strong>下一步：</strong>在下一章中，我们将学习数据透视表，这是 Excel 最强大的数据分析工具之一。
+            </div>
         </div>
     </main>
 
-    <script src="../js/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Excel Charts 页面已加载');
+
+        // 交互式流程图
+        const steps = document.querySelectorAll('.flowchart-step');
+        const detailEl = document.getElementById('flowchartDetail');
+
+        const stepDetails = [
+          {
+            title: '步骤 1: 简化',
+            content: '删除不必要的图表元素：移除多余的网格线、简化图例、删除 3D 效果和阴影。保持图表简洁，让数据成为主角。记住：少即是多。'
+          },
+          {
+            title: '步骤 2: 配色',
+            content: '选择协调的颜色方案：使用 Excel 内置的专业配色，或自定义品牌颜色。确保颜色有足够的对比度，考虑色盲友好的配色方案。'
+          },
+          {
+            title: '步骤 3: 标注',
+            content: '添加必要的说明文字：确保图表标题清晰，坐标轴标签完整，关键数据点添加标注。使用简洁的语言，避免冗长描述。'
+          },
+          {
+            title: '步骤 4: 对齐',
+            content: '检查所有元素的对齐：确保标题居中，图例位置合理，数据标签不重叠。使用对齐工具确保元素整齐排列。'
+          },
+          {
+            title: '步骤 5: 检查',
+            content: '最后验证图表的可读性：从读者角度审视图表，确保 3 秒内能理解主要信息。检查数据准确性，确认没有误导性展示。'
+          }
+        ];
+
+        steps.forEach((step, index) => {
+          step.addEventListener('click', function() {
+            steps.forEach(s => s.classList.remove('active'));
+            step.classList.add('active');
+
+            const detail = stepDetails[index];
+            if (detail && detailEl) {
+              detailEl.innerHTML = `<h4>${detail.title}</h4><p>${detail.content}</p>`;
+            }
+          });
+        });
+      });
+    </script>
 </body>
 </html>

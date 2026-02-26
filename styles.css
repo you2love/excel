@@ -1,0 +1,1158 @@
+/* ===================================
+   Excel Learn - 2026 现代 CSS 样式
+   Excel 主题配色，现代化设计
+   =================================== */
+
+/* ===================================
+   CSS 层叠层（Cascade Layers）
+   =================================== */
+@layer reset, base, layout, components, utilities;
+
+/* ===================================
+   CSS 变量（Excel 主题）
+   =================================== */
+:root {
+  /* Excel 主题色 */
+  --excel-green: #107c41;
+  --excel-green-light: #21a366;
+  --excel-green-dark: #0b5a32;
+  --excel-bg: #f3f2f1;
+  --excel-surface: #ffffff;
+  --excel-border: #e1dfdd;
+  --excel-header: #f8f9fa;
+  --excel-cell-hover: #e6f2ea;
+  --excel-selection: #cce8d6;
+
+  /* 主色调 - Excel 绿 */
+  --primary-color: #107c41;
+  --primary-light: #21a366;
+  --primary-dark: #0b5a32;
+  --secondary-color: #2b88d8;
+  --accent-color: #d83b01;
+  --accent-light: #ea4300;
+
+  /* AI 主题色 */
+  --ai-gradient-start: #667eea;
+  --ai-gradient-end: #764ba2;
+
+  /* 文本颜色 */
+  --text-primary: #24292e;
+  --text-secondary: #586069;
+  --text-tertiary: #6a737d;
+  --text-inverse: #ffffff;
+
+  /* 背景颜色 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f2f1;
+  --bg-alt: #e6f2ea;
+  --bg-elevated: #ffffff;
+  --bg-code: #1d1f23;
+
+  /* 边框颜色 */
+  --border-color: #e1dfdd;
+  --border-color-dark: #c8c6c4;
+
+  /* 阴影 */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px 0 rgba(16, 124, 65, 0.1);
+  --shadow-md: 0 4px 8px 0 rgba(16, 124, 65, 0.12);
+  --shadow-lg: 0 8px 16px 0 rgba(16, 124, 65, 0.15);
+  --shadow-xl: 0 12px 24px 0 rgba(16, 124, 65, 0.2);
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* 过渡 */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 字体 */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+
+  /* 容器最大宽度 */
+  --container-max: 1400px;
+
+  /* 安全区域 */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+}
+
+/* ===================================
+   Reset 层
+   =================================== */
+@layer reset {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(80px + var(--safe-area-top));
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    overflow-x: hidden;
+  }
+
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+
+  ul, ol {
+    list-style: none;
+  }
+
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+  }
+
+  pre, code {
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background-color: var(--excel-selection);
+    color: var(--text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+}
+
+/* ===================================
+   Base 层
+   =================================== */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+  h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+  h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+  h4 { font-size: clamp(1.1rem, 2.5vw, 1.25rem); }
+
+  p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+  }
+
+  strong {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  code {
+    background-color: var(--bg-secondary);
+    padding: 0.2rem 0.4rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85em;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    border: none;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+
+  th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border: 1px solid var(--border-color);
+  }
+
+  th {
+    background-color: var(--excel-header);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  td {
+    color: var(--text-secondary);
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--bg-secondary);
+  }
+
+  tr:hover {
+    background-color: var(--excel-cell-hover);
+  }
+}
+
+/* ===================================
+   Layout 层
+   =================================== */
+@layer layout {
+  .container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+
+    container-type: inline-size;
+    container-name: main-container;
+  }
+
+  .section {
+    padding: clamp(3rem, 8vw, 6rem) 0;
+  }
+
+  .section-alt {
+    background-color: var(--bg-secondary);
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    position: relative;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--primary-color);
+    margin: 1rem auto 0;
+    border-radius: var(--radius-full);
+  }
+
+  .section-description {
+    text-align: center;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto 3rem;
+  }
+}
+
+/* ===================================
+   Components 层
+   =================================== */
+@layer components {
+  /* ========== 导航栏 ========== */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 8px rgba(16, 124, 65, 0.1);
+    z-index: 1000;
+    transition: all var(--transition-base);
+    border-bottom: 2px solid var(--excel-green);
+  }
+
+  .navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    height: 70px;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo {
+    color: var(--text-primary);
+  }
+
+  .highlight {
+    color: var(--excel-green);
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-menu a {
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    position: relative;
+
+    &:hover {
+      color: var(--excel-green);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--excel-green);
+      transition: width var(--transition-base);
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+
+    span {
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-primary);
+      border-radius: var(--radius-full);
+      transition: all var(--transition-fast);
+    }
+  }
+
+  /* ========== Hero 区域 ========== */
+  .hero {
+    padding: calc(120px + var(--safe-area-top)) 0 4rem;
+    background: linear-gradient(135deg, #f3f2f1 0%, #e6f2ea 100%);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(135deg, rgba(16, 124, 65, 0.05) 0%, transparent 50%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 40px,
+        rgba(16, 124, 65, 0.03) 40px,
+        rgba(16, 124, 65, 0.03) 41px
+      );
+    pointer-events: none;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 0.8s ease-out;
+    color: var(--excel-green-dark);
+    position: relative;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    margin-bottom: 0.75rem;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+    color: var(--text-secondary);
+  }
+
+  .hero-description {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-secondary);
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    margin-top: 4rem;
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--excel-green);
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+  }
+
+  /* ========== 按钮 ========== */
+  .btn {
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: all var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid transparent;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      text-decoration: none;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--excel-green) 0%, var(--excel-green-light) 100%);
+    color: white;
+
+    &:hover {
+      background: linear-gradient(135deg, var(--excel-green-dark) 0%, var(--excel-green) 100%);
+      box-shadow: 0 6px 20px rgba(16, 124, 65, 0.3);
+    }
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--excel-green);
+    border: 2px solid var(--excel-green);
+
+    &:hover {
+      background-color: var(--excel-green);
+      color: white;
+    }
+  }
+
+  /* ========== Excel 卡片 ========== */
+  .excel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .excel-card {
+    background: var(--excel-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--excel-green) 0%, var(--excel-green-light) 100%);
+      transform: scaleX(0);
+      transition: transform var(--transition-base);
+    }
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--excel-green);
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+    }
+
+    h3 {
+      color: var(--excel-green);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  /* ========== 函数卡片 ========== */
+  .function-card {
+    border-left: 4px solid var(--excel-green);
+    border-top: none;
+
+    &::before {
+      height: 0;
+    }
+
+    &:hover::before {
+      transform: scaleX(0);
+    }
+  }
+
+  .function-syntax {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+
+    code {
+      color: var(--excel-green-dark);
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  }
+
+  /* ========== 版本标签 ========== */
+  .version-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .version-new {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+  }
+
+  .version-2026 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  /* ========== 信息框 ========== */
+  .info-box {
+    background-color: var(--bg-secondary);
+    border-left: 4px solid var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 2rem 0;
+    border: 1px solid var(--border-color);
+
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    h4 {
+      font-size: 1rem;
+      margin: 1.5rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+
+    p {
+      color: var(--text-secondary);
+    }
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 0.5rem 0 0.5rem 2rem;
+      position: relative;
+      color: var(--text-secondary);
+
+      &::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--excel-green);
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  /* ========== Mermaid 图表包装器 ========== */
+  .mermaid-wrapper {
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+
+    .mermaid {
+      display: flex;
+      justify-content: center;
+
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .diagram-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    text-align: center;
+  }
+
+  /* ========== 代码块 ========== */
+  .code-block {
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin: 2rem 0;
+    overflow: hidden;
+
+    h3, h4 {
+      padding: 0.75rem 1.25rem;
+      background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem;
+      overflow-x: auto;
+      background-color: #2d3748;
+      max-height: 500px;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+
+      &.collapsed {
+        max-height: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      code {
+        color: #e2e8f0;
+        background: none;
+        padding: 0;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+    }
+
+    .collapse-btn {
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background: #e9ecef;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+
+      &:hover {
+        background: var(--bg-alt);
+        border-color: var(--primary-color);
+      }
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      color: #e2e8f0 !important;
+    }
+  }
+
+  /* ========== 表格 ========== */
+  .table-wrapper {
+    margin: 2rem 0;
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+  }
+
+  .table-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .comparison-table,
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-elevated);
+
+    th {
+      background: linear-gradient(135deg, var(--excel-header) 0%, #f1f1f1 100%);
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border-color);
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    tr {
+      transition: background-color var(--transition-fast);
+
+      &:hover {
+        background-color: var(--excel-cell-hover);
+      }
+    }
+
+    code {
+      background: var(--excel-selection);
+      color: var(--excel-green-dark);
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--excel-border);
+    }
+  }
+
+  /* ========== 内容网格 ========== */
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .card {
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    opacity: 0;
+    transform: translateY(20px);
+    border: 1px solid var(--border-color);
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--excel-green);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+  }
+
+  /* ========== 公式高亮 ========== */
+  .formula-highlight {
+    background: linear-gradient(135deg, var(--excel-selection) 0%, var(--bg-secondary) 100%);
+    border: 2px solid var(--excel-green);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+  }
+
+  /* ========== 单元格引用样式 ========== */
+  .cell-ref {
+    display: inline-block;
+    background: var(--excel-selection);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--excel-green-dark);
+    border: 1px solid var(--excel-border);
+  }
+
+  /* ========== 示例表格 ========== */
+  .sample-table {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin: 1rem 0;
+    background: white;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: var(--excel-header);
+      border: 1px solid var(--border-color);
+      padding: 0.75rem;
+      font-weight: 600;
+    }
+
+    td {
+      border: 1px solid var(--border-color);
+      padding: 0.75rem;
+    }
+
+    tr:hover {
+      background: var(--excel-cell-hover);
+    }
+  }
+
+  /* ========== Chart.js 图表容器 ========== */
+  .chart-wrapper {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+  }
+
+  /* ========== 交互式流程图 ========== */
+  .interactive-flowchart {
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+  }
+
+  .flowchart-steps {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+    min-width: max-content;
+  }
+
+  .flowchart-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    min-width: 100px;
+    border: 1px solid var(--border-color);
+
+    &:hover, &.active {
+      background: linear-gradient(135deg, var(--excel-green) 0%, var(--excel-green-light) 100%);
+      transform: translateY(-2px);
+
+      .step-number {
+        background-color: white;
+        color: var(--excel-green);
+      }
+
+      .step-content h4,
+      .step-content p {
+        color: white;
+      }
+    }
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--excel-green) 0%, var(--excel-green-light) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all var(--transition-base);
+  }
+
+  .step-content {
+    text-align: center;
+
+    h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    p {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      margin: 0;
+    }
+  }
+
+  .flowchart-detail {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+
+    h4 {
+      color: var(--excel-green);
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+  }
+
+  /* ========== AI 功能卡片 ========== */
+  .ai-card {
+    border-top: 4px solid var(--ai-gradient-start);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  }
+}
+
+/* ===================================
+   动画关键帧
+   =================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ===================================
+   响应式设计
+   =================================== */
+@container main-container (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .nav-menu.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    gap: 1rem;
+  }
+
+  .hero-stats {
+    gap: 2rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .excel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+}
+
+/* ===================================
+   打印样式
+   =================================== */
+@media print {
+  .navbar,
+  .hero-buttons,
+  .theme-toggle,
+  .mobile-menu-btn {
+    display: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  .section {
+    page-break-inside: avoid;
+  }
+
+  .code-block pre {
+    max-height: none;
+    page-break-inside: avoid;
+  }
+
+  .mermaid-wrapper {
+    page-break-inside: avoid;
+  }
+}
+
+/* ===================================
+   减少动画（无障碍支持）
+   =================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

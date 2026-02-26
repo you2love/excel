@@ -3,14 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel基础操作 - Excel学习中心</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Excel 基础操作 - Excel 学习中心</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+      /* 页面特定样式 */
+      .tutorial-page {
+        padding-top: 100px;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f3f2f1 0%, #ffffff 100%);
+      }
+
+      .tutorial-header {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 3rem 0;
+        text-align: center;
+      }
+
+      .tutorial-header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+      }
+
+      .tutorial-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      .tutorial-content h2 {
+        color: #107c41;
+        border-bottom: 3px solid #107c41;
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+      }
+
+      .tutorial-content h3 {
+        color: #21a366;
+        margin-top: 1.5rem;
+      }
+
+      .tip-box {
+        background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%);
+        border-left: 4px solid #107c41;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .warning-box {
+        background: linear-gradient(135deg, #fff3cd 0%, #fffbf0 100%);
+        border-left: 4px solid #ffc107;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .code-block {
+        background: #f8f9fa;
+        border: 1px solid #e1dfdd;
+        border-radius: 6px;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.9rem;
+        line-height: 1.8;
+      }
+
+      .mermaid-wrapper {
+        background: white;
+        border: 1px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .diagram-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #24292e;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .interactive-flowchart {
+        background: #fafbfc;
+        border: 1px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .flowchart-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .flowchart-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: white;
+        border: 2px solid #e1dfdd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 120px;
+      }
+
+      .flowchart-step:hover,
+      .flowchart-step.active {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        border-color: #107c41;
+        transform: translateY(-2px);
+      }
+
+      .flowchart-step:hover .step-number,
+      .flowchart-step.active .step-number {
+        background: white;
+        color: #107c41;
+      }
+
+      .flowchart-step:hover h4,
+      .flowchart-step.active h4,
+      .flowchart-step:hover p,
+      .flowchart-step.active p {
+        color: white;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s;
+      }
+
+      .step-content h4 {
+        margin: 0 0 0.25rem 0;
+        font-size: 0.95rem;
+        color: #24292e;
+      }
+
+      .step-content p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #586069;
+      }
+
+      .flowchart-detail {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        border-radius: 8px;
+        padding: 1.5rem;
+        border: 1px solid #e1dfdd;
+      }
+
+      .flowchart-detail h4 {
+        color: #107c41;
+        margin-top: 0;
+      }
+
+      .shortcut-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .shortcut-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: #f8f9fa;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        border: 1px solid #e1dfdd;
+      }
+
+      .shortcut-key {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-family: monospace;
+        font-weight: 600;
+        font-size: 0.85rem;
+        white-space: nowrap;
+      }
+
+      .shortcut-desc {
+        color: #586069;
+        font-size: 0.9rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        background: white;
+      }
+
+      .comparison-table th {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+      }
+
+      .comparison-table td {
+        padding: 0.75rem 1rem;
+        border: 1px solid #e1dfdd;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .comparison-table tr:hover {
+        background: #e6f2ea;
+      }
+
+      .site-header {
+        background: white;
+        border-bottom: 2px solid #107c41;
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(16, 124, 65, 0.1);
+      }
+
+      .site-header .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .site-header .logo h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #107c41;
+      }
+
+      .main-nav ul {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .main-nav a {
+        color: #24292e;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        position: relative;
+      }
+
+      .main-nav a:hover,
+      .main-nav a.active {
+        color: #107c41;
+      }
+
+      .main-nav a.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #107c41;
+      }
+
+      @media (max-width: 768px) {
+        .main-nav ul {
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .flowchart-steps {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .flowchart-step {
+          flex-direction: row;
+          gap: 1rem;
+        }
+
+        .step-number {
+          margin-bottom: 0;
+          flex-shrink: 0;
+        }
+
+        .step-content {
+          text-align: left;
+        }
+      }
+    </style>
+    <!-- Mermaid 图表库 -->
+    <script src="../lib/mermaid.min.js"></script>
+    <script type="module">
+      window.mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis', useMaxWidth: true }
+      });
+    </script>
 </head>
 <body>
     <header class="site-header">
         <div class="container">
             <div class="logo">
-                <h1>Excel 学习中心</h1>
+                <h1>📊 Excel 学习中心</h1>
             </div>
             <nav class="main-nav">
                 <ul>
@@ -28,63 +354,153 @@
     </header>
 
     <main class="tutorial-page">
-<div class="tutorial-header">
+        <div class="tutorial-header">
             <h1>第二章：基础操作</h1>
+            <p style="margin: 1rem 0 0; opacity: 0.9;">掌握 Excel 2026 的基础操作技能</p>
         </div>
 
         <div class="tutorial-content">
+            <!-- Mermaid 流程图：数据输入完整流程 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">数据输入完整流程图</h3>
+                <div class="mermaid">
+flowchart TD
+    A[开始数据输入] --> B{数据类型？}
+    
+    B -->|文本 | C[直接输入]
+    B -->|数字 | D[输入数字]
+    B -->|日期 | E[输入日期格式]
+    B -->|时间 | F[输入时间格式]
+    B -->|公式 | G[以=开头输入]
+    
+    C --> H{需要换行？}
+    H -->|是 | I[按 Alt+Enter]
+    H -->|否 | J[按 Enter 确认]
+    
+    D --> K{需要百分比？}
+    K -->|是 | L[输入数字+%]
+    K -->|否 | J
+    
+    E --> M[使用-/分隔]
+    M --> J
+    
+    F --> N[使用:分隔]
+    N --> J
+    
+    G --> O[输入公式内容]
+    O --> P[按 Enter 计算]
+    
+    I --> J
+    L --> J
+    P --> Q{继续输入？}
+    J --> Q
+    Q -->|是 | B
+    Q -->|否 | R[完成输入]
+                </div>
+            </div>
+
             <h2>2.1 数据输入</h2>
-            <p>掌握数据输入是使用Excel的基础，Excel 2026提供了多种便捷的数据输入方式。</p>
+            <p>掌握数据输入是使用 Excel 的基础，Excel 2026 提供了多种便捷的数据输入方式。</p>
 
             <h3>基本数据输入</h3>
             <ul>
                 <li>点击单元格选中，然后直接输入数据</li>
                 <li>双击单元格进入编辑模式</li>
-                <li>按Enter键确认输入并移动到下一单元格</li>
-                <li>按Tab键移动到右侧单元格</li>
-                <li>按Esc键取消输入</li>
+                <li>按 Enter 键确认输入并移动到下一单元格</li>
+                <li>按 Tab 键移动到右侧单元格</li>
+                <li>按 Esc 键取消输入</li>
             </ul>
 
             <h3>文本输入技巧</h3>
             <div class="tip-box">
-                <strong>小技巧：</strong>如果要在单元格中输入多行文本，按Alt+Enter插入换行符。
+                <strong>小技巧：</strong>如果要在单元格中输入多行文本，按<kbd>Alt</kbd>+<kbd>Enter</kbd>插入换行符。
             </div>
 
             <h3>数字输入</h3>
-            <p>Excel会自动识别数字格式。输入数字时注意：</p>
+            <p>Excel 会自动识别数字格式。输入数字时注意：</p>
             <ul>
                 <li>小数点使用句点（.）</li>
                 <li>千位分隔符会自动添加</li>
-                <li>输入分数时，如输入1/2会被识别为日期，应输入0 1/2</li>
+                <li>输入分数时，如输入 1/2 会被识别为日期，应输入 0 1/2</li>
             </ul>
 
             <h3>日期和时间输入</h3>
-            <p>Excel支持多种日期和时间格式：</p>
+            <p>Excel 支持多种日期和时间格式：</p>
             <ul>
-                <li>日期：2025-1-15 或 2025/1/15</li>
+                <li>日期：2026-1-15 或 2026/1/15</li>
                 <li>时间：14:30 或 2:30 PM</li>
-                <li>当前日期快捷键：Ctrl+;</li>
-                <li>当前时间快捷键：Ctrl+Shift+;</li>
+                <li>当前日期快捷键：<kbd>Ctrl</kbd>+<kbd>;</kbd></li>
+                <li>当前时间快捷键：<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd></li>
             </ul>
 
+            <!-- 快捷键网格 -->
+            <div class="shortcut-grid">
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + ;</span>
+                    <span class="shortcut-desc">输入当前日期</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + Shift + ;</span>
+                    <span class="shortcut-desc">输入当前时间</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + Enter</span>
+                    <span class="shortcut-desc">单元格内换行</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + Enter</span>
+                    <span class="shortcut-desc">批量填充相同内容</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + E</span>
+                    <span class="shortcut-desc">快速填充（Flash Fill）</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">F2</span>
+                    <span class="shortcut-desc">编辑单元格</span>
+                </div>
+            </div>
+
             <h2>2.2 数据编辑</h2>
-            <p>学会编辑已输入的数据是Excel操作的重要技能。</p>
+            <p>学会编辑已输入的数据是 Excel 操作的重要技能。</p>
 
             <h3>编辑单元格内容</h3>
             <ol>
                 <li>双击单元格进入编辑模式</li>
-                <li>或选中单元格后按F2键</li>
+                <li>或选中单元格后按 F2 键</li>
                 <li>在编辑栏中直接修改内容</li>
             </ol>
 
             <h3>清除单元格内容</h3>
             <p>右键点击单元格，选择"清除"，可以：</p>
             <ul>
-                <li>清除全部：删除内容、格式和批注</li>
-                <li>清除格式：只删除格式设置</li>
-                <li>清除内容：只删除单元格内容</li>
-                <li>清除批注：只删除批注</li>
+                <li><strong>清除全部</strong>：删除内容、格式和批注</li>
+                <li><strong>清除格式</strong>：只删除格式设置</li>
+                <li><strong>清除内容</strong>：只删除单元格内容</li>
+                <li><strong>清除批注</strong>：只删除批注</li>
             </ul>
+
+            <!-- Mermaid 序列图：数据编辑流程 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">数据编辑操作序列图</h3>
+                <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant C as 单元格
+    participant E as 编辑栏
+    participant S as 系统
+
+    U->>C: 双击单元格
+    C->>E: 显示内容
+    E->>U: 进入编辑模式
+    U->>E: 修改内容
+    U->>S: 按 Enter 确认
+    S->>C: 更新内容
+    S->>S: 重新计算依赖
+    S-->>U: 显示新值
+                </div>
+            </div>
 
             <h2>2.3 单元格选择</h2>
             <p>掌握快速选择单元格的方法可以提高工作效率。</p>
@@ -95,12 +511,12 @@
             <h3>选择连续单元格区域</h3>
             <ul>
                 <li>点击第一个单元格，拖动到最后一个单元格</li>
-                <li>点击第一个单元格，按住Shift键点击最后一个单元格</li>
-                <li>使用键盘方向键配合Shift键</li>
+                <li>点击第一个单元格，按住 Shift 键点击最后一个单元格</li>
+                <li>使用键盘方向键配合 Shift 键</li>
             </ul>
 
             <h3>选择不连续单元格</h3>
-            <p>按住Ctrl键点击多个单元格。</p>
+            <p>按住 Ctrl 键点击多个单元格。</p>
 
             <h3>选择整行或整列</h3>
             <ul>
@@ -111,10 +527,12 @@
 
             <h3>快捷选择技巧</h3>
             <div class="code-block">
-                Ctrl+A：选择当前数据区域<br/>
-                Ctrl+Shift+End：选择到数据区域末尾<br/>
-                Ctrl+Space：选择整列<br/>
-                Shift+Space：选择整行
+<span style="color: #107c41; font-weight: 600;">Ctrl + A</span>    选择当前数据区域
+<span style="color: #107c41; font-weight: 600;">Ctrl + Shift + End</span>  选择到数据区域末尾
+<span style="color: #107c41; font-weight: 600;">Ctrl + Space</span>    选择整列
+<span style="color: #107c41; font-weight: 600;">Shift + Space</span>   选择整行
+<span style="color: #107c41; font-weight: 600;">Ctrl + Shift + ↓</span>  选择到列末
+<span style="color: #107c41; font-weight: 600;">Ctrl + Shift + →</span>  选择到行末
             </div>
 
             <h2>2.4 移动和复制数据</h2>
@@ -128,30 +546,104 @@
             </ol>
 
             <h3>拖动复制</h3>
-            <p>操作同上，但在拖动时按住Ctrl键。</p>
+            <p>操作同上，但在拖动时按住 Ctrl 键。</p>
 
             <h3>剪切和粘贴</h3>
             <ul>
-                <li>快捷键：Ctrl+X（剪切）、Ctrl+C（复制）、Ctrl+V（粘贴）</li>
+                <li>快捷键：<kbd>Ctrl</kbd>+<kbd>X</kbd>（剪切）、<kbd>Ctrl</kbd>+<kbd>C</kbd>（复制）、<kbd>Ctrl</kbd>+<kbd>V</kbd>（粘贴）</li>
                 <li>右键菜单：剪切、复制、粘贴</li>
             </ul>
 
             <h3>粘贴选项</h3>
-            <p>粘贴时Excel提供多种粘贴选项：</p>
-            <ul>
-                <li>粘贴：常规粘贴，保留所有格式</li>
-                <li>值：只粘贴数值，不保留公式</li>
-                <li>格式：只粘贴格式设置</li>
-                <li>公式：只粘贴公式</li>
-                <li>转置：行列互换</li>
-            </ul>
+            <p>粘贴时 Excel 提供多种粘贴选项：</p>
+            <div class="comparison-table" style="max-width: 800px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="30%">选项</th>
+                            <th width="35%">说明</th>
+                            <th width="35%">快捷键</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>粘贴</strong></td>
+                            <td>常规粘贴，保留所有格式</td>
+                            <td><kbd>Ctrl</kbd>+<kbd>V</kbd></td>
+                        </tr>
+                        <tr>
+                            <td><strong>值</strong></td>
+                            <td>只粘贴数值，不保留公式</td>
+                            <td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>, <kbd>V</kbd></td>
+                        </tr>
+                        <tr>
+                            <td><strong>格式</strong></td>
+                            <td>只粘贴格式设置</td>
+                            <td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>, <kbd>T</kbd></td>
+                        </tr>
+                        <tr>
+                            <td><strong>公式</strong></td>
+                            <td>只粘贴公式</td>
+                            <td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>, <kbd>F</kbd></td>
+                        </tr>
+                        <tr>
+                            <td><strong>转置</strong></td>
+                            <td>行列互换</td>
+                            <td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>, <kbd>E</kbd></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="tip-box">
                 <strong>高级技巧：</strong>粘贴后出现的"粘贴选项"按钮提供更多选择性粘贴选项，如图片、链接、运算等。
             </div>
 
             <h2>2.5 填充功能</h2>
-            <p>Excel的填充功能可以快速输入序列数据和复制公式。</p>
+            <p>Excel 的填充功能可以快速输入序列数据和复制公式。</p>
+
+            <!-- Mermaid 流程图：填充功能决策树 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">填充功能选择决策树</h3>
+                <div class="mermaid">
+flowchart TD
+    A[需要填充数据？] --> B{填充类型？}
+    
+    B -->|复制数据 | C[拖动填充柄]
+    C --> D{数据内容？}
+    D -->|文本 | E[复制文本]
+    D -->|数字 | F[默认复制]
+    D -->|日期 | G[按天数填充]
+    
+    B -->|序列填充 | H{序列类型？}
+    H -->|等差数列 | I[输入前两项后拖动]
+    H -->|等比数列 | J[输入前两项后拖动]
+    H -->|日期序列 | K[选择日期单位]
+    H -->|自定义序列 | L[使用自定义列表]
+    
+    B -->|公式填充 | M[拖动填充柄]
+    M --> N{引用类型？}
+    N -->|相对引用 | O[自动调整引用]
+    N -->|绝对引用 | P[保持引用不变]
+    N -->|混合引用 | Q[部分调整]
+    
+    B -->|快速填充 | R[Ctrl + E]
+    R --> S[AI 识别模式]
+    S --> T[自动填充]
+    
+    E --> U[完成]
+    F --> U
+    G --> U
+    I --> U
+    J --> U
+    K --> U
+    L --> U
+    O --> U
+    P --> U
+    Q --> U
+    T --> U
+                </div>
+            </div>
 
             <h3>自动填充柄</h3>
             <p>选中单元格后，右下角会出现小方块（填充柄），拖动它可以：</p>
@@ -173,7 +665,7 @@
             </ul>
 
             <h3>自定义序列</h3>
-            <p>Excel预定义了许多常用序列，你也可以创建自己的序列：</p>
+            <p>Excel 预定义了许多常用序列，你也可以创建自己的序列：</p>
             <ol>
                 <li>文件 > 选项 > 高级</li>
                 <li>滚动到"常规"部分</li>
@@ -187,7 +679,7 @@
 
             <h3>基本查找</h3>
             <ul>
-                <li>快捷键：Ctrl+F</li>
+                <li>快捷键：<kbd>Ctrl</kbd>+<kbd>F</kbd></li>
                 <li>输入查找内容</li>
                 <li>点击"查找全部"或"查找下一个"</li>
             </ul>
@@ -202,18 +694,22 @@
 
             <h3>替换功能</h3>
             <ul>
-                <li>快捷键：Ctrl+H</li>
+                <li>快捷键：<kbd>Ctrl</kbd>+<kbd>H</kbd></li>
                 <li>输入查找内容和替换内容</li>
                 <li>选择"替换"或"全部替换"</li>
             </ul>
+
+            <div class="tip-box">
+                <strong>2026 新特性：</strong>Excel 2026 引入 AI 智能查找，可以模糊匹配相似内容，大大提高查找效率。
+            </div>
 
             <h2>2.7 撤销和重做</h2>
             <p>掌握撤销和重做可以避免操作失误。</p>
 
             <ul>
-                <li>撤销：Ctrl+Z 或点击撤销按钮</li>
-                <li>重做：Ctrl+Y 或点击重做按钮</li>
-                <li>Excel默认记录最近的100次操作</li>
+                <li>撤销：<kbd>Ctrl</kbd>+<kbd>Z</kbd> 或点击撤销按钮</li>
+                <li>重做：<kbd>Ctrl</kbd>+<kbd>Y</kbd> 或点击重做按钮</li>
+                <li>Excel 默认记录最近的 100 次操作</li>
             </ul>
 
             <div class="warning-box">
@@ -227,7 +723,7 @@
             <ul>
                 <li>点击工作表标签右侧的"+"按钮</li>
                 <li>右键点击工作表标签，选择"插入"</li>
-                <li>快捷键：Shift+F11</li>
+                <li>快捷键：<kbd>Shift</kbd>+<kbd>F11</kbd></li>
             </ul>
 
             <h3>删除工作表</h3>
@@ -245,40 +741,137 @@
             <h3>移动和复制工作表</h3>
             <ul>
                 <li>拖动工作表标签移动位置</li>
-                <li>按住Ctrl键拖动可以复制工作表</li>
+                <li>按住 Ctrl 键拖动可以复制工作表</li>
                 <li>右键点击工作表标签，选择"移动或复制"</li>
             </ul>
 
             <h3>工作表标签颜色</h3>
             <p>右键点击工作表标签，选择"工作表标签颜色"，可以为工作表设置不同颜色以便区分。</p>
 
+            <!-- 交互式流程图：工作表管理流程 -->
+            <div class="interactive-flowchart">
+                <h3 style="margin-bottom: 1.5rem; text-align: center;">工作表管理流程（点击步骤查看详情）</h3>
+                <div class="flowchart-steps">
+                    <div class="flowchart-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>创建工作表</h4>
+                            <p>添加新工作表</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>重命名</h4>
+                            <p>设置描述性名称</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>组织排序</h4>
+                            <p>调整工作表顺序</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>颜色标记</h4>
+                            <p>设置标签颜色</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>保护</h4>
+                            <p>设置保护选项</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowchart-detail" id="flowchartDetail">
+                    <h4>步骤 1: 创建工作表</h4>
+                    <p>点击工作表标签右侧的"+"按钮可快速添加新工作表，或使用快捷键 <kbd>Shift</kbd>+<kbd>F11</kbd>。Excel 2026 支持在一个工作簿中创建最多 1000 个工作表。</p>
+                </div>
+            </div>
+
             <h2>2.9 实践练习</h2>
             <p>让我们通过一个实际练习来巩固本章所学：</p>
 
             <ol>
                 <li>创建一个员工信息表，包含姓名、部门、入职日期、工资等列</li>
-                <li>输入5-10条样本数据</li>
+                <li>输入 5-10 条样本数据</li>
                 <li>练习使用填充功能输入部门名称</li>
                 <li>使用查找功能查找特定员工</li>
                 <li>练习移动和复制数据</li>
                 <li>重命名工作表为"员工信息"</li>
                 <li>创建一个新的工作表，命名为"工资统计"</li>
+                <li>使用快捷键快速选择数据区域</li>
+                <li>练习使用 Ctrl+E 快速填充功能</li>
             </ol>
 
             <h2>2.10 本章小结</h2>
-            <p>本章介绍了Excel的基础操作技能，你现在应该能够：</p>
+            <p>本章介绍了 Excel 的基础操作技能，你现在应该能够：</p>
             <ul>
                 <li>熟练输入和编辑各种类型的数据</li>
                 <li>掌握单元格选择的各种方法</li>
                 <li>使用移动、复制、填充功能高效处理数据</li>
                 <li>使用查找和替换功能管理数据</li>
                 <li>管理和组织多个工作表</li>
+                <li>使用快捷键提高工作效率</li>
             </ul>
 
-            <p>在下一章中，我们将学习如何格式化和美化数据，让你的工作表更加专业和易读。</p>
+            <div class="tip-box" style="background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%); border-left-color: #21a366;">
+                <strong>下一步：</strong>在下一章中，我们将学习如何格式化和美化数据，让你的工作表更加专业和易读。
+            </div>
         </div>
     </main>
 
-    <script src="../js/main.js"></script>
+    <script>
+      // Mermaid 初始化
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Excel Basics 页面已加载');
+      });
+
+      // 交互式流程图
+      document.addEventListener('DOMContentLoaded', function() {
+        const steps = document.querySelectorAll('.flowchart-step');
+        const detailEl = document.getElementById('flowchartDetail');
+
+        const stepDetails = [
+          {
+            title: '步骤 1: 创建工作表',
+            content: '点击工作表标签右侧的"+"按钮可快速添加新工作表，或使用快捷键 <kbd>Shift</kbd>+<kbd>F11</kbd>。Excel 2026 支持在一个工作簿中创建最多 1000 个工作表。'
+          },
+          {
+            title: '步骤 2: 重命名工作表',
+            content: '双击工作表标签或右键选择"重命名"，输入描述性名称。好的命名习惯可以提高工作簿的可读性，如"2026-01 销售数据"、"员工信息"等。'
+          },
+          {
+            title: '步骤 3: 组织排序',
+            content: '拖动工作表标签可以调整顺序。将相关工作表放在一起，按逻辑顺序排列。右键点击工作表标签，选择"移动或复制"可以精确控制位置。'
+          },
+          {
+            title: '步骤 4: 颜色标记',
+            content: '右键点击工作表标签，选择"工作表标签颜色"。使用颜色可以快速识别不同类型的工作表，如红色表示重要、绿色表示已完成等。'
+          },
+          {
+            title: '步骤 5: 保护工作表',
+            content: '审阅选项卡 > 保护工作表。可以设置密码保护，选择允许用户进行的操作。这对于防止意外修改重要数据非常有用。'
+          }
+        ];
+
+        steps.forEach((step, index) => {
+          step.addEventListener('click', function() {
+            steps.forEach(s => s.classList.remove('active'));
+            step.classList.add('active');
+
+            const detail = stepDetails[index];
+            if (detail && detailEl) {
+              detailEl.innerHTML = `<h4>${detail.title}</h4><p>${detail.content}</p>`;
+            }
+          });
+        });
+      });
+    </script>
 </body>
 </html>

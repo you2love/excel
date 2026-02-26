@@ -3,14 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>编程处理Excel - Excel学习中心</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>编程处理 - Excel 学习中心</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+      .tutorial-page {
+        padding-top: 100px;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f3f2f1 0%, #ffffff 100%);
+      }
+
+      .tutorial-header {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 3rem 0;
+        text-align: center;
+      }
+
+      .tutorial-header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+      }
+
+      .tutorial-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      .tutorial-content h2 {
+        color: #107c41;
+        border-bottom: 3px solid #107c41;
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+      }
+
+      .tutorial-content h3 {
+        color: #21a366;
+        margin-top: 1.5rem;
+      }
+
+      .tip-box {
+        background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%);
+        border-left: 4px solid #107c41;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .warning-box {
+        background: linear-gradient(135deg, #fff3cd 0%, #fffbf0 100%);
+        border-left: 4px solid #ffc107;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .note-box {
+        background: linear-gradient(135deg, #e7f3ff 0%, #f0f7ff 100%);
+        border-left: 4px solid #2b88d8;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .mermaid-wrapper {
+        background: white;
+        border: 1px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .diagram-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #24292e;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        background: white;
+      }
+
+      .comparison-table th {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+      }
+
+      .comparison-table td {
+        padding: 0.75rem 1rem;
+        border: 1px solid #e1dfdd;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .comparison-table tr:hover {
+        background: #e6f2ea;
+      }
+
+      .site-header {
+        background: white;
+        border-bottom: 2px solid #107c41;
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(16, 124, 65, 0.1);
+      }
+
+      .site-header .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .site-header .logo h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #107c41;
+      }
+
+      .main-nav ul {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .main-nav a {
+        color: #24292e;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        position: relative;
+      }
+
+      .main-nav a:hover,
+      .main-nav a.active {
+        color: #107c41;
+      }
+
+      .main-nav a.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #107c41;
+      }
+
+      .version-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .version-new {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .code-compare-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .code-card {
+        background: white;
+        border: 1px solid #e1dfdd;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .code-card-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e1dfdd;
+      }
+
+      .code-card-header.vba {
+        background: linear-gradient(135deg, #5c2d91 0%, #7b4cb5 100%);
+        color: white;
+      }
+
+      .code-card-header.python {
+        background: linear-gradient(135deg, #3776ab 0%, #4b8bbe 100%);
+        color: white;
+      }
+
+      .code-card-header h4 {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .code-card-body {
+        padding: 1rem 1.5rem;
+        background: #1e1e1e;
+        overflow-x: auto;
+      }
+
+      .code-card-body pre {
+        margin: 0;
+        color: #d4d4d4;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .code-card-body .keyword { color: #569cd6; }
+      .code-card-body .string { color: #ce9178; }
+      .code-card-body .number { color: #b5cea8; }
+      .code-card-body .comment { color: #6a9955; }
+      .code-card-body .function { color: #dcdcaa; }
+      .code-card-body .object { color: #4ec9b0; }
+
+      .ai-feature-box {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        border: 2px solid #667eea;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .ai-feature-box h3 {
+        color: #667eea;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .automation-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .automation-card {
+        background: white;
+        border: 2px solid #e1dfdd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: all 0.3s;
+      }
+
+      .automation-card:hover {
+        border-color: #107c41;
+        box-shadow: 0 4px 12px rgba(16, 124, 65, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .automation-card h4 {
+        color: #107c41;
+        margin-top: 0;
+      }
+
+      .flowchart-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin: 1.5rem 0;
+      }
+
+      .flowchart-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: white;
+        border: 2px solid #e1dfdd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 120px;
+      }
+
+      .flowchart-step:hover,
+      .flowchart-step.active {
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        border-color: #107c41;
+        transform: translateY(-2px);
+      }
+
+      .flowchart-step:hover .step-number,
+      .flowchart-step.active .step-number {
+        background: white;
+        color: #107c41;
+      }
+
+      .flowchart-step:hover h4,
+      .flowchart-step.active h4,
+      .flowchart-step:hover p,
+      .flowchart-step.active p {
+        color: white;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #107c41 0%, #21a366 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        margin: 0 0 0.25rem 0;
+        font-size: 0.95rem;
+        color: #24292e;
+      }
+
+      .step-content p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #586069;
+      }
+
+      .flowchart-detail {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        border-radius: 8px;
+        padding: 1.5rem;
+        border: 1px solid #e1dfdd;
+        margin-top: 1rem;
+      }
+
+      .flowchart-detail h4 {
+        color: #107c41;
+        margin-top: 0;
+      }
+
+      @media (max-width: 768px) {
+        .main-nav ul {
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .code-compare-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flowchart-steps {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .flowchart-step {
+          flex-direction: row;
+          gap: 1rem;
+        }
+
+        .step-number {
+          margin-bottom: 0;
+        }
+
+        .step-content {
+          text-align: left;
+        }
+      }
+    </style>
+    <!-- Mermaid 图表库 -->
+    <script src="../lib/mermaid.min.js"></script>
+    <script type="module">
+      window.mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis', useMaxWidth: true }
+      });
+    </script>
 </head>
 <body>
     <header class="site-header">
         <div class="container">
             <div class="logo">
-                <h1>Excel 学习中心</h1>
+                <h1>📊 Excel 学习中心</h1>
             </div>
             <nav class="main-nav">
                 <ul>
@@ -30,689 +426,505 @@
     <main class="tutorial-page">
         <div class="tutorial-header">
             <h1>第七章：编程处理</h1>
+            <p style="margin: 1rem 0 0; opacity: 0.9;">从 VBA 到 Python — Excel 2026 自动化完全指南</p>
         </div>
 
         <div class="tutorial-content">
-            <h2>7.1 为什么用编程处理Excel</h2>
-            <p>除了在Excel中使用公式和函数，我们还可以使用编程语言来处理Excel文件。这种方式特别适合批量处理、自动化任务和复杂的数据分析。</p>
+            <!-- Mermaid 流程图：自动化方案选择完整指南 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">Excel 自动化方案选择完整流程图</h3>
+                <div class="mermaid">
+flowchart TD
+    A[需要自动化任务？] --> B{任务类型？}
+    
+    B -->|简单重复操作 | C[录制宏]
+    C --> D{需要编辑？}
+    D -->|是 | E[编辑 VBA 代码]
+    D -->|否 | F[直接使用宏]
+    
+    B -->|复杂业务逻辑 | G[编写 VBA]
+    G --> H{需要 UI 交互？}
+    H -->|是 | I[创建 UserForm]
+    H -->|否 | J[纯代码处理]
+    
+    B -->|数据处理/ETL | K{数据来源？}
+    K -->|数据库/API| L[Power Query]
+    K -->|Excel 内部 | M[公式/函数]
+    K -->|多源混合 | N[Power Query + M]
+    
+    B -->|数据分析/ML | O{分析复杂度？}
+    O -->|统计分析 | P[Python in Excel]
+    O -->|机器学习 | Q[Python + sklearn]
+    O -->|深度学习 | R[Python + TensorFlow]
+    O -->|简单计算 | S[Excel 函数]
+    
+    B -->|自定义函数 | T{函数复杂度？}
+    T -->|简单计算 | U[LAMBDA 函数]
+    T -->|复杂逻辑 | V[VBA UDF]
+    T -->|调用外部库 | W[Python 函数]
+    
+    B -->|报表生成 | X{报表频率？}
+    X -->|一次性 | Y[手动制作]
+    X -->|定期 | Z[VBA 自动化]
+    X -->|实时 | AA[Power BI 集成]
+    
+    B -->|跨应用集成 | AB{集成对象？}
+    AB -->|Office 应用 | AC[VBA + COM]
+    AB -->|Web API| AD[Python + requests]
+    AB -->|数据库 | AE[Power Query / Python]
+    
+    E --> AF[完成]
+    F --> AF
+    I --> AF
+    J --> AF
+    L --> AF
+    M --> AF
+    N --> AF
+    P --> AF
+    Q --> AF
+    R --> AF
+    S --> AF
+    U --> AF
+    V --> AF
+    W --> AF
+    Y --> AF
+    Z --> AF
+    AA --> AF
+    AC --> AF
+    AD --> AF
+    AE --> AF
+                </div>
+            </div>
 
-            <h3>编程处理Excel的优势</h3>
+            <h2>7.1 Excel 编程概述</h2>
+            <p>Excel 提供多种编程和自动化方案，每种方案都有其适用场景。</p>
+
+            <h3>主要编程方案</h3>
+            <div class="automation-card-grid">
+                <div class="automation-card">
+                    <h4>📜 VBA 宏</h4>
+                    <p>传统的 Excel 自动化方案，功能强大且成熟</p>
+                    <ul>
+                        <li>适合：复杂业务逻辑、UI 交互</li>
+                        <li>优势：与 Excel 深度集成</li>
+                        <li>局限：仅限 Windows、安全性考虑</li>
+                    </ul>
+                </div>
+
+                <div class="automation-card">
+                    <h4>🔌 Power Query</h4>
+                    <p>强大的数据连接和转换工具</p>
+                    <ul>
+                        <li>适合：数据清洗、ETL 流程</li>
+                        <li>优势：可视化操作、易上手</li>
+                        <li>局限：复杂逻辑受限</li>
+                    </ul>
+                </div>
+
+                <div class="automation-card">
+                    <h4>🐍 Python in Excel</h4>
+                    <p><span class="version-badge version-new">2026 新特性</span> Python 直接运行在 Excel 中</p>
+                    <ul>
+                        <li>适合：数据分析、机器学习</li>
+                        <li>优势：丰富的库生态</li>
+                        <li>局限：需要 Microsoft 365</li>
+                    </ul>
+                </div>
+
+                <div class="automation-card">
+                    <h4>⚡ LAMBDA 函数</h4>
+                    <p>无需代码的自定义函数</p>
+                    <ul>
+                        <li>适合：自定义计算逻辑</li>
+                        <li>优势：安全、易分享</li>
+                        <li>局限：功能相对简单</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>7.2 VBA vs Python 代码对比</h2>
+            <p>通过实际代码对比，了解两种方案的特点。</p>
+
+            <div class="code-compare-grid">
+                <div class="code-card">
+                    <div class="code-card-header vba">
+                        <h4>📜 VBA - 汇总销售数据</h4>
+                    </div>
+                    <div class="code-card-body">
+                        <pre><span class="keyword">Sub</span> <span class="function">SummarizeSales</span>()
+    <span class="keyword">Dim</span> ws <span class="keyword">As</span> <span class="object">Worksheet</span>
+    <span class="keyword">Dim</span> lastRow <span class="keyword">As</span> <span class="keyword">Long</span>
+    <span class="keyword">Dim</span> i <span class="keyword">As</span> <span class="keyword">Long</span>
+    <span class="keyword">Dim</span> total <span class="keyword">As</span> <span class="keyword">Double</span>
+    
+    <span class="keyword">Set</span> ws = <span class="keyword">ThisWorkbook</span>.<span class="function">Sheets</span>(<span class="string">"Sales"</span>)
+    lastRow = ws.<span class="function">Cells</span>(ws.<span class="function">Rows</span>.Count, <span class="string">"A"</span>).<span class="function">End</span>(xlUp).Row
+    
+    total = 0
+    <span class="keyword">For</span> i = 2 <span class="keyword">To</span> lastRow
+        total = total + ws.<span class="function">Cells</span>(i, <span class="string">"C"</span>).Value
+    <span class="keyword">Next</span> i
+    
+    ws.<span class="function">Range</span>(<span class="string">"C"</span> & lastRow + 1).Value = total
+    ws.<span class="function">Range</span>(<span class="string">"C"</span> & lastRow + 1).Font.Bold = <span class="keyword">True</span>
+<span class="keyword">End Sub</span></pre>
+                    </div>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-card-header python">
+                        <h4>🐍 Python - 同样的功能</h4>
+                    </div>
+                    <div class="code-card-body">
+                        <pre><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+<span class="comment"># 读取 Excel 数据</span>
+df = pd.<span class="function">read_excel</span>(
+    <span class="string">"Sales.xlsx"</span>, 
+    sheet_name=<span class="string">"Sales"</span>
+)
+
+<span class="comment"># 计算总额</span>
+total = df[<span class="string">"Amount"</span>].<span class="function">sum</span>()
+
+<span class="comment"># 添加总计行</span>
+total_row = pd.<span class="function">DataFrame</span>({
+    <span class="string">"Amount"</span>: [total]
+}, index=[<span class="string">"Total"</span>])
+
+df = pd.<span class="function">concat</span>([df, total_row])
+
+<span class="comment"># 保存结果</span>
+df.<span class="function">to_excel</span>(
+    <span class="string">"Sales_Summary.xlsx"</span>,
+    index=<span class="keyword">False</span>
+)</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mermaid 序列图：VBA 宏执行流程 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">VBA 宏执行流程</h3>
+                <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant E as Excel 应用
+    participant V as VBA 引擎
+    participant M as 宏代码
+    participant W as 工作表
+
+    U->>E: 运行宏 (Alt+F8)
+    E->>V: 启动 VBA 引擎
+    V->>M: 执行宏代码
+    M->>E: 获取工作表引用
+    E-->>M: 返回 Worksheet 对象
+    M->>W: 读取数据
+    W-->>M: 返回单元格值
+    M->>M: 循环计算
+    M->>W: 写入结果
+    W->>W: 更新显示
+    M-->>V: 执行完成
+    V-->>E: 返回结果
+    E-->>U: 显示完成消息
+                </div>
+            </div>
+
+            <!-- Mermaid 序列图：Python in Excel 执行流程 -->
+            <div class="mermaid-wrapper">
+                <h3 class="diagram-title">Python in Excel 执行流程（2026 新特性）</h3>
+                <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant C as 单元格
+    participant P as Python 引擎
+    participant L as pandas/numpy
+    participant X as Excel 数据
+
+    U->>C: 输入 =PY() 函数
+    C->>P: 发送 Python 代码
+    P->>L: 导入库
+    L-->>P: 库已加载
+    P->>X: 读取 Excel 数据
+    X-->>P: 返回 DataFrame
+    P->>P: 执行 Python 计算
+    P->>L: 调用 pandas 函数
+    L-->>P: 返回计算结果
+    P->>P: 转换为 Excel 格式
+    P-->>C: 返回结果
+    C-->>U: 显示结果
+    Note over P,X: Python 在云端<br/>安全沙箱运行
+                </div>
+            </div>
+
+            <h2>7.3 完整方案对比表</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th width="15%">方案</th>
+                        <th width="15%">学习曲线</th>
+                        <th width="12%">执行速度</th>
+                        <th width="12%">灵活性</th>
+                        <th width="15%">适用场景</th>
+                        <th width="15%">2026 支持度</th>
+                        <th width="16%">推荐指数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>录制宏</strong></td>
+                        <td>⭐ 简单</td>
+                        <td>⭐⭐ 中等</td>
+                        <td>⭐ 低</td>
+                        <td>简单重复任务</td>
+                        <td>✅ 完全支持</td>
+                        <td>⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VBA</strong></td>
+                        <td>⭐⭐⭐ 中等</td>
+                        <td>⭐⭐⭐ 快</td>
+                        <td>⭐⭐⭐⭐ 高</td>
+                        <td>复杂自动化</td>
+                        <td>✅ 兼容支持</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Power Query</strong></td>
+                        <td>⭐⭐ 较简单</td>
+                        <td>⭐⭐⭐ 快</td>
+                        <td>⭐⭐⭐ 中等</td>
+                        <td>数据清洗转换</td>
+                        <td>✅ 重点发展</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LAMBDA</strong></td>
+                        <td>⭐⭐ 较简单</td>
+                        <td>⭐⭐ 中等</td>
+                        <td>⭐⭐⭐ 中等</td>
+                        <td>自定义计算</td>
+                        <td>✅ 重点发展</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Python</strong></td>
+                        <td>⭐⭐⭐⭐ 较难</td>
+                        <td>⭐⭐⭐⭐ 很快</td>
+                        <td>⭐⭐⭐⭐⭐ 极高</td>
+                        <td>数据分析/ML</td>
+                        <td>🆕 2026 新增</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>7.4 Power Query 入门</h2>
+            <p>Power Query 是 Excel 内置的强大数据连接和转换工具。</p>
+
+            <h3>Power Query 特点</h3>
             <ul>
-                <li><strong>批量处理</strong>：可以一次性处理成百上千个Excel文件</li>
-                <li><strong>自动化</strong>：可以定时自动生成报表，减少人工操作</li>
-                <li><strong>复杂数据处理</strong>：编程语言提供更强大的数据处理能力</li>
-                <li><strong>集成</strong>：可以轻松集成到其他系统和工作流中</li>
-                <li><strong>性能</strong>：处理大数据量时，程序通常比Excel更快</li>
-                <li><strong>版本控制</strong>：代码可以进行版本控制和团队协作</li>
-                <li><strong>复用性</strong>：编写的代码可以重复使用，提高效率</li>
+                <li>可视化操作，无需编程</li>
+                <li>支持多种数据源</li>
+                <li>可重复使用的查询</li>
+                <li>自动刷新数据</li>
+                <li>M 语言支持高级定制</li>
             </ul>
 
-            <div class="tip-box">
-                <strong>适用场景：</strong>
-                <ul>
-                    <li>定期需要生成相同格式的报表</li>
-                    <li>需要处理大量Excel文件</li>
-                    <li>数据需要与其他系统集成</li>
-                    <li>需要复杂的数据清洗和分析</li>
-                    <li>需要自动化任务调度</li>
-                </ul>
-            </div>
-
-            <h2>7.2 Python处理Excel</h2>
-            <p>Python有多个强大的库可以处理Excel文件，最常用的是openpyxl、pandas和xlsxwriter。</p>
-
-            <div class="note-box">
-                <strong>Python选择建议：</strong>Python适合数据分析、机器学习、快速原型开发，生态系统非常丰富，有大量的第三方库支持。
-            </div>
-
-            <h3>7.2.1 使用openpyxl</h3>
-            <p>openpyxl是一个用于读写Excel 2010 xlsx/xlsm/xltx/xltm文件的Python库。</p>
-
-            <h4>安装</h4>
-            <div class="code-block">
-                pip install openpyxl
-            </div>
-
-            <h4>基本操作</h4>
-            <div class="code-block">
-                from openpyxl import Workbook, load_workbook<br/><br/>
-
-                # 创建新工作簿<br/>
-                wb = Workbook()<br/>
-                ws = wb.active<br/>
-                ws.title = "销售数据"<br/><br/>
-
-                # 写入数据<br/>
-                headers = ["产品", "数量", "单价", "金额"]<br/>
-                ws.append(headers)<br/><br/>
-
-                # 添加数据行<br/>
-                data = [<br/>
-                    ["产品A", 100, 50, 5000],<br/>
-                    ["产品B", 200, 80, 16000],<br/>
-                    ["产品C", 150, 60, 9000]<br/>
-                ]<br/><br/>
-
-                for row in data:<br/>
-                    ws.append(row)<br/><br/>
-
-                # 使用公式计算金额<br/>
-                for row in range(2, 5):<br/>
-                    ws[f"D{row}"] = f"=B{row}*C{row}"<br/><br/>
-
-                # 保存文件<br/>
-                wb.save("销售数据.xlsx")
-            </div>
-
-            <h4>读取现有文件</h4>
-            <div class="code-block">
-                from openpyxl import load_workbook<br/><br/>
-
-                # 读取现有Excel文件<br/>
-                wb = load_workbook("销售数据.xlsx")<br/>
-                ws = wb.active<br/><br/>
-
-                # 读取数据<br/>
-                for row in ws.iter_rows(min_row=2, values_only=True):<br/>
-                    print(f"产品: {row[0]}, 数量: {row[1]}, 单价: {row[2]}, 金额: {row[3]}")
-            </div>
-
-            <h4>样式设置</h4>
-            <div class="code-block">
-                from openpyxl.styles import PatternFill, Font, Alignment<br/><br/>
-                wb = load_workbook("销售数据.xlsx")<br/>
-                ws = wb.active<br/><br/>
-
-                # 设置标题样式<br/>
-                header_fill = PatternFill(start_color="4CAF50", end_color="4CAF50", fill_type="solid")<br/>
-                header_font = Font(bold=True, color="FFFFFF")<br/>
-                header_alignment = Alignment(horizontal="center")<br/><br/>
-
-                for cell in ws[1]:<br/>
-                    cell.fill = header_fill<br/>
-                    cell.font = header_font<br/>
-                    cell.alignment = header_alignment<br/><br/>
-
-                # 设置条件格式<br/>
-                red_fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")<br/><br/>
-                for row in ws.iter_rows(min_row=2):<br/>
-                    if row[3].value > 10000:  # 如果金额大于10000<br/>
-                        row[3].fill = red_fill<br/><br/>
-
-                wb.save("销售数据_格式化.xlsx")
-            </div>
-
-            <h3>7.2.2 使用pandas处理Excel</h3>
-            <p>pandas是数据分析的神器，非常适合处理Excel数据。</p>
-
-            <h4>安装</h4>
-            <div class="code-block">
-                pip install pandas openpyxl
-            </div>
-
-            <h4>读取Excel文件</h4>
-            <div class="code-block">
-                import pandas as pd<br/><br/>
-
-                # 读取Excel文件<br/>
-                df = pd.read_excel("销售数据.xlsx", sheet_name="销售数据")<br/><br/>
-
-                # 查看数据<br/>
-                print(df.head())<br/>
-                print(df.info())<br/>
-                print(df.describe())
-            </div>
-
-            <h4>数据分析</h4>
-            <div class="code-block">
-                # 计算统计信息<br/>
-                total_sales = df["金额"].sum()<br/>
-                avg_price = df["单价"].mean()<br/>
-                max_amount = df["金额"].max()<br/><br/>
-
-                print(f"总销售额: {total_sales}")<br/>
-                print(f"平均单价: {avg_price}")<br/>
-                print(f"最大金额: {max_amount}")<br/><br/>
-
-                # 数据筛选<br/>
-                high_sales = df[df["金额"] > 10000]<br/>
-                print("高销售额产品:")<br/>
-                print(high_sales)<br/><br/>
-
-                # 数据分组<br/>
-                product_stats = df.groupby("产品").agg({<br/>
-                    "数量": "sum",<br/>
-                    "金额": "sum"<br/>
-                })<br/>
-                print("产品统计:")<br/>
-                print(product_stats)
-            </div>
-
-            <h4>数据处理</h4>
-            <div class="code-block">
-                # 添加新列（类似Excel公式）<br/>
-                df["折扣后金额"] = df["金额"] * 0.9  # 9折<br/>
-                df["销售等级"] = df["金额"].apply(<br/>
-                    lambda x: "高" if x > 10000 else ("中" if x > 5000 else "低")<br/>
-                )<br/><br/>
-
-                # 数据清洗<br/>
-                # 删除空值<br/>
-                df_clean = df.dropna()<br/><br/>
-                # 删除重复值<br/>
-                df_unique = df.drop_duplicates()<br/><br/>
-                # 填充空值<br/>
-                df_filled = df.fillna(0)
-            </div>
-
-            <h4>保存到Excel</h4>
-            <div class="code-block">
-                # 保存到Excel<br/>
-                df.to_excel("销售数据_处理后.xlsx", index=False)<br/><br/>
-
-                # 多个sheet写入<br/>
-                with pd.ExcelWriter("销售报表.xlsx") as writer:<br/>
-                    df.to_excel(writer, sheet_name="原始数据", index=False)<br/>
-                    high_sales.to_excel(writer, sheet_name="高销售额", index=False)<br/>
-                    product_stats.to_excel(writer, sheet_name="产品统计")
-            </div>
-
-            <h4>与Excel公式结合</h4>
-            <div class="code-block">
-                from openpyxl import load_workbook<br/><br/>
-
-                # 保存数据<br/>
-                df.to_excel("销售数据_带公式.xlsx", index=False)<br/><br/>
-                # 使用openpyxl添加公式<br/>
-                wb = load_workbook("销售数据_带公式.xlsx")<br/>
-                ws = wb.active<br/><br/>
-                # 在Excel中添加公式列<br/>
-                ws["E1"] = "折扣金额"<br/>
-                for row in range(2, len(df) + 2):<br/>
-                    ws[f"E{row}"] = f"=D{row}*0.1"<br/><br/>
-                wb.save("销售数据_带公式.xlsx")
-            </div>
-
-            <h3>7.2.3 使用xlsxwriter创建报表</h3>
-            <p>xlsxwriter专门用于创建Excel文件，支持图表和丰富的格式。</p>
-
-            <h4>安装</h4>
-            <div class="code-block">
-                pip install xlsxwriter
-            </div>
-
-            <h4>创建带格式的报表</h4>
-            <div class="code-block">
-                import xlsxwriter<br/><br/>
-
-                # 创建新工作簿<br/>
-                workbook = xlsxwriter.Workbook("月度报表.xlsx")<br/>
-                worksheet = workbook.add_worksheet("销售报表")<br/><br/>
-
-                # 定义格式<br/>
-                header_format = workbook.add_format({<br/>
-                    "bold": True,<br/>
-                    "bg_color": "#4CAF50",<br/>
-                    "font_color": "white",<br/>
-                    "border": 1<br/>
-                })<br/><br/>
-
-                number_format = workbook.add_format({<br/>
-                    "num_format": "#,##0.00",<br/>
-                    "border": 1<br/>
-                })<br/><br/>
-
-                percent_format = workbook.add_format({<br/>
-                    "num_format": "0.0%",<br/>
-                    "border": 1<br/>
-                })<br/><br/>
-
-                # 写入标题<br/>
-                headers = ["月份", "销售额", "成本", "利润", "利润率"]<br/>
-                for col, header in enumerate(headers):<br/>
-                    worksheet.write(0, col, header, header_format)<br/><br/>
-
-                # 写入数据<br/>
-                data = [<br/>
-                    ["1月", 100000, 60000, 40000],<br/>
-                    ["2月", 120000, 70000, 50000],<br/>
-                    ["3月", 150000, 85000, 65000],<br/>
-                    ["4月", 180000, 100000, 80000]<br/>
-                ]<br/><br/>
-                for row_idx, row_data in enumerate(data, start=1):<br/>
-                    worksheet.write(row_idx, 0, row_data[0])<br/>
-                    worksheet.write(row_idx, 1, row_data[1], number_format)<br/>
-                    worksheet.write(row_idx, 2, row_data[2], number_format)<br/>
-                    worksheet.write_formula(row_idx, 3, f"B{row_idx+1}-C{row_idx+1}", number_format)<br/>
-                    worksheet.write_formula(row_idx, 4, f"D{row_idx+1}/B{row_idx+1}", percent_format)
-            </div>
-
-            <h4>添加条件格式</h4>
-            <div class="code-block">
-                # 添加条件格式<br/>
-                worksheet.conditional_format("D2:D5", {<br/>
-                    "type": "cell",<br/>
-                    "criteria": ">",<br/>
-                    "value": 50000,<br/>
-                    "format": workbook.add_format({"bg_color": "#FFC107"})<br/>
-                })
-            </div>
-
-            <h4>创建图表</h4>
-            <div class="code-block">
-                # 创建图表<br/>
-                chart = workbook.add_chart({"type": "column"})<br/>
-                chart.add_series({<br/>
-                    "name": "销售额",<br/>
-                    "categories": ["销售报表", 0, 0, 0, 3],<br/>
-                    "values": ["销售报表", 1, 1, 4, 1],<br/>
-                    "fill": {"color": "#4CAF50"}<br/>
-                })<br/>
-                chart.add_series({<br/>
-                    "name": "成本",<br/>
-                    "categories": ["销售报表", 0, 0, 0, 3],<br/>
-                    "values": ["销售报表", 1, 2, 4, 2],<br/>
-                    "fill": {"color": "#FF5722"}<br/>
-                })<br/>
-                chart.set_title({"name": "月度销售图表"})<br/>
-                chart.set_x_axis({"name": "月份"})<br/>
-                chart.set_y_axis({"name": "金额"})<br/>
-                worksheet.insert_chart("F2", chart)<br/><br/>
-
-                workbook.close()
-            </div>
-
-            <h2>7.3 GoLang处理Excel</h2>
-            <p>Go语言也有优秀的Excel处理库，最常用的是excelize。</p>
-
-            <div class="note-box">
-                <strong>GoLang选择建议：</strong>Go适合高性能服务、并发处理、企业级应用，性能优秀，部署简单，适合构建稳定的后端服务。
-            </div>
-
-            <h3>7.3.1 使用excelize</h3>
-            <p>excelize是Go语言中最流行的Excel处理库，功能强大且性能优秀。</p>
-
-            <h4>安装</h4>
-            <div class="code-block">
-                go get github.com/xuri/excelize/v2
-            </div>
-
-            <h4>创建Excel文件</h4>
-            <div class="code-block">
-                package main<br/><br/>
-
-                import (<br/>
-                    "fmt"<br/><br/>
-                    "github.com/xuri/excelize/v2"<br/>
-                )<br/><br/>
-
-                func main() {<br/>
-                    // 创建新工作簿<br/>
-                    f := excelize.NewFile()<br/><br/>
-                    // 设置工作表名称<br/>
-                    f.SetSheetName("Sheet1", "销售数据")<br/><br/>
-                    // 设置标题行<br/>
-                    headers := []string{"产品", "数量", "单价", "金额"}<br/>
-                    for i, header := range headers {<br/>
-                        cell, _ := excelize.CoordinatesToCellName(i+1, 1)<br/>
-                        f.SetCellValue("销售数据", cell, header)<br/>
-                    }<br/><br/>
-                    // 添加数据行<br/>
-                    data := [][]interface{}{<br/>
-                        {"产品A", 100, 50},<br/>
-                        {"产品B", 200, 80},<br/>
-                        {"产品C", 150, 60},<br/>
-                        {"产品D", 300, 45},<br/>
-                        {"产品E", 250, 70},<br/>
-                    }<br/><br/>
-                    for i, row := range data {<br/>
-                        for j, value := range row {<br/>
-                            cell, _ := excelize.CoordinatesToCellName(j+1, i+2)<br/>
-                            f.SetCellValue("销售数据", cell, value)<br/>
-                        }<br/>
-                    }<br/><br/>
-                    // 使用公式计算金额<br/>
-                    for i := 2; i <= len(data)+1; i++ {<br/>
-                        cell, _ := excelize.CoordinatesToCellName(4, i)<br/>
-                        formula := fmt.Sprintf("=B%d*C%d", i, i)<br/>
-                        f.SetCellFormula("销售数据", cell, formula)<br/>
-                    }<br/><br/>
-                    // 保存文件<br/>
-                    if err := f.SaveAs("销售数据.xlsx"); err != nil {<br/>
-                        fmt.Println(err)<br/>
-                    }<br/>
-                }
-            </div>
-
-            <h4>设置样式</h4>
-            <div class="code-block">
-                package main<br/><br/>
-
-                import (<br/>
-                    "fmt"<br/><br/>
-                    "github.com/xuri/excelize/v2"<br/>
-                )<br/><br/>
-
-                func main() {<br/>
-                    f := excelize.NewFile()<br/>
-                    // ... 写入数据代码 ...<br/><br/>
-                    // 设置标题样式<br/>
-                    headerStyle, _ := f.NewStyle(&excelize.Style{<br/>
-                        Font: &excelize.Font{<br/>
-                            Bold:   true,<br/>
-                            Color:  "FFFFFFFF",<br/>
-                        },<br/>
-                        Fill: excelize.Fill{<br/>
-                            Type:    "pattern",<br/>
-                            Color:   []string{"#4CAF50"},<br/>
-                            Pattern: 1,<br/>
-                        },<br/>
-                        Alignment: &excelize.Alignment{<br/>
-                            Horizontal: "center",<br/>
-                        },<br/>
-                    })<br/>
-                    f.SetCellStyle("销售数据", "A1", "D1", headerStyle)<br/><br/>
-                    // 设置数字格式<br/>
-                    numberStyle, _ := f.NewStyle(&excelize.Style{<br/>
-                        NumFmt: 34, // 千分位格式<br/>
-                    })<br/>
-                    f.SetCellStyle("销售数据", "C2", "D6", numberStyle)<br/><br/>
-                    // 添加边框<br/>
-                    borderStyle, _ := f.NewStyle(&excelize.Style{<br/>
-                        Border: []excelize.Border{<br/>
-                            {Type: "left", Color: "000000", Style: 1},<br/>
-                            {Type: "top", Color: "000000", Style: 1},<br/>
-                            {Type: "bottom", Color: "000000", Style: 1},<br/>
-                            {Type: "right", Color: "000000", Style: 1},<br/>
-                        },<br/>
-                    })<br/>
-                    f.SetCellStyle("销售数据", "A1", "D6", borderStyle)<br/><br/>
-                    // 调整列宽<br/>
-                    f.SetColWidth("销售数据", "A", "A", 12)<br/>
-                    f.SetColWidth("销售数据", "B", "B", 10)<br/>
-                    f.SetColWidth("销售数据", "C", "C", 12)<br/>
-                    f.SetColWidth("销售数据", "D", "D", 15)<br/><br/>
-                    if err := f.SaveAs("销售数据.xlsx"); err != nil {<br/>
-                        fmt.Println(err)<br/>
-                    }<br/>
-                }
-            </div>
-
-            <h4>读取Excel文件</h4>
-            <div class="code-block">
-                package main<br/><br/>
-
-                import (<br/>
-                    "fmt"<br/>
-                    "log"<br/><br/>
-                    "github.com/xuri/excelize/v2"<br/>
-                )<br/><br/>
-
-                func main() {<br/>
-                    // 打开Excel文件<br/>
-                    f, err := excelize.OpenFile("销售数据.xlsx")<br/>
-                    if err != nil {<br/>
-                        log.Fatal(err)<br/>
-                    }<br/>
-                    defer func() {<br/>
-                        if err := f.Close(); err != nil {<br/>
-                            fmt.Println(err)<br/>
-                        }<br/>
-                    }()<br/><br/>
-                    // 获取所有工作表<br/>
-                    sheets := f.GetSheetList()<br/>
-                    fmt.Println("工作表列表:", sheets)<br/><br/>
-                    // 读取数据<br/>
-                    rows, err := f.GetRows("销售数据")<br/>
-                    if err != nil {<br/>
-                        log.Fatal(err)<br/>
-                    }<br/><br/>
-                    fmt.Println("销售数据:")<br/>
-                    for i, row := range rows {<br/>
-                        for j, cell := range row {<br/>
-                            fmt.Printf("[%d,%d]: %s\t", i, j, cell)<br/>
-                        }<br/>
-                        fmt.Println()<br/>
-                    }<br/><br/>
-                    // 获取单元格值<br/>
-                    cellValue, _ := f.GetCellValue("销售数据", "D2")<br/>
-                    fmt.Printf("D2单元格的值: %s\n", cellValue)<br/><br/>
-                    // 获取公式<br/>
-                    formula, _ := f.GetCellFormula("销售数据", "D2")<br/>
-                    fmt.Printf("D2单元格的公式: %s\n", formula)<br/>
-                }
-            </div>
-
-            <h4>数据分析和统计</h4>
-            <div class="code-block">
-                package main<br/><br/>
-
-                import (<br/>
-                    "fmt"<br/>
-                    "log"<br/>
-                    "sort"<br/><br/>
-                    "github.com/xuri/excelize/v2"<br/>
-                )<br/><br/>
-
-                type SalesData struct {<br/>
-                    Product string<br/>
-                    Quantity int<br/>
-                    Price    float64<br/>
-                    Amount   float64<br/>
-                }<br/><br/>
-
-                func main() {<br/>
-                    f, err := excelize.OpenFile("销售数据.xlsx")<br/>
-                    if err != nil {<br/>
-                        log.Fatal(err)<br/>
-                    }<br/>
-                    defer f.Close()<br/><br/>
-                    // 读取数据到结构体切片<br/>
-                    var sales []SalesData<br/>
-                    rows, _ := f.GetRows("销售数据")<br/><br/>
-                    // 跳过标题行<br/>
-                    for _, row := range rows[1:] {<br/>
-                        if len(row) >= 4 {<br/>
-                            data := SalesData{<br/>
-                                Product: row[0],<br/>
-                                Quantity: parseInt(row[1]),<br/>
-                                Price:    parseFloat(row[2]),<br/>
-                                Amount:   parseFloat(row[3]),<br/>
-                            }<br/>
-                            sales = append(sales, data)<br/>
-                        }<br/>
-                    }<br/><br/>
-                    // 计算统计信息<br/>
-                    var totalAmount float64<br>
-                    var maxAmount float64
-                    var minAmount float64 = sales[0].Amount<br/><br/>
-                    for _, s := range sales {<br/>
-                        totalAmount += s.Amount<br/>
-                        if s.Amount > maxAmount {<br/>
-                            maxAmount = s.Amount<br/>
-                        }
-                        if s.Amount < minAmount {<br/>
-                            minAmount = s.Amount<br/>
-                        }
-                    }<br/><br/>
-                    avgAmount := totalAmount / float64(len(sales))<br/><br/>
-                    fmt.Printf("总销售额: %.2f\n", totalAmount)<br/>
-                    fmt.Printf("平均销售额: %.2f\n", avgAmount)<br/>
-                    fmt.Printf("最大销售额: %.2f\n", maxAmount)<br/>
-                    fmt.Printf("最小销售额: %.2f\n\n", minAmount)<br/><br/>
-                    // 按销售额排序<br/>
-                    sort.Slice(sales, func(i, j int) bool {<br/>
-                        return sales[i].Amount > sales[j].Amount<br/>
-                    })<br/><br/>
-                    fmt.Println("销售额排行:")<br/>
-                    for i, s := range sales {<br/>
-                        fmt.Printf("%d. %s: %.2f\n", i+1, s.Product, s.Amount)<br/>
-                    }<br/>
-                }<br/><br/>
-                // 辅助函数<br/>
-                func parseInt(s string) int {<br/>
-                    var n int<br/>
-                    fmt.Sscanf(s, "%d", &n)<br/>
-                    return n<br/>
-                }<br/><br/>
-                func parseFloat(s string) float64 {<br/>
-                    var f float64<br/>
-                    fmt.Sscanf(s, "%f", &f)<br/>
-                    return f<br/>
-                }
-            </div>
-
-            <h4>创建图表</h4>
-            <div class="code-block">
-                package main<br/><br/>
-
-                import (<br/>
-                    "fmt"<br/><br/>
-                    "github.com/xuri/excelize/v2"<br/>
-                )<br/><br/>
-
-                func main() {<br/>
-                    f := excelize.NewFile()<br/>
-                    f.SetSheetName("Sheet1", "数据")<br/><br/>
-                    // 准备数据<br/>
-                    data := [][]interface{}{<br/>
-                        {"月份", "销售额", "成本", "利润"},<br/>
-                        {"1月", 100000, 60000, 40000},<br/>
-                        {"2月", 120000, 70000, 50000},<br/>
-                        {"3月", 150000, 85000, 65000},<br/>
-                        {"4月", 180000, 100000, 80000},<br/>
-                        {"5月", 200000, 110000, 90000},<br/>
-                    }<br/><br/>
-                    // 写入数据<br/>
-                    for i, row := range data {<br/>
-                        for j, value := range row {<br/>
-                            cell, _ := excelize.CoordinatesToCellName(j+1, i+1)<br/>
-                            f.SetCellValue("数据", cell, value)<br/>
-                        }<br/>
-                    }<br/><br/>
-                    // 创建柱状图<br/>
-                    if err := f.AddChart("数据", "F2", &excelize.Chart{<br/>
-                        Type: excelize.Col,<br/>
-                        Series: []excelize.ChartSeries{<br/>
-                            {<br/>
-                                Name:       "数据!$B$1",<br/>
-                                Categories: "数据!$A$2:$A$6",<br/>
-                                Values:     "数据!$B$2:$B$6",<br/>
-                                Format: excelize.ChartFormat{<br/>
-                                    Fill: excelize.Fill{Color: []string{"#4CAF50"}},<br/>
-                                },<br/>
-                            },<br/>
-                            {<br/>
-                                Name:       "数据!$C$1",<br/>
-                                Categories: "数据!$A$2:$A$6",<br/>
-                                Values:     "数据!$C$2:$C$6",<br/>
-                                Format: excelize.ChartFormat{<br/>
-                                    Fill: excelize.Fill{Color: []string{"#FF5722"}},<br/>
-                                },<br/>
-                            },<br/>
-                        },<br/>
-                        Format: excelize.ChartFormat{<br/>
-                            Legend: excelize.ChartLegend{<br/>
-                                Position: "bottom",<br/>
-                            },<br/>
-                        },<br/>
-                        Title: []excelize.ChartTitle{{<br/>
-                            Name: "月度销售数据",<br/>
-                        }},<br/>
-                        XAxis: excelize.ChartAxis{<br/>
-                            Name: "月份",<br/>
-                        },<br/>
-                        YAxis: excelize.ChartAxis{<br/>
-                            Name: "金额",<br/>
-                        },<br/>
-                    }); err != nil {<br/>
-                        fmt.Println(err)<br/>
-                    }<br/><br/>
-                    // 创建折线图<br/>
-                    if err := f.AddChart("数据", "F20", &excelize.Chart{<br/>
-                        Type: excelize.Line,<br/>
-                        Series: []excelize.ChartSeries{<br/>
-                            {<br/>
-                                Name:       "数据!$D$1",<br/>
-                                Categories: "数据!$A$2:$A$6",<br/>
-                                Values:     "数据!$D$2:$D$6",<br/>
-                                Format: excelize.ChartFormat{<br/>
-                                    Fill: excelize.Fill{Color: []string{"#2196F3"}},<br/>
-                                },<br/>
-                                Marker: excelize.ChartMarker{<br/>
-                                    Symbol: "circle",<br/>
-                                    Size:   8,<br/>
-                                },<br/>
-                            },<br/>
-                        },<br/>
-                        Title: []excelize.ChartTitle{{<br/>
-                            Name: "利润趋势",<br/>
-                        }},<br/>
-                        XAxis: excelize.ChartAxis{<br/>
-                            Name: "月份",<br/>
-                        },<br/>
-                        YAxis: excelize.ChartAxis{<br/>
-                            Name: "利润",<br/>
-                        },<br/>
-                    }); err != nil {<br/>
-                        fmt.Println(err)<br/>
-                    }<br/><br/>
-                    // 保存文件<br/>
-                    if err := f.SaveAs("图表示例.xlsx"); err != nil {<br/>
-                        fmt.Println(err)<br/>
-                    }<br/>
-                }
-            </div>
-
-            <h2>7.4 实践练习</h2>
-            <p>让我们通过一个实际案例来练习编程处理Excel：</p>
-
-            <h3>Python练习</h3>
+            <h3>基本使用步骤</h3>
             <ol>
-                <li>创建一个包含销售数据的Excel文件（产品、数量、单价、金额）</li>
-                <li>使用openpyxl设置样式和条件格式</li>
-                <li>使用pandas读取数据并进行分析</li>
-                <li>筛选出销售额前3的产品</li>
-                <li>按产品类别进行分组统计</li>
-                <li>使用xlsxwriter创建带图表的月度报表</li>
+                <li>数据选项卡 > 获取数据</li>
+                <li>选择数据源（Excel、CSV、数据库、Web 等）</li>
+                <li>在 Power Query 编辑器中转换数据</li>
+                <li>点击"关闭并上载"将结果导入 Excel</li>
             </ol>
 
-            <h3>GoLang练习</h3>
-            <ol>
-                <li>使用excelize创建销售数据Excel文件</li>
-                <li>设置单元格样式和数字格式</li>
-                <li>读取数据并计算统计信息</li>
-                <li>按销售额进行排序</li>
-                <li>创建柱状图和折线图</li>
-                <li>将处理后的数据保存到新的Excel文件</li>
-            </ol>
-
-            <h2>7.5 本章小结</h2>
-            <p>本章介绍了如何使用编程语言处理Excel文件，你现在应该能够：</p>
+            <h3>常见转换操作</h3>
             <ul>
-                <li>理解编程处理Excel的优势和适用场景</li>
-                <li>使用Python的openpyxl库创建和修改Excel文件</li>
-                <li>使用Python的pandas库进行数据分析和处理</li>
-                <li>使用Python的xlsxwriter库创建带图表的报表</li>
-                <li>使用GoLang的excelize库处理Excel文件</li>
-                <li>设置单元格样式、公式和条件格式</li>
-                <li>创建各种类型的图表</li>
-                <li>进行数据分析和统计</li>
+                <li>删除/重命名/移动列</li>
+                <li>筛选和排序</li>
+                <li>拆分和合并列</li>
+                <li>更改数据类型</li>
+                <li>透视和逆透视</li>
+                <li>合并和追加查询</li>
             </ul>
 
-            <div class="note-box">
-                <strong>选择建议总结：</strong>
-                <ul>
-                    <li><strong>Python</strong>：适合数据分析、机器学习、快速原型开发，生态丰富</li>
-                    <li><strong>GoLang</strong>：适合高性能服务、并发处理、企业级应用，性能优秀</li>
-                    <li><strong>混合使用</strong>：可以用Python做数据分析，用Go做服务端处理</li>
-                </ul>
+            <!-- 交互式流程图：自动化项目实施步骤 -->
+            <div class="interactive-flowchart">
+                <h3 style="margin-bottom: 1.5rem; text-align: center;">自动化项目实施五步法（点击步骤查看详情）</h3>
+                <div class="flowchart-steps">
+                    <div class="flowchart-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>需求分析</h4>
+                            <p>明确自动化目标</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>方案选择</h4>
+                            <p>选择合适的工具</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>开发实现</h4>
+                            <p>编写代码/配置</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>测试验证</h4>
+                            <p>确保正确运行</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>部署维护</h4>
+                            <p>交付使用和更新</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowchart-detail" id="flowchartDetail">
+                    <h4>步骤 1: 需求分析</h4>
+                    <p>明确自动化的具体目标：要解决什么问题？当前流程的痛点是什么？期望的效率提升是多少？输入输出是什么？明确需求是项目成功的基础。</p>
+                </div>
             </div>
 
-            <p>编程处理Excel是一个非常强大的技能，掌握后可以大大提高工作效率，实现自动化的数据处理和报表生成。建议多实践，探索更多高级功能！</p>
+            <!-- AI 功能 -->
+            <div class="ai-feature-box">
+                <h3>🤖 AI 辅助编程 <span class="version-badge version-new">2026 新特性</span></h3>
+                <p>Excel 2026 引入 AI 驱动的编程辅助功能。</p>
+
+                <h4>VBA 代码生成</h4>
+                <ul>
+                    <li>用自然语言描述需求</li>
+                    <li>AI 自动生成 VBA 代码</li>
+                    <li>支持代码解释和修改建议</li>
+                </ul>
+
+                <h4>Python 代码建议</h4>
+                <ul>
+                    <li>根据数据类型推荐分析代码</li>
+                    <li>自动导入必要的库</li>
+                    <li>提供代码优化建议</li>
+                </ul>
+
+                <h4>代码调试助手</h4>
+                <ul>
+                    <li>自动识别代码错误</li>
+                    <li>提供修复建议</li>
+                    <li>解释错误原因</li>
+                </ul>
+
+                <div class="code-block" style="background: white; border: 1px solid #e1dfdd; padding: 1rem; border-radius: 6px; margin-top: 1rem;">
+<strong>示例：</strong><br/>
+输入："创建一个宏，将所有工作表合并到一个工作表中"<br/>
+AI: 自动生成完整的 VBA 合并代码
+                </div>
+            </div>
+
+            <h2>7.5 实践练习</h2>
+            <p>让我们通过实际案例来练习 Excel 编程：</p>
+
+            <h3>练习 1：录制宏</h3>
+            <ol>
+                <li>录制一个格式化表格的宏</li>
+                <li>设置标题行加粗、添加边框</li>
+                <li>应用条件格式</li>
+                <li>分配快捷键运行宏</li>
+            </ol>
+
+            <h3>练习 2：VBA 基础</h3>
+            <ol>
+                <li>编写一个 VBA 函数计算平均值</li>
+                <li>添加错误处理</li>
+                <li>创建自定义工具栏按钮</li>
+            </ol>
+
+            <h3>练习 3：Power Query</h3>
+            <ol>
+                <li>从 CSV 文件导入数据</li>
+                <li>清洗和转换数据</li>
+                <li>合并多个查询</li>
+                <li>设置自动刷新</li>
+            </ol>
+
+            <h3>练习 4：Python in Excel</h3>
+            <ol>
+                <li>使用 pandas 读取 Excel 数据</li>
+                <li>执行数据统计分析</li>
+                <li>创建可视化图表</li>
+                <li>将结果返回 Excel</li>
+            </ol>
+
+            <h2>7.6 本章小结</h2>
+            <p>本章介绍了 Excel 的编程和自动化方案，你现在应该能够：</p>
+            <ul>
+                <li>理解各种自动化方案的特点和适用场景</li>
+                <li>根据需求选择合适的编程方案</li>
+                <li>录制和编辑 VBA 宏</li>
+                <li>使用 Power Query 进行数据转换</li>
+                <li>了解 Python in Excel 的基本用法</li>
+                <li>使用 LAMBDA 创建自定义函数</li>
+                <li>利用 AI 辅助编程提高效率</li>
+            </ul>
+
+            <div class="tip-box" style="background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%); border-left-color: #21a366;">
+                <strong>学习建议：</strong>建议从 Power Query 和 LAMBDA 开始学习，它们易上手且功能强大。对于复杂需求，再学习 VBA 或 Python。
+            </div>
         </div>
     </main>
 
-    <script src="../js/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Excel Programming 页面已加载');
+
+        // 交互式流程图
+        const steps = document.querySelectorAll('.flowchart-step');
+        const detailEl = document.getElementById('flowchartDetail');
+
+        const stepDetails = [
+          {
+            title: '步骤 1: 需求分析',
+            content: '明确自动化的具体目标：要解决什么问题？当前流程的痛点是什么？期望的效率提升是多少？输入输出是什么？明确需求是项目成功的基础。'
+          },
+          {
+            title: '步骤 2: 方案选择',
+            content: '根据需求选择合适的工具：简单重复用录制宏、复杂逻辑用 VBA、数据转换用 Power Query、数据分析用 Python、自定义计算用 LAMBDA。'
+          },
+          {
+            title: '步骤 3: 开发实现',
+            content: '开始编写代码或配置：VBA 在 VBE 中编写、Power Query 在编辑器中配置、Python 在单元格中输入。遵循最佳实践，添加注释。'
+          },
+          {
+            title: '步骤 4: 测试验证',
+            content: '充分测试确保正确性：使用不同数据测试、检查边界情况、验证错误处理、确认性能满足要求。记录测试结果。'
+          },
+          {
+            title: '步骤 5: 部署维护',
+            content: '交付给用户使用：编写使用说明、培训用户、设置更新机制、收集反馈持续改进。对于 VBA，确保宏安全性设置正确。'
+          }
+        ];
+
+        steps.forEach((step, index) => {
+          step.addEventListener('click', function() {
+            steps.forEach(s => s.classList.remove('active'));
+            step.classList.add('active');
+
+            const detail = stepDetails[index];
+            if (detail && detailEl) {
+              detailEl.innerHTML = `<h4>${detail.title}</h4><p>${detail.content}</p>`;
+            }
+          });
+        });
+      });
+    </script>
 </body>
 </html>
