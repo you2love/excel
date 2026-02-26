@@ -1358,8 +1358,7 @@ with pd.ExcelWriter("Sales.xlsx", mode="a") as writer:
     <section id="ai-features" class="section section-alt">
         <div class="container">
             <h2 class="section-title">AI 智能功能</h2>
-            <p class="section-description">Excel 2026 引入的 AI 驱动功能，让数据分析更智能</p>
-
+            
             <!-- Mermaid 架构图：AI 功能架构 -->
             <div class="mermaid-wrapper">
                 <h3 class="diagram-title">Excel AI 功能架构图</h3>
@@ -1397,39 +1396,6 @@ flowchart TB
     Data --> AI
     AI --> Output
                 </div>
-            </div>
-
-            <div class="ai-card">
-                <h3>🤖 Copilot 助手</h3>
-                <p>使用自然语言与 Excel 交互，让 AI 帮你完成复杂任务</p>
-                <ul class="feature-list">
-                    <li>"帮我找出销售额最高的产品"</li>
-                    <li>"创建一个对比今年和去年销售的图表"</li>
-                    <li>"分析这个数据的趋势并给出建议"</li>
-                    <li>"帮我清理这些数据中的重复项"</li>
-                </ul>
-            </div>
-
-            <div class="ai-card">
-                <h3>💡 智能公式建议</h3>
-                <p>AI 根据你的数据自动推荐合适的公式</p>
-                <ul class="feature-list">
-                    <li>输入数据时自动提示可能的计算</li>
-                    <li>根据列名推荐相关函数</li>
-                    <li>解释复杂公式的含义</li>
-                    <li>提供公式优化建议</li>
-                </ul>
-            </div>
-
-            <div class="ai-card">
-                <h3>📊 自动洞察</h3>
-                <p>AI 自动分析数据并生成洞察</p>
-                <ul class="feature-list">
-                    <li>识别数据中的异常值</li>
-                    <li>发现隐藏的趋势和模式</li>
-                    <li>生成关键指标摘要</li>
-                    <li>提供数据质量评估</li>
-                </ul>
             </div>
 
             <!-- AI 功能效率对比 -->
@@ -1485,7 +1451,6 @@ flowchart TB
     <section id="advanced" class="section">
         <div class="container">
             <h2 class="section-title">高级技巧与最佳实践</h2>
-            <p class="section-description">掌握这些技巧，成为 Excel 高手</p>
 
             <!-- Mermaid 流程图：问题排查流程 -->
             <div class="mermaid-wrapper">
@@ -1524,50 +1489,6 @@ flowchart TD
     N --> U
     Q --> U
     T --> U
-                </div>
-            </div>
-
-            <div class="excel-grid">
-                <div class="excel-card">
-                    <h3>⌨️ 快捷键大师</h3>
-                    <ul class="feature-list">
-                        <li><strong>Ctrl+E</strong> - 快速填充（Flash Fill）</li>
-                        <li><strong>Ctrl+T</strong> - 创建表格</li>
-                        <li><strong>Alt+=</strong> - 自动求和</li>
-                        <li><strong>F4</strong> - 切换引用类型/重复操作</li>
-                        <li><strong>Ctrl+Shift+L</strong> - 切换筛选</li>
-                        <li><strong>Alt+Enter</strong> - 单元格内换行</li>
-                    </ul>
-                </div>
-                <div class="excel-card">
-                    <h3>📋 表格 vs 区域</h3>
-                    <ul class="feature-list">
-                        <li>表格自动扩展公式和格式</li>
-                        <li>结构化引用更易读</li>
-                        <li>内置筛选和排序</li>
-                        <li>可作为数据源用于透视表</li>
-                        <li>使用 Ctrl+T 快速创建</li>
-                    </ul>
-                </div>
-                <div class="excel-card">
-                    <h3>🏷️ 命名范围</h3>
-                    <ul class="feature-list">
-                        <li>让公式更易理解</li>
-                        <li>便于跨表引用</li>
-                        <li>支持动态命名范围</li>
-                        <li>使用名称管理器管理</li>
-                        <li>Ctrl+F3 快速访问</li>
-                    </ul>
-                </div>
-                <div class="excel-card">
-                    <h3>⚡ 性能优化</h3>
-                    <ul class="feature-list">
-                        <li>避免整列引用</li>
-                        <li>使用 SUMIFS 替代 SUMPRODUCT</li>
-                        <li>减少易失性函数</li>
-                        <li>手动计算模式处理大数据</li>
-                        <li>使用 Power Pivot 处理百万级数据</li>
-                    </ul>
                 </div>
             </div>
 
@@ -1622,49 +1543,6 @@ flowchart TD
                         </tr>
                     </tbody>
                 </table>
-            </div>
-
-            <!-- 最佳实践清单 -->
-            <div class="info-box" style="border-left-color: var(--excel-green);">
-                <h3>✅ Excel 最佳实践清单</h3>
-                <div class="excel-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-                    <div>
-                        <h4>📝 数据组织</h4>
-                        <ul class="feature-list">
-                            <li>使用表格结构化数据</li>
-                            <li>每列一个变量</li>
-                            <li>每行一个记录</li>
-                            <li>避免合并单元格</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>📐 公式设计</h4>
-                        <ul class="feature-list">
-                            <li>使用命名范围</li>
-                            <li>避免硬编码</li>
-                            <li>添加注释说明</li>
-                            <li>模块化复杂公式</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>🎨 格式规范</h4>
-                        <ul class="feature-list">
-                            <li>保持一致的样式</li>
-                            <li>使用条件格式突出</li>
-                            <li>区分输入和计算</li>
-                            <li>打印前预览检查</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>🔒 文件管理</h4>
-                        <ul class="feature-list">
-                            <li>定期保存版本</li>
-                            <li>保护重要工作表</li>
-                            <li>移除未使用的内容</li>
-                            <li>文档化关键逻辑</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
