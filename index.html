@@ -3,260 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Excel 完全学习指南">
-    <title>Excel 完全指南</title>
-    <link rel="stylesheet" href="css/styles.css?v=2026022604">
+    <meta name="description" content="Excel 完全学习指南 - 2026 最新版">
+    <title>Excel 完全指南 | 2026 版</title>
+    <link rel="stylesheet" href="css/styles.css?v=2026022605">
     <style>
-      /* Excel 主题色 */
       :root {
         --excel-green: #107c41;
         --excel-green-light: #21a366;
         --excel-green-dark: #0b5a32;
-        --excel-bg: #f3f2f1;
-        --excel-surface: #ffffff;
-        --excel-border: #e1dfdd;
-        --excel-header: #f8f9fa;
-        --excel-cell-hover: #e6f2ea;
-        --excel-selection: #cce8d6;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f3f2f1;
+        --text-primary: #24292e;
+        --text-secondary: #586069;
+        --border-color: #e1dfdd;
       }
-
-      /* 强制浅色模式 */
-      :root {
-        --bg-primary: #ffffff !important;
-        --bg-secondary: #f3f2f1 !important;
-        --bg-alt: #e6f2ea !important;
-        --bg-elevated: #ffffff !important;
-        --text-primary: #24292e !important;
-        --text-secondary: #586069 !important;
-        --border-color: #e1dfdd !important;
-        --primary-color: #107c41 !important;
-        --primary-light: #21a366 !important;
-        --primary-dark: #0b5a32 !important;
-      }
-
-      html, body {
-        background-color: #ffffff !important;
-      }
-
+      html, body { background-color: #ffffff !important; }
       .navbar {
         background-color: rgba(255, 255, 255, 0.98) !important;
         border-bottom: 2px solid var(--excel-green) !important;
       }
-
-      .navbar .logo, .nav-menu a {
-        color: #24292e !important;
+      .navbar .logo, .nav-menu a { color: #24292e !important; }
+      .hero {
+        padding: calc(100px + var(--safe-area-top)) 0 3rem;
+        background: linear-gradient(135deg, #f3f2f1 0%, #e6f2ea 100%);
+        text-align: center;
       }
-
-      .section-alt {
-        background-color: #f3f2f1 !important;
+      .hero-title {
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        font-weight: 800;
+        color: var(--excel-green-dark);
+        margin-bottom: 0.5rem;
       }
-
-      /* Excel 网格样式 */
-      .excel-grid {
+      .hero-subtitle {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--excel-green) 0%, var(--excel-green-light) 100%);
+        color: white;
+      }
+      .btn-secondary {
+        background-color: transparent;
+        color: var(--excel-green);
+        border: 2px solid var(--excel-green);
+      }
+      .section { padding: clamp(2rem, 5vw, 4rem) 0; }
+      .section-alt { background-color: var(--bg-secondary); }
+      .section-title {
+        text-align: center;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        margin-bottom: 2rem;
+        color: var(--text-primary);
+      }
+      .section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: var(--excel-green);
+        margin: 1rem auto 0;
+        border-radius: 2px;
+      }
+      .course-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.5rem;
         margin: 2rem 0;
       }
-
-      .excel-card {
-        background: var(--excel-surface);
-        border: 1px solid var(--excel-border);
+      .course-card {
+        background: white;
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 1.5rem;
         transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        display: block;
       }
-
-      .excel-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--excel-green);
-        transform: scaleX(0);
-        transition: transform 0.3s;
-      }
-
-      .excel-card:hover {
+      .course-card:hover {
         box-shadow: 0 4px 12px rgba(16, 124, 65, 0.15);
-        transform: translateY(-2px);
+        transform: translateY(-4px);
+        border-color: var(--excel-green);
+        text-decoration: none;
       }
-
-      .excel-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .excel-card h3 {
+      .course-card h3 {
         color: var(--excel-green);
         margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
       }
-
-      /* 功能列表样式 */
-      .feature-list {
-        list-style: none;
-        padding: 0;
-        margin: 1rem 0 0 0;
-      }
-
-      .feature-list li {
-        padding: 0.5rem 0 0.5rem 2rem;
-        position: relative;
+      .course-card p {
         color: var(--text-secondary);
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
       }
-
-      .feature-list li::before {
-        content: '✓';
-        position: absolute;
-        left: 0;
-        color: var(--excel-green);
-        font-weight: 700;
-        font-size: 1.1rem;
-      }
-
-      /* 函数卡片 */
-      .function-card {
-        border-left: 4px solid var(--excel-green);
-      }
-
-      .function-syntax {
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 4px;
-        font-family: 'Consolas', 'Monaco', monospace;
-        font-size: 0.9rem;
-        margin: 1rem 0;
-        border: 1px solid var(--excel-border);
-      }
-
-      .function-syntax code {
-        color: var(--excel-green-dark);
-      }
-
-      /* 示例表格 */
-      .sample-table {
-        border: 1px solid var(--excel-border);
-        border-radius: 4px;
-        overflow: hidden;
-        margin: 1rem 0;
-      }
-
-      .sample-table table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .sample-table th {
-        background: var(--excel-header);
-        border: 1px solid var(--excel-border);
-        padding: 0.75rem;
-        font-weight: 600;
-      }
-
-      .sample-table td {
-        border: 1px solid var(--excel-border);
-        padding: 0.75rem;
-      }
-
-      .sample-table tr:hover {
-        background: var(--excel-cell-hover);
-      }
-
-      /* 单元格样式 */
-      .cell-ref {
-        display: inline-block;
-        background: var(--excel-selection);
-        padding: 0.2rem 0.5rem;
-        border-radius: 3px;
-        font-family: monospace;
-        font-weight: 600;
-        color: var(--excel-green-dark);
-      }
-
-      /* 公式高亮 */
-      .formula-highlight {
-        background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%);
-        border: 2px solid var(--excel-green);
-        border-radius: 6px;
-        padding: 1rem;
-        font-family: 'Consolas', 'Monaco', monospace;
-        font-size: 1rem;
-        margin: 1rem 0;
-      }
-
-      /* 版本标签 */
-      .version-badge {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        margin-left: 0.5rem;
-      }
-
-      .version-new {
-        background: #d4edda;
-        color: #155724;
-      }
-
-      .version-2026 {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-
-      /* 交互式流程图详情 */
-      .flowchart-detail {
-        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-top: 1.5rem;
-        border: 1px solid var(--excel-border);
-      }
-
-      .flowchart-detail h4 {
-        color: var(--excel-green);
-        margin-bottom: 0.5rem;
-      }
-
-      .flowchart-detail p {
-        color: var(--text-secondary);
-        margin: 0;
-      }
-
-      /* 决策树样式 */
-      .decision-tree {
-        background: #fafbfc;
-        border: 1px solid var(--excel-border);
+      .course-icon { font-size: 1.5rem; }
+      .mermaid-wrapper {
+        background: white;
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 1.5rem;
         margin: 2rem 0;
+        text-align: center;
+        overflow-x: auto;
       }
-
-      .decision-node {
-        display: inline-block;
-        background: var(--excel-green);
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 6px;
-        margin: 0.5rem;
-        font-weight: 600;
-      }
-
-      .decision-branch {
-        padding-left: 2rem;
-        margin: 1rem 0;
-        border-left: 2px solid var(--excel-green);
-      }
-
-      /* 时间线样式 */
       .timeline {
         position: relative;
         padding: 2rem 0;
+        max-width: 800px;
+        margin: 0 auto;
       }
-
       .timeline::before {
         content: '';
         position: absolute;
@@ -266,1192 +139,272 @@
         height: 100%;
         background: var(--excel-green);
       }
-
       .timeline-item {
         display: flex;
         justify-content: flex-end;
         padding-right: 50%;
         position: relative;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
       }
-
       .timeline-item:nth-child(even) {
         justify-content: flex-start;
         padding-right: 0;
         padding-left: 50%;
       }
-
       .timeline-content {
         background: white;
-        border: 1px solid var(--excel-border);
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 1rem;
-        margin-right: 2rem;
-        max-width: 400px;
+        margin-right: 1.5rem;
+        max-width: 300px;
       }
-
       .timeline-item:nth-child(even) .timeline-content {
         margin-right: 0;
-        margin-left: 2rem;
+        margin-left: 1.5rem;
       }
-
       .timeline-dot {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         background: var(--excel-green);
         border-radius: 50%;
         border: 3px solid white;
       }
-
-      /* AI 功能卡片 */
-      .ai-card {
-        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-        border: 2px solid #667eea;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin: 1.5rem 0;
-      }
-
-      .ai-card h3 {
-        color: #667eea;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      /* 对比表格增强 */
-      .comparison-table th {
-        background: linear-gradient(135deg, var(--excel-green) 0%, var(--excel-green-light) 100%);
+      .footer {
+        background: linear-gradient(135deg, var(--excel-green-dark) 0%, var(--excel-green) 100%);
         color: white;
+        padding: 3rem 0;
+        margin-top: 4rem;
       }
-
-      /* 响应式 Mermaid */
-      .mermaid-wrapper {
-        overflow-x: auto;
-        text-align: center;
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+      .footer-section h4 {
+        color: white;
+        margin-bottom: 1rem;
+      }
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      .footer-section a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+      }
+      .footer-section a:hover {
+        color: white;
+        text-decoration: underline;
       }
     </style>
-    <!-- Mermaid 图表库 -->
     <script src="lib/mermaid.min.js"></script>
     <script type="module">
       window.mermaid.initialize({
         startOnLoad: true,
         theme: 'default',
         securityLevel: 'loose',
-        flowchart: { curve: 'basis', useMaxWidth: true },
-        sequence: { useMaxWidth: true, wrap: true }
+        flowchart: { curve: 'basis', useMaxWidth: true }
       });
     </script>
-    <!-- Chart.js 图表库 -->
-    <script src="lib/chart.umd.min.js"></script>
 </head>
 <body>
-    <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="container">
+        <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;height:60px;">
             <div class="nav-brand">
-                <span class="logo">📊 Excel<span class="highlight">Learn</span></span>
+                <span class="logo">📊 Excel<span style="color:var(--excel-green)">Learn</span></span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#intro">简介</a></li>
-                <li><a href="#basics">核心概念</a></li>
-                <li><a href="#functions">函数公式</a></li>
-                <li><a href="#visualization">数据可视化</a></li>
-                <li><a href="#automation">自动化</a></li>
-                <li><a href="#ai-features">AI 功能</a></li>
-                <li><a href="#advanced">高级技巧</a></li>
+            <ul class="nav-menu" style="display:flex;gap:1.5rem;list-style:none;margin:0;padding:0;">
+                <li><a href="#courses" style="color:var(--text-secondary);text-decoration:none;font-weight:500;">课程目录</a></li>
+                <li><a href="#timeline" style="color:var(--text-secondary);text-decoration:none;font-weight:500;">学习路线</a></li>
+                <li><a href="pages/code-processing.html" style="color:var(--excel-green);text-decoration:none;font-weight:600;">Python/Go 处理</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- 简介部分 -->
-    <section id="intro" class="section">
+    <section class="hero">
         <div class="container">
-            <h2 class="section-title">什么是 Excel？</h2>
-            <!-- Mermaid 流程图：Excel 生态系统 -->
-            <div class="mermaid-wrapper">
-                <div class="mermaid">
-flowchart TB
-    subgraph Core[Excel 核心功能]
-        A[数据录入] --> B[公式计算]
-        B --> C[数据分析]
-        C --> D[可视化]
-        D --> E[报告输出]
-    end
-
-    subgraph Apps[应用场景]
-        F[财务报表]
-        G[数据仪表板]
-        H[项目管理]
-        I[预算规划]
-        J[数据清洗]
-    end
-
-    subgraph AI[AI 增强]
-        K[Copilot 助手]
-        L[智能公式建议]
-        M[自动洞察]
-        N[自然语言查询]
-    end
-
-    Core --> Apps
-    AI --> Core
-    AI --> Apps
-                </div>
+            <h1 class="hero-title">Excel 完全指南</h1>
+            <p class="hero-subtitle">从入门到精通 · 2026 最新版</p>
+            <div class="hero-buttons">
+                <a href="#courses" class="btn btn-primary">📚 开始学习</a>
+                <a href="pages/introduction.html" class="btn btn-secondary">📖 入门教程</a>
             </div>
+        </div>
+    </section>
 
-            <!-- Excel 版本演进时间线 -->
+    <section id="courses" class="section">
+        <div class="container">
+            <h2 class="section-title">课程目录</h2>
+            <p style="text-align:center;color:var(--text-secondary);max-width:600px;margin:0 auto 2rem;">
+                系统化的 Excel 学习路径，从基础操作到高级编程处理
+            </p>
+            <div class="course-grid">
+                <a href="pages/excel-structure.html" class="course-card">
+                    <h3><span class="course-icon">📁</span> Excel 文件结构</h3>
+                    <p>了解 Excel 文件的内部结构、XML 格式和 OpenXML 标准</p>
+                </a>
+                <a href="pages/introduction.html" class="course-card">
+                    <h3><span class="course-icon">🚀</span> 快速入门</h3>
+                    <p>Excel 界面介绍、基本操作和常用功能快速上手</p>
+                </a>
+                <a href="pages/basics.html" class="course-card">
+                    <h3><span class="course-icon">📝</span> 基础操作</h3>
+                    <p>数据输入、编辑、单元格选择、移动复制等基础技能</p>
+                </a>
+                <a href="pages/formatting.html" class="course-card">
+                    <h3><span class="course-icon">🎨</span> 格式化美化</h3>
+                    <p>单元格格式、条件格式、样式设置让数据更美观</p>
+                </a>
+                <a href="pages/formulas.html" class="course-card">
+                    <h3><span class="course-icon">🧮</span> 公式函数</h3>
+                    <p>常用函数、逻辑函数、查找函数、动态数组函数</p>
+                </a>
+                <a href="pages/charts.html" class="course-card">
+                    <h3><span class="course-icon">📊</span> 图表制作</h3>
+                    <p>柱状图、折线图、饼图等各类图表创建和美化</p>
+                </a>
+                <a href="pages/pivottables.html" class="course-card">
+                    <h3><span class="course-icon">🔄</span> 数据透视表</h3>
+                    <p>强大的数据汇总、分析和透视表制作技巧</p>
+                </a>
+                <a href="pages/programming.html" class="course-card">
+                    <h3><span class="course-icon">💻</span> VBA 编程</h3>
+                    <p>宏录制、VBA 代码编写实现自动化处理</p>
+                </a>
+                <a href="pages/code-processing.html" class="course-card">
+                    <h3><span class="course-icon">🐍</span> Python/Go 处理</h3>
+                    <p>使用 Python 和 Go 编程语言高效处理 Excel 文件</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Excel 版本演进史</h2>
             <div class="timeline">
-                <h3 style="text-align: center; margin-bottom: 2rem;">Excel 版本演进史</h3>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <strong>1985 - Excel 诞生</strong>
-                        <p>首个 Mac 版本发布</p>
+                        <strong>1985</strong>
+                        <p>Excel 诞生 (Mac)</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <strong>1987 - Excel 2.0</strong>
-                        <p>首个 Windows 版本</p>
+                        <strong>1987</strong>
+                        <p>Excel 2.0 (Windows)</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <strong>1993 - Excel 5.0</strong>
-                        <p>引入 VBA 编程</p>
+                        <strong>1993</strong>
+                        <p>Excel 5.0 - VBA 编程</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <strong>2007 - Excel 2007</strong>
+                        <strong>2007</strong>
                         <p>Ribbon 界面革新</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <strong>2019 - Excel 2019</strong>
+                        <strong>2019</strong>
                         <p>动态数组函数</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <strong>2021 - Excel 2021</strong>
+                        <strong>2021</strong>
                         <p>LAMBDA 函数</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <strong>2026 - Excel 2026</strong>
+                        <strong>2026</strong>
                         <p>AI 驱动、Python 集成</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Excel 核心能力对比表 -->
-            <div class="table-wrapper">
-                <h3 class="table-title">Excel 2026 核心能力矩阵</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th width="20%">能力维度</th>
-                            <th width="20%">传统方式</th>
-                            <th width="20%">现代方式 (2026)</th>
-                            <th width="20%">效率提升</th>
-                            <th width="20%">学习难度</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>数据查找</strong></td>
-                            <td>VLOOKUP</td>
-                            <td>XLOOKUP + AI 建议</td>
-                            <td>↑ 300%</td>
-                            <td>↓ 降低</td>
-                        </tr>
-                        <tr>
-                            <td><strong>数据筛选</strong></td>
-                            <td>自动筛选</td>
-                            <td>FILTER 动态数组</td>
-                            <td>↑ 200%</td>
-                            <td>↓ 降低</td>
-                        </tr>
-                        <tr>
-                            <td><strong>自定义函数</strong></td>
-                            <td>VBA UDF</td>
-                            <td>LAMBDA 函数</td>
-                            <td>↑ 500%</td>
-                            <td>↓ 大幅降低</td>
-                        </tr>
-                        <tr>
-                            <td><strong>数据清洗</strong></td>
-                            <td>手动操作</td>
-                            <td>Power Query + AI</td>
-                            <td>↑ 1000%</td>
-                            <td>↓ 降低</td>
-                        </tr>
-                        <tr>
-                            <td><strong>公式编写</strong></td>
-                            <td>手动输入</td>
-                            <td>Copilot 自然语言</td>
-                            <td>↑ 800%</td>
-                            <td>↓ 大幅降低</td>
-                        </tr>
-                        <tr>
-                            <td><strong>代码处理</strong></td>
-                            <td>VBA</td>
-                            <td>Python in Excel</td>
-                            <td>↑ 400%</td>
-                            <td>→ 持平</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- 核心概念部分 -->
-    <section id="basics" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">Excel 核心概念</h2>
-
-            <!-- Mermaid 类图：Excel 对象层次结构 -->
             <div class="mermaid-wrapper">
-                <h3 class="diagram-title">Excel 对象层次结构</h3>
-                <div class="mermaid">
-                classDiagram
-                    class Application {
-                        +Workbooks
-                        +ActiveWorkbook
-                        +ActiveSheet
-                        +Selection
-                        +ThisWorkbook
-                    }
-                    class Workbook {
-                        +Worksheets
-                        +Charts
-                        +Name
-                        +Path
-                        +Saved
-                    }
-                    class Worksheet {
-                        +Cells
-                        +Rows
-                        +Columns
-                        +Range()
-                        +Name
-                        +Index
-                    }
-                    class Range {
-                        +Value
-                        +Formula
-                        +Format
-                        +Address
-                        +Select()
-                    }
-                    class Chart {
-                        +ChartType
-                        +Series
-                        +HasTitle
-                        +ChartTitle
-                    }
-
-                    Application --> Workbook : 包含
-                    Workbook --> Worksheet : 包含
-                    Workbook --> Chart : 包含
-                    Worksheet --> Range : 包含
-                </div>
-            </div>
-
-            <!-- Mermaid 序列图：公式计算流程 -->
-            <div class="mermaid-wrapper">
-                <h3 class="diagram-title">Excel 公式计算流程（时序图）</h3>
-                <div class="mermaid">
-                sequenceDiagram
-                    autonumber
-                    participant U as 用户
-                    participant C as 单元格
-                    participant P as 解析器
-                    participant D as 依赖追踪
-                    participant E as 计算引擎
-                    participant R as 重算队列
-
-                    U->>C: 输入公式 =SUM(A1:A10)*B1
-                    C->>P: 发送公式字符串
-                    P->>P: 词法分析
-                    P->>P: 语法分析生成 AST
-                    P->>D: 识别依赖单元格
-                    D->>D: 构建依赖树
-                    D-->>P: 返回依赖关系
-                    P-->>C: 存储公式和依赖
-                    Note over C,E: 依赖项变化时触发重算
-                    D->>R: 加入重算队列
-                    R->>E: 按依赖顺序计算
-                    E->>C: 读取 A1:A10 值
-                    E->>E: 执行 SUM
-                    E->>C: 读取 B1 值
-                    E->>E: 执行乘法
-                    E-->>C: 返回计算结果
-                    C-->>U: 显示结果
-                </div>
-            </div>
-
-            <!-- 引用类型详解表 -->
-            <div class="table-wrapper">
-                <h3 class="table-title">单元格引用类型完全指南</h3>
-                <table class="detail-table">
-                    <thead>
-                        <tr>
-                            <th width="18%">引用类型</th>
-                            <th width="18%">示例</th>
-                            <th width="22%">复制公式时变化</th>
-                            <th width="22%">应用场景</th>
-                            <th width="20%">快捷键</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>相对引用</strong></td>
-                            <td><span class="cell-ref">A1</span></td>
-                            <td>行和列都会变化</td>
-                            <td>批量计算、填充序列</td>
-                            <td>F4 循环切换</td>
-                        </tr>
-                        <tr>
-                            <td><strong>绝对引用</strong></td>
-                            <td><span class="cell-ref">$A$1</span></td>
-                            <td>行和列都不变</td>
-                            <td>固定参数、常量引用</td>
-                            <td>F4 切换至此</td>
-                        </tr>
-                        <tr>
-                            <td><strong>混合引用（列绝对）</strong></td>
-                            <td><span class="cell-ref">$A1</span></td>
-                            <td>列固定，行变化</td>
-                            <td>乘法表、矩阵计算</td>
-                            <td>F4 切换至此</td>
-                        </tr>
-                        <tr>
-                            <td><strong>混合引用（行绝对）</strong></td>
-                            <td><span class="cell-ref">A$1</span></td>
-                            <td>行固定，列变化</td>
-                            <td>跨列比较、横向填充</td>
-                            <td>F4 切换至此</td>
-                        </tr>
-                        <tr>
-                            <td><strong>结构化引用</strong></td>
-                            <td><span class="cell-ref">Table1[Sales]</span></td>
-                            <td>引用表列，自动扩展</td>
-                            <td>表格数据、动态范围</td>
-                            <td>自动转换</td>
-                        </tr>
-                        <tr>
-                            <td><strong>跨表引用</strong></td>
-                            <td><span class="cell-ref">Sheet2!A1</span></td>
-                            <td>跟随上述规则</td>
-                            <td>多表汇总、数据关联</td>
-                            <td>鼠标点击</td>
-                        </tr>
-                        <tr>
-                            <td><strong>跨簿引用</strong></td>
-                            <td><span class="cell-ref">[Book1.xlsx]Sheet1!$A$1</span></td>
-                            <td>保持绝对引用</td>
-                            <td>数据整合、报表合并</td>
-                            <td>鼠标点击</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- 交互式流程图：数据处理流程 -->
-            <div class="interactive-flowchart">
-                <h3 style="margin-bottom: 1.5rem;">数据处理完整流程（点击步骤查看详情）</h3>
-                <div class="flowchart-steps">
-                    <div class="flowchart-step active" data-step="1">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>数据导入</h4>
-                            <p>获取原始数据</p>
-                        </div>
-                    </div>
-                    <div class="flowchart-step" data-step="2">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>数据清洗</h4>
-                            <p>清理和转换</p>
-                        </div>
-                    </div>
-                    <div class="flowchart-step" data-step="3">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>数据分析</h4>
-                            <p>计算和建模</p>
-                        </div>
-                    </div>
-                    <div class="flowchart-step" data-step="4">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h4>数据可视化</h4>
-                            <p>图表展示</p>
-                        </div>
-                    </div>
-                    <div class="flowchart-step" data-step="5">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h4>报告输出</h4>
-                            <p>分享结果</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flowchart-detail" id="flowchartDetail">
-                    <h4>步骤 1: 数据导入</h4>
-                    <p>从各种来源导入数据：CSV 文件、数据库、Web API、其他 Excel 文件等。2026 版本支持一键导入和智能识别格式。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 函数公式部分 -->
-    <section id="functions" class="section">
-        <div class="container">
-            <h2 class="section-title">函数与公式</h2>
-
-            <!-- Mermaid 思维导图：函数分类 -->
-            <div class="mermaid-wrapper">
-                <h3 class="diagram-title">Excel 函数分类思维导图</h3>
-                <div class="mermaid">
-mindmap
-  root((Excel 函数))
-    数学与三角
-      SUM SUMIFS
-      ROUND ROUNDUP
-      MOD QUOTIENT
-    统计
-      AVERAGE AVERAGEIFS
-      COUNT COUNTIFS
-      MAX MIN
-      RANK PERCENTILE
-    查找与引用
-      XLOOKUP VLOOKUP
-      INDEX MATCH
-      FILTER SORT
-      UNIQUE
-    文本
-      LEFT RIGHT MID
-      TEXT TEXTJOIN
-      CONCAT SUBSTITUTE
-      LEN TRIM
-    日期与时间
-      TODAY NOW
-      DATEDIF
-      WORKDAY NETWORKDAYS
-      EOMONTH
-    逻辑
-      IF IFS
-      AND OR NOT
-      SWITCH
-      IFERROR IFNA
-    动态数组
-      SORT SORTBY
-      UNIQUE
-      FILTER
-      SEQUENCE
-      RANDARRAY
-    2026 新函数
-      LAMBDA
-      LET
-      MAKEARRAY
-      SCAN REDUCE
-      MAP
-                </div>
-            </div>
-
-            <!-- Mermaid 决策树：查找函数选择 -->
-            <div class="mermaid-wrapper">
-                <h3 class="diagram-title">查找函数选择决策树</h3>
-                <div class="mermaid">
-flowchart TD
-    A[需要查找数据？] --> B{查找方向？}
-    B -->|向下查找 | C{需要返回左侧列？}
-    B -->|向右查找 | D[使用 HLOOKUP]
-    C -->|是 | E[使用 XLOOKUP]
-    C -->|否 | F{需要近似匹配？}
-    F -->|是 | G[使用 XLOOKUP]
-    F -->|否 | H[使用 VLOOKUP 或 XLOOKUP]
-    
-    E --> I[推荐：XLOOKUP]
-    H --> I
-    G --> I
-    
-    I --> J{需要多条件查找？}
-    J -->|是 | K[使用 FILTER 或<br/>XLOOKUP 连接键]
-    J -->|否 | L[完成选择]
-    
-    K --> M{需要返回数组？}
-    M -->|是 | N[使用 FILTER]
-    M -->|否 | O[使用 XLOOKUP]
-    
-    D --> P[HLOOKUP 已淘汰<br/>建议用 XLOOKUP]
-    P --> I
-                </div>
-            </div>
-
-            <div class="excel-grid">
-                <div class="excel-card function-card">
-                    <h3>XLOOKUP <span class="version-badge version-new">推荐</span></h3>
-                    <p>现代查找函数，替代 VLOOKUP 和 HLOOKUP</p>
-                    <div class="function-syntax">
-                        <code>=XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found], [match_mode], [search_mode])</code>
-                    </div>
-                    <ul class="feature-list">
-                        <li>支持向左查找</li>
-                        <li>默认精确匹配</li>
-                        <li>可自定义未找到返回值</li>
-                        <li>支持二分查找模式</li>
-                    </ul>
-                </div>
-                <div class="excel-card function-card">
-                    <h3>FILTER <span class="version-badge version-new">动态数组</span></h3>
-                    <p>根据条件筛选数据区域</p>
-                    <div class="function-syntax">
-                        <code>=FILTER(array, include, [if_empty])</code>
-                    </div>
-                    <ul class="feature-list">
-                        <li>返回动态数组结果</li>
-                        <li>支持多条件筛选</li>
-                        <li>自动溢出到相邻单元格</li>
-                        <li>可嵌套其他函数</li>
-                    </ul>
-                </div>
-                <div class="excel-card function-card">
-                    <h3>SORT <span class="version-badge version-new">动态数组</span></h3>
-                    <p>对区域或数组进行排序</p>
-                    <div class="function-syntax">
-                        <code>=SORT(array, [sort_index], [sort_order], [by_col])</code>
-                    </div>
-                    <ul class="feature-list">
-                        <li>动态排序结果</li>
-                        <li>支持多列排序</li>
-                        <li>升序/降序可选</li>
-                        <li>不改变原始数据</li>
-                    </ul>
-                </div>
-                <div class="excel-card function-card">
-                    <h3>LAMBDA <span class="version-badge version-2026">2021+</span></h3>
-                    <p>创建自定义函数，无需 VBA</p>
-                    <div class="function-syntax">
-                        <code>=LAMBDA(parameter1, parameter2, ..., calculation)</code>
-                    </div>
-                    <ul class="feature-list">
-                        <li>定义命名函数</li>
-                        <li>支持递归调用</li>
-                        <li>可组合复杂逻辑</li>
-                        <li>提升公式复用性</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- LAMBDA 函数示例 -->
-            <div class="info-box" style="border-left-color: #667eea; background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);">
-                <h3>🚀 LAMBDA 自定义函数示例</h3>
-                <p>使用 LAMBDA 创建可复用的自定义函数，无需 VBA 编程</p>
-
-                <h4>示例 1：计算圆的面积</h4>
-                <div class="function-syntax">
-                    <code>=LAMBDA(r, PI() * r^2)</code>
-                </div>
-                <p>命名为 CIRCLE_AREA 后，可直接使用 <code>=CIRCLE_AREA(5)</code></p>
-
-                <h4>示例 2：递归计算阶乘</h4>
-                <div class="function-syntax">
-                    <code>=LAMBDA(n, IF(n<=1, 1, n * FACTORIAL(n-1)))</code>
-                </div>
-                <p>命名为 FACTORIAL 后，可计算任意正整数的阶乘</p>
-
-                <h4>示例 3：多参数复杂计算</h4>
-                <div class="function-syntax">
-                    <code>=LAMBDA(principal, rate, periods,
-    LET(
-        monthlyRate, rate/12,
-        totalPayments, periods*12,
-        PMT(monthlyRate, totalPayments, -principal)
-    )
-)</code>
-                </div>
-                <p>命名为 CALC_MORTGAGE，计算房贷月供</p>
-            </div>
-
-            <!-- 函数对比表 -->
-            <div class="table-wrapper">
-                <h3 class="table-title">新旧函数对比与迁移指南</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th width="20%">功能</th>
-                            <th width="25%">传统函数</th>
-                            <th width="25%">现代函数</th>
-                            <th width="30%">优势</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>垂直查找</strong></td>
-                            <td><code>VLOOKUP</code></td>
-                            <td><code>XLOOKUP</code></td>
-                            <td>支持向左查找、默认精确匹配、更简洁</td>
-                        </tr>
-                        <tr>
-                            <td><strong>多条件查找</strong></td>
-                            <td><code>INDEX+MATCH</code></td>
-                            <td><code>XLOOKUP</code> 或 <code>FILTER</code></td>
-                            <td>语法简单、性能更好</td>
-                        </tr>
-                        <tr>
-                            <td><strong>条件求和</strong></td>
-                            <td><code>SUMIF</code></td>
-                            <td><code>SUMIFS</code></td>
-                            <td>支持多条件、参数顺序一致</td>
-                        </tr>
-                        <tr>
-                            <td><strong>排序</strong></td>
-                            <td>手动排序</td>
-                            <td><code>SORT</code></td>
-                            <td>动态更新、不改变原数据</td>
-                        </tr>
-                        <tr>
-                            <td><strong>去重</strong></td>
-                            <td>删除重复项</td>
-                            <td><code>UNIQUE</code></td>
-                            <td>动态数组、自动更新</td>
-                        </tr>
-                        <tr>
-                            <td><strong>自定义函数</strong></td>
-                            <td>VBA UDF</td>
-                            <td><code>LAMBDA</code></td>
-                            <td>无需宏、更安全、易分享</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- 数据可视化部分 -->
-    <section id="visualization" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">数据可视化</h2>
-            <p class="section-description">将数据转化为直观的图表，让洞察一目了然</p>
-
-            <!-- Mermaid 决策树：图表选择指南 -->
-            <div class="mermaid-wrapper">
-                <h3 class="diagram-title">图表类型选择决策树</h3>
-                <div class="mermaid">
-flowchart TD
-    A[需要可视化数据？] --> B{展示什么？}
-    
-    B -->|比较大小 | C{比较项目数量？}
-    C -->|少（≤5）| D[柱状图]
-    C -->|多（>5）| E[条形图]
-    C -->|时间序列 | F[折线图]
-    
-    B -->|占比关系 | G{部分与整体？}
-    G -->|是 | H{时间点数量？}
-    H -->|单时间点 | I[饼图/环形图]
-    H -->|多时间点 | J[堆积柱状图]
-    G -->|否 | K[百分比条形图]
-    
-    B -->|趋势变化 | L{时间跨度？}
-    L -->|短期（≤12 期）| M[折线图]
-    L -->|长期（>12 期）| N[面积图]
-    L -->|预测未来 | O[带趋势线的折线图]
-    
-    B -->|分布情况 | P{数据类型？}
-    P -->|连续数据 | Q[直方图]
-    P -->|离散数据 | R[箱线图]
-    P -->|两个变量 | S[散点图]
-    
-    B -->|关系分析 | T{变量数量？}
-    T -->|两个变量 | U[散点图/气泡图]
-    T -->|多个变量 | V[热力图]
-    T -->|相关性 | W[相关矩阵]
-    
-    B -->|流程展示 | X{流程类型？}
-    X -->|步骤流程 | Y[流程图]
-    X -->|时间流程 | Z[甘特图]
-    X -->|转化流程 | AA[漏斗图]
-                </div>
-            </div>
-
-            <div class="excel-grid">
-                <div class="excel-card">
-                    <h3>📊 基础图表</h3>
-                    <ul class="feature-list">
-                        <li><strong>柱状图</strong> - 比较不同类别的数据</li>
-                        <li><strong>折线图</strong> - 展示数据随时间变化趋势</li>
-                        <li><strong>饼图</strong> - 显示部分与整体的关系</li>
-                        <li><strong>条形图</strong> - 横向比较，适合长标签</li>
-                        <li><strong>面积图</strong> - 强调数量随时间变化</li>
-                    </ul>
-                </div>
-                <div class="excel-card">
-                    <h3>📈 高级图表</h3>
-                    <ul class="feature-list">
-                        <li><strong>散点图</strong> - 分析两个变量的关系</li>
-                        <li><strong>气泡图</strong> - 三维数据比较</li>
-                        <li><strong>雷达图</strong> - 多维度数据对比</li>
-                        <li><strong>股价图</strong> - 金融数据分析</li>
-                        <li><strong>曲面图</strong> - 三维数据趋势</li>
-                    </ul>
-                </div>
-                <div class="excel-card">
-                    <h3>🎯 统计图表</h3>
-                    <ul class="feature-list">
-                        <li><strong>直方图</strong> - 数据分布分析</li>
-                        <li><strong>箱线图</strong> - 显示数据分散情况</li>
-                        <li><strong>瀑布图</strong> - 累计效果展示</li>
-                        <li><strong>漏斗图</strong> - 流程转化率</li>
-                        <li><strong>树状图</strong> - 层次结构数据</li>
-                    </ul>
-                </div>
-                <div class="excel-card">
-                    <h3>🌟 2026 新增</h3>
-                    <ul class="feature-list">
-                        <li><strong>AI 推荐图表</strong> - 智能选择最佳图表</li>
-                        <li><strong>动态仪表板</strong> - 交互式数据展示</li>
-                        <li><strong>实时数据图表</strong> - 连接实时数据源</li>
-                        <li><strong>3D 地图增强</strong> - 地理数据可视化</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 自动化部分 -->
-    <section id="automation" class="section">
-        <div class="container">
-            <h2 class="section-title">自动化与编程</h2>
-            <p class="section-description">从 VBA 到 Python，实现工作流程自动化</p>
-
-            <!-- Mermaid 流程图：自动化方案选择 -->
-            <div class="mermaid-wrapper">
-                <h3 class="diagram-title">Excel 自动化方案选择流程图</h3>
-                <div class="mermaid">
-flowchart TD
-    A[需要自动化任务？] --> B{任务类型？}
-    
-    B -->|简单宏录制 | C[录制宏]
-    C --> D{需要编辑？}
-    D -->|是 | E[编辑 VBA 代码]
-    D -->|否 | F[直接使用]
-    
-    B -->|复杂逻辑 | G[编写 VBA]
-    G --> H{需要 UI 交互？}
-    H -->|是 | I[使用 UserForm]
-    H -->|否 | J[纯代码处理]
-    
-    B -->|数据处理 | K{数据来源？}
-    K -->|数据库/API| L[Power Query]
-    K -->|Excel 内部 | M[公式/函数]
-    K -->|外部文件 | N[Power Query / VBA]
-    
-    B -->|数据分析 | O{分析复杂度？}
-    O -->|统计分析 | P[Python in Excel]
-    O -->|机器学习 | Q[Python + 库]
-    O -->|简单计算 | R[Excel 函数]
-    
-    B -->|自定义函数 | S{函数复杂度？}
-    S -->|简单计算 | T[LAMBDA 函数]
-    S -->|复杂逻辑 | U[VBA UDF]
-    S -->|调用外部库 | V[Python 函数]
-    
-    B -->|报表生成 | W{报表频率？}
-    W -->|一次性 | X[手动制作]
-    W -->|定期 | Y[VBA 自动化]
-    W -->|实时 | Z[Power BI 集成]
-    
-    E --> AA[完成]
-    F --> AA
-    I --> AA
-    J --> AA
-    L --> AA
-    M --> AA
-    N --> AA
-    P --> AA
-    Q --> AA
-    R --> AA
-    T --> AA
-    U --> AA
-    V --> AA
-    X --> AA
-    Y --> AA
-    Z --> AA
-                </div>
-            </div>
-            <!-- VBA vs Python 对比 -->
-            <div class="code-block">
-                <h3>VBA vs Python 代码对比</h3>
-                <h4>VBA 示例：计算销售总额</h4>
-                <pre><code>Sub CalculateTotal()
-    Dim ws As Worksheet
-    Dim lastRow As Long
-    Dim i As Long
-    Dim total As Double
-    
-    Set ws = ThisWorkbook.Sheets("Sales")
-    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
-    
-    total = 0
-    For i = 2 To lastRow
-        total = total + ws.Cells(i, "C").Value
-    Next i
-    
-    ws.Range("C" & lastRow + 1).Value = total
-End Sub</code></pre>
-
-                <h4>Python 示例：同样的功能</h4>
-                <pre><code>import pandas as pd
-
-# 读取 Excel 数据
-df = pd.read_excel("Sales.xlsx", sheet_name="Sales")
-
-# 计算总额
-total = df["Amount"].sum()
-
-# 输出结果
-print(f"销售总额：{total}")
-
-# 写回 Excel
-with pd.ExcelWriter("Sales.xlsx", mode="a") as writer:
-    pd.DataFrame({"Total": [total]}).to_excel(writer, sheet_name="Results")</code></pre>
-            </div>
-
-            <!-- 自动化方案对比表 -->
-            <div class="table-wrapper">
-                <h3 class="table-title">自动化方案全面对比</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th width="15%">方案</th>
-                            <th width="17%">学习曲线</th>
-                            <th width="17%">执行速度</th>
-                            <th width="17%">灵活性</th>
-                            <th width="17%">适用场景</th>
-                            <th width="17%">2026 支持度</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>录制宏</strong></td>
-                            <td>⭐ 简单</td>
-                            <td>⭐⭐ 中等</td>
-                            <td>⭐ 低</td>
-                            <td>简单重复任务</td>
-                            <td>✅ 完全支持</td>
-                        </tr>
-                        <tr>
-                            <td><strong>VBA</strong></td>
-                            <td>⭐⭐⭐ 中等</td>
-                            <td>⭐⭐⭐ 快</td>
-                            <td>⭐⭐⭐⭐ 高</td>
-                            <td>复杂自动化</td>
-                            <td>✅ 兼容支持</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Power Query</strong></td>
-                            <td>⭐⭐ 较简单</td>
-                            <td>⭐⭐⭐ 快</td>
-                            <td>⭐⭐⭐ 中等</td>
-                            <td>数据清洗转换</td>
-                            <td>✅ 重点发展</td>
-                        </tr>
-                        <tr>
-                            <td><strong>LAMBDA</strong></td>
-                            <td>⭐⭐ 较简单</td>
-                            <td>⭐⭐ 中等</td>
-                            <td>⭐⭐⭐ 中等</td>
-                            <td>自定义计算</td>
-                            <td>✅ 重点发展</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Python</strong></td>
-                            <td>⭐⭐⭐⭐ 较难</td>
-                            <td>⭐⭐⭐⭐ 很快</td>
-                            <td>⭐⭐⭐⭐⭐ 极高</td>
-                            <td>数据分析/ML</td>
-                            <td>🆕 2026 新增</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- AI 功能部分 -->
-    <section id="ai-features" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">AI 智能功能</h2>
-            
-            <!-- Mermaid 架构图：AI 功能架构 -->
-            <div class="mermaid-wrapper">
-                <h3 class="diagram-title">Excel AI 功能架构图</h3>
+                <h3 style="margin-bottom:1rem;color:var(--text-primary);">Excel 生态系统</h3>
                 <div class="mermaid">
 flowchart TB
-    subgraph User[用户交互层]
-        A[自然语言输入]
-        B[智能建议]
-        C[一键操作]
+    subgraph Core[核心功能]
+        A[数据录入] --> B[公式计算]
+        B --> C[数据分析]
+        C --> D[可视化]
     end
-
-    subgraph AI[AI 引擎层]
-        D[Copilot 助手]
-        E[公式生成器]
-        F[数据洞察]
-        G[异常检测]
+    subgraph Apps[应用场景]
+        E[财务报表]
+        F[数据仪表板]
+        G[项目管理]
+        H[预算规划]
     end
-
-    subgraph Data[数据处理层]
-        H[数据理解]
-        I[模式识别]
-        J[趋势分析]
-        K[关联发现]
+    subgraph AI[AI 增强]
+        I[Copilot 助手]
+        J[智能公式]
+        K[自动洞察]
     end
-
-    subgraph Output[输出层]
-        L[自动生成公式]
-        M[创建图表]
-        N[生成报告]
-        O[提供建议]
-    end
-
-    User --> AI
-    AI --> Data
-    Data --> AI
-    AI --> Output
+    Core --> Apps
+    AI --> Core
                 </div>
-            </div>
-
-            <!-- AI 功能效率对比 -->
-            <div class="table-wrapper">
-                <h3 class="table-title">AI 功能效率提升对比</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th width="25%">任务类型</th>
-                            <th width="25%">传统方式</th>
-                            <th width="25%">AI 辅助</th>
-                            <th width="25%">效率提升</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>公式编写</strong></td>
-                            <td>手动查找函数 + 编写</td>
-                            <td>自然语言描述</td>
-                            <td>↑ 500%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>数据清洗</strong></td>
-                            <td>手动操作 + 公式</td>
-                            <td>AI 自动识别和清理</td>
-                            <td>↑ 800%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>图表创建</strong></td>
-                            <td>选择数据 + 配置选项</td>
-                            <td>AI 推荐最佳图表</td>
-                            <td>↑ 300%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>数据分析</strong></td>
-                            <td>手动分析 + 计算</td>
-                            <td>AI 自动生成洞察</td>
-                            <td>↑ 600%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>报告撰写</strong></td>
-                            <td>手动整理 + 编写</td>
-                            <td>AI 生成初稿</td>
-                            <td>↑ 400%</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </section>
 
-    <!-- 高级技巧部分 -->
-    <section id="advanced" class="section">
+    <footer class="footer">
         <div class="container">
-            <h2 class="section-title">高级技巧与最佳实践</h2>
-
-            <!-- Mermaid 流程图：问题排查流程 -->
-            <div class="mermaid-wrapper">
-                <h3 class="diagram-title">公式错误排查流程图</h3>
-                <div class="mermaid">
-flowchart TD
-    A[公式返回错误] --> B{错误类型？}
-
-    B -->|"#VALUE!"| C[检查参数类型]
-    C --> D[确保数值运算使用数字]
-    D --> E[文本连接使用&或 TEXTJOIN]
-
-    B -->|"#DIV/0!"| F[检查除数]
-    F --> G[使用 IFERROR 处理]
-    G --> H["=IFERROR(A1/B1, 0)"]
-
-    B -->|"#REF!"| I[检查引用]
-    I --> J[单元格是否被删除？]
-    J --> K[修复或重建引用]
-
-    B -->|"#NAME?"| L[检查名称]
-    L --> M[函数名拼写正确？]
-    M --> N[名称是否已定义？]
-
-    B -->|"#N/A"| O[查找失败]
-    O --> P[数据是否存在？]
-    P --> Q[使用 IFNA 处理]
-
-    B -->|"#NUM!"| R[数值问题]
-    R --> S[检查数值范围]
-    S --> T[确保参数有效]
-
-    E --> U[问题解决]
-    H --> U
-    K --> U
-    N --> U
-    Q --> U
-    T --> U
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>📊 ExcelLearn</h4>
+                    <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;">
+                        全面的 Excel 学习资源，帮助你从入门到精通
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="#courses">课程目录</a></li>
+                        <li><a href="#timeline">学习路线</a></li>
+                        <li><a href="pages/introduction.html">入门教程</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>学习资源</h4>
+                    <ul>
+                        <li><a href="pages/basics.html">基础操作</a></li>
+                        <li><a href="pages/formulas.html">公式函数</a></li>
+                        <li><a href="pages/charts.html">图表制作</a></li>
+                        <li><a href="pages/pivottables.html">数据透视表</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>编程处理</h4>
+                    <ul>
+                        <li><a href="pages/programming.html">VBA 编程</a></li>
+                        <li><a href="pages/code-processing.html">Python/Go 处理</a></li>
+                    </ul>
                 </div>
             </div>
-
-            <!-- 常见错误与解决方案 -->
-            <div class="table-wrapper">
-                <h3 class="table-title">常见错误与解决方案速查表</h3>
-                <table class="detail-table">
-                    <thead>
-                        <tr>
-                            <th width="20%">错误</th>
-                            <th width="25%">原因</th>
-                            <th width="30%">解决方案</th>
-                            <th width="25%">预防方法</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>#VALUE!</strong></td>
-                            <td>参数类型不匹配</td>
-                            <td>使用 VALUE() 转换文本为数字</td>
-                            <td>数据验证限制输入类型</td>
-                        </tr>
-                        <tr>
-                            <td><strong>#DIV/0!</strong></td>
-                            <td>除数为零或空</td>
-                            <td>=IFERROR(A1/B1, 0)</td>
-                            <td>添加除数检查</td>
-                        </tr>
-                        <tr>
-                            <td><strong>#REF!</strong></td>
-                            <td>引用无效</td>
-                            <td>修复或删除错误引用</td>
-                            <td>使用命名范围</td>
-                        </tr>
-                        <tr>
-                            <td><strong>#NAME?</strong></td>
-                            <td>名称未识别</td>
-                            <td>检查拼写和名称定义</td>
-                            <td>使用公式自动完成</td>
-                        </tr>
-                        <tr>
-                            <td><strong>#N/A</strong></td>
-                            <td>值不可用</td>
-                            <td>=IFNA(VLOOKUP(...), "未找到")</td>
-                            <td>数据验证确保存在</td>
-                        </tr>
-                        <tr>
-                            <td><strong>循环引用</strong></td>
-                            <td>公式自引用</td>
-                            <td>检查并打破引用链</td>
-                            <td>启用迭代计算警告</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.2);text-align:center;">
+                <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;">
+                    最后更新：2026 年 2 月 | 基于 Excel 2026 最新版本
+                </p>
             </div>
         </div>
-    </section>
-
-    <!-- Chart.js 图表初始化脚本 -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // 销售趋势图
-        const salesCtx = document.getElementById('salesChart');
-        if (salesCtx && typeof Chart !== 'undefined') {
-          new Chart(salesCtx, {
-            type: 'line',
-            data: {
-              labels: ['1 月', '2 月', '3 月', '4 月', '5 月', '6 月', '7 月', '8 月', '9 月', '10 月', '11 月', '12 月'],
-              datasets: [{
-                label: '2025 年销售额',
-                data: [120, 150, 180, 220, 200, 250, 280, 300, 320, 350, 380, 420],
-                borderColor: '#107c41',
-                backgroundColor: 'rgba(16, 124, 65, 0.1)',
-                tension: 0.4,
-                fill: true
-              }, {
-                label: '2026 年销售额',
-                data: [180, 200, 240, 280, 320, 380, 420, 450, 480, 520, 560, 600],
-                borderColor: '#2b88d8',
-                backgroundColor: 'rgba(43, 136, 216, 0.1)',
-                tension: 0.4,
-                fill: true
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { position: 'bottom' }
-              },
-              scales: {
-                y: { beginAtZero: true },
-                x: { grid: { display: false } }
-              }
-            }
-          });
-        }
-
-        // 产品占比饼图
-        const pieCtx = document.getElementById('pieChart');
-        if (pieCtx && typeof Chart !== 'undefined') {
-          new Chart(pieCtx, {
-            type: 'doughnut',
-            data: {
-              labels: ['电子产品', '办公用品', '家具', '服务', '其他'],
-              datasets: [{
-                data: [35, 25, 20, 15, 5],
-                backgroundColor: ['#107c41', '#21a366', '#2b88d8', '#8b5cf6', '#d83b01'],
-                borderWidth: 2,
-                borderColor: '#ffffff'
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { position: 'bottom' }
-              }
-            }
-          });
-        }
-      });
-    </script>
+    </footer>
 </body>
 </html>
