@@ -426,6 +426,7 @@
                 <span class="logo">Excel</span>
             </div>
             <ul class="nav-menu">
+                <li><a href="#xlsx-format">xlsx 格式</a></li>
                 <li><a href="#history">发展历程</a></li>
                 <li><a href="#languages">编程语言</a></li>
                 <li><a href="#topics">技术主题</a></li>
@@ -575,6 +576,145 @@ result.to_excel(<span class="string">"output.xlsx"</span>, index=<span class="ke
                         <span class="lang-tag">高并发</span>
                     </div>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="xlsx-format" class="section">
+        <div class="container">
+            <h2 class="section-title">📁 xlsx 文件格式详解</h2>
+            <p class="section-desc">深入理解 Excel xlsx 文件的内部结构和 OpenXML 规范</p>
+
+            <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:2rem;margin:2rem 0;">
+                <h3 style="color:var(--excel-green);margin-top:0;">什么是 xlsx 文件？</h3>
+                <p style="color:var(--text-secondary);line-height:1.8;">
+                    xlsx 是 Microsoft Excel 2007 及以后版本使用的默认文件格式。它基于 <strong>Office Open XML (OOXML)</strong> 标准，
+                    本质上是一个 <strong>ZIP 压缩包</strong>，包含多个 XML 文件和资源文件。
+                </p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin:2rem 0;">
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:1.5rem;">
+                    <h4 style="color:var(--excel-green);margin-top:0;">📦 ZIP 压缩包结构</h4>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">
+                        xlsx 文件实际上是一个 ZIP 压缩包。你可以将任何 .xlsx 文件的扩展名改为 .zip，
+                        然后解压查看内部的所有 XML 文件和资源文件。
+                    </p>
+                    <div style="background:var(--code-bg);color:#d4d4d4;padding:1rem;border-radius:6px;font-family:'Consolas',monospace;font-size:0.8rem;margin-top:1rem;">
+<span class="keyword" style="color:#569cd6;">#</span> <span class="comment" style="color:#6a9955;">查看 xlsx 文件结构</span>
+unzip -l data.xlsx
+
+<span class="keyword" style="color:#569cd6;">#</span> <span class="comment" style="color:#6a9955;">或重命名为 zip 后解压</span>
+mv report.xlsx report.zip
+unzip report.zip
+                    </div>
+                </div>
+
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:1.5rem;">
+                    <h4 style="color:var(--excel-green);margin-top:0;">📄 XML 为基础</h4>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">
+                        所有数据、格式、样式都以 XML 格式存储。这种基于文本的格式使得 xlsx 文件
+                        更容易被程序解析和生成，也便于版本控制和数据交换。
+                    </p>
+                </div>
+
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:1.5rem;">
+                    <h4 style="color:var(--excel-green);margin-top:0;">🔧 开放标准</h4>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">
+                        xlsx 格式遵循 ECMA-376 和 ISO/IEC 29500 国际标准，
+                        这意味着任何开发者都可以基于标准文档实现 xlsx 文件的读写功能。
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="color:var(--text-primary);margin:2rem 0 1rem;">📂 xlsx 文件核心结构</h3>
+            <div style="overflow-x:auto;margin:1.5rem 0;">
+                <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+                    <thead>
+                        <tr style="background:var(--bg-secondary);">
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">文件/文件夹</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">说明</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">重要性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--python-blue);">[Content_Types].xml</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">定义包中所有部件的 MIME 类型</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#4caf50;">●●●</span> 必需</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--python-blue);">_rels/.rels</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">包级别的关系定义</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#4caf50;">●●●</span> 必需</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--go-cyan);">xl/workbook.xml</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">工作簿定义，包含工作表列表和命名范围</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#4caf50;">●●●</span> 核心</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--go-cyan);">xl/worksheets/sheet1.xml</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">工作表的实际数据（稀疏矩阵存储）</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#4caf50;">●●●</span> 核心</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--go-cyan);">xl/sharedStrings.xml</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">共享字符串表，存储所有文本内容</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#ff9800;">●●○</span> 常用</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--go-cyan);">xl/styles.xml</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">样式定义（字体、填充、边框等）</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#ff9800;">●●○</span> 常用</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--go-cyan);">xl/theme/theme1.xml</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">主题定义（颜色方案、字体方案）</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#ffc107;">●○○</span> 可选</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;color:var(--go-cyan);">xl/calcChain.xml</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">公式计算链（公式依赖关系）</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><span style="color:#ffc107;">●○○</span> 可选</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color:var(--text-primary);margin:2rem 0 1rem;">📊 xlsx 文件结构图</h3>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+graph TD
+    A[xlsx 文件] --> B[Content_Types.xml<br/>MIME 类型定义]
+    A --> C[_rels/.rels<br/>包关系]
+    A --> D[xl/ 文件夹]
+    
+    D --> E[workbook.xml<br/>工作簿定义]
+    D --> F[worksheets/sheet1.xml<br/>工作表数据]
+    D --> G[sharedStrings.xml<br/>共享字符串]
+    D --> H[styles.xml<br/>样式定义]
+    D --> I[theme/theme1.xml<br/>主题]
+    
+    E --> J[工作表引用]
+    F --> K[行/单元格数据]
+    G --> L[字符串索引]
+    H --> M[字体/填充/边框]
+                </div>
+            </div>
+
+            <div style="background:linear-gradient(135deg,#e6f2ea 0%,#f3f2f1 100%);border-left:4px solid var(--excel-green);padding:1.5rem;border-radius:0 8px 8px 0;margin:2rem 0;">
+                <h4 style="color:var(--excel-green);margin-top:0;">💡 开发者提示</h4>
+                <ul style="margin:0.5rem 0 0 1.5rem;color:var(--text-secondary);line-height:1.8;">
+                    <li>理解 xlsx 结构有助于更高效地处理 Excel 文件</li>
+                    <li>直接操作 XML 可以实现更精细的控制，但复杂度较高</li>
+                    <li>推荐使用成熟的库（如 openpyxl、excelize）来简化开发</li>
+                    <li>共享字符串表优化了文本存储，但会增加查找开销</li>
+                </ul>
+            </div>
+
+            <div style="text-align:center;margin-top:2rem;">
+                <a href="pages/excel-structure.html" class="btn btn-primary">📖 查看完整的 xlsx 结构详解</a>
             </div>
         </div>
     </section>
