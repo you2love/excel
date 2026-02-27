@@ -426,48 +426,13 @@
                 <span class="logo">Excel</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="#xlsx-format">xlsx 格式</a></li>
                 <li><a href="#history">发展历程</a></li>
-                <li><a href="#languages">编程语言</a></li>
-                <li><a href="#topics">技术主题</a></li>
+                <li><a href="#xlsx-format">xlsx 格式</a></li>
                 <li><a href="#workflow">工作流程</a></li>
-                <li><a href="pages/code-processing.html" style="color:var(--excel-green);font-weight:600;">代码示例 →</a></li>
+                <li><a href="#code-example" style="color:var(--excel-green);font-weight:600;">代码示例 →</a></li>
             </ul>
         </div>
     </nav>
-
-    <section class="hero">
-        <div class="container">
-            <h1 class="hero-title">
-                <span class="keyword">import</span> <span class="string">"excel"</span>
-            </h1>
-            <p class="hero-subtitle">
-                面向开发者的 Excel/xlsx 编程指南<br/>
-                Python · Go · 自动化 · 数据处理
-            </p>
-            
-            <div class="hero-code">
-<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
-<span class="keyword">from</span> openpyxl <span class="keyword">import</span> load_workbook
-
-<span class="comment"># 读取 Excel 数据</span>
-df = pd.read_excel(<span class="string">"data.xlsx"</span>)
-
-<span class="comment"># 数据处理</span>
-result = df.groupby(<span class="string">"category"</span>).agg({
-    <span class="string">"value"</span>: <span class="string">"sum"</span>
-})
-
-<span class="comment"># 导出结果</span>
-result.to_excel(<span class="string">"output.xlsx"</span>, index=<span class="keyword">False</span>)
-            </div>
-            
-            <div style="margin-top:2rem;">
-                <a href="#languages" class="btn btn-primary">🚀 开始编程</a>
-                <a href="pages/excel-structure.html" class="btn btn-secondary">📁 xlsx 格式详解</a>
-            </div>
-        </div>
-    </section>
 
     <section id="history" class="section">
         <div class="container">
@@ -546,36 +511,6 @@ result.to_excel(<span class="string">"output.xlsx"</span>, index=<span class="ke
                         <p>深度集成 AI 辅助功能，支持自然语言公式、智能数据分析和自动化建议。</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="languages" class="section">
-        <div class="container">
-            <h2 class="section-title">选择编程语言</h2>
-            <p class="section-desc">根据你的技术栈和项目需求选择合适的工具</p>
-            
-            <div class="lang-grid">
-                <a href="pages/code-processing.html#python" class="lang-card python">
-                    <h3><span class="lang-icon">🐍</span> Python</h3>
-                    <p>数据分析、机器学习、自动化脚本的首选</p>
-                    <div class="lang-tags">
-                        <span class="lang-tag">pandas</span>
-                        <span class="lang-tag">openpyxl</span>
-                        <span class="lang-tag">xlsxwriter</span>
-                        <span class="lang-tag">xlrd</span>
-                    </div>
-                </a>
-                
-                <a href="pages/code-processing.html#go" class="lang-card go">
-                    <h3><span class="lang-icon">🔷</span> Go</h3>
-                    <p>高性能服务、并发处理、微服务架构</p>
-                    <div class="lang-tags">
-                        <span class="lang-tag">excelize</span>
-                        <span class="lang-tag">unioffice</span>
-                        <span class="lang-tag">高并发</span>
-                    </div>
-                </a>
             </div>
         </div>
     </section>
@@ -712,93 +647,6 @@ graph TD
                     <li>共享字符串表优化了文本存储，但会增加查找开销</li>
                 </ul>
             </div>
-
-            <div style="text-align:center;margin-top:2rem;">
-                <a href="pages/excel-structure.html" class="btn btn-primary">📖 查看完整的 xlsx 结构详解</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="topics" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">技术主题</h2>
-            <p class="section-desc">覆盖 Excel 编程的完整知识体系</p>
-            
-            <div class="topic-grid">
-                <div class="topic-card">
-                    <div class="topic-header">
-                        <h3>📁 xlsx 文件格式</h3>
-                    </div>
-                    <div class="topic-body">
-                        <ul>
-                            <li><a href="pages/excel-structure.html">OpenXML 规范详解</a></li>
-                            <li><a href="pages/excel-structure.html">XML 结构分析</a></li>
-                            <li><a href="pages/excel-structure.html">[Content_Types].xml</a></li>
-                            <li><a href="pages/excel-structure.html">workbook.xml / worksheet.xml</a></li>
-                            <li><a href="pages/excel-structure.html">共享字符串表 (sharedStrings.xml)</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="topic-card">
-                    <div class="topic-header">
-                        <h3>💻 代码处理 Excel</h3>
-                    </div>
-                    <div class="topic-body">
-                        <ul>
-                            <li><a href="pages/code-processing.html">读取/写入单元格</a></li>
-                            <li><a href="pages/code-processing.html">行列操作</a></li>
-                            <li><a href="pages/charts.html">插入图表</a></li>
-                            <li><a href="pages/code-processing.html">文件加密/解密</a></li>
-                            <li><a href="pages/code-processing.html">批量处理</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="topic-card">
-                    <div class="topic-header">
-                        <h3>🤖 自动化</h3>
-                    </div>
-                    <div class="topic-body">
-                        <ul>
-                            <li><a href="pages/code-processing.html">Python 脚本自动化</a></li>
-                            <li><a href="pages/code-processing.html">Go 并发处理</a></li>
-                            <li><a href="pages/code-processing.html">定时任务调度</a></li>
-                            <li><a href="pages/code-processing.html">API 服务集成</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="topic-card">
-                    <div class="topic-header">
-                        <h3>🌐 Web 集成</h3>
-                    </div>
-                    <div class="topic-body">
-                        <ul>
-                            <li><a href="pages/code-processing.html">Excel 导出 API</a></li>
-                            <li><a href="pages/code-processing.html">文件上传解析</a></li>
-                            <li><a href="pages/code-processing.html">在线预览</a></li>
-                            <li><a href="pages/code-processing.html">模板引擎</a></li>
-                            <li><a href="pages/code-processing.html">报表生成服务</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="topic-card">
-                    <div class="topic-header">
-                        <h3>⚡ 性能优化</h3>
-                    </div>
-                    <div class="topic-body">
-                        <ul>
-                            <li><a href="pages/code-processing.html">大文件处理</a></li>
-                            <li><a href="pages/code-processing.html">流式读写</a></li>
-                            <li><a href="pages/code-processing.html">内存优化</a></li>
-                            <li><a href="pages/code-processing.html">并发处理</a></li>
-                            <li><a href="pages/code-processing.html">缓存策略</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -877,60 +725,6 @@ flowchart LR
                     <div class="feature-content">
                         <h4>Web API</h4>
                         <p>RESTful API 提供 Excel 导出/导入服务</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">快速开始</h2>
-            <p class="section-desc">选择你的技术栈，5 分钟上手 Excel 编程</p>
-
-            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
-                <div class="code-tabs">
-                    <button class="code-tab python active" onclick="switchTab('#python-quick', event)">
-                        🐍 Python
-                    </button>
-                    <button class="code-tab go" onclick="switchTab('#go-quick', event)">
-                        🔷 Go
-                    </button>
-                </div>
-
-                <div id="python-quick" class="tab-content active">
-                    <div class="tab-panel">
-                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;"># 安装依赖</span>
-pip install pandas openpyxl
-
-<span class="keyword" style="color:#569cd6;"># 读取 Excel</span>
-<span class="keyword" style="color:#c586c0;">import</span> pandas <span class="keyword" style="color:#c586c0;">as</span> pd
-df = pd.read_excel(<span class="string" style="color:#ce9178;">"input.xlsx"</span>)
-
-<span class="keyword" style="color:#569cd6;"># 数据处理</span>
-result = df.groupby(<span class="string" style="color:#ce9178;">"category"</span>)[<span class="string" style="color:#ce9178;">"value"</span>].sum()
-
-<span class="keyword" style="color:#569cd6;"># 导出结果</span>
-result.to_excel(<span class="string" style="color:#ce9178;">"output.xlsx"</span>, index=<span class="keyword" style="color:#569cd6;">False</span>)</pre>
-                        <a href="pages/code-processing.html#python" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">查看完整示例</a>
-                    </div>
-                </div>
-
-                <div id="go-quick" class="tab-content">
-                    <div class="tab-panel">
-                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">// 安装依赖</span>
-go get github.com/xuri/excelize/v2
-
-<span class="keyword" style="color:#c586c0;">package</span> main
-
-<span class="keyword" style="color:#c586c0;">import</span> <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
-
-<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
-    f := excelize.NewFile()
-    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"Hello"</span>)
-    f.SaveAs(<span class="string" style="color:#ce9178;">"output.xlsx"</span>)
-}</pre>
-                        <a href="pages/code-processing.html#go" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">查看完整示例</a>
                     </div>
                 </div>
             </div>
@@ -1808,6 +1602,550 @@ print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</s
     } <span class="keyword" style="color:#c586c0;">else</span> {
         fmt.Println(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</span>)
     }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="code-example" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">💻 Python/Go 处理 Excel</h2>
+            <p class="section-desc">使用编程语言高效处理 Excel 文件</p>
+
+            <!-- Mermaid 流程图：处理方案选择 -->
+            <div class="mermaid-wrapper" style="margin:2rem 0;">
+                <h3 style="text-align:center;font-size:1.1rem;font-weight:600;color:#24292e;margin-bottom:1rem;">Excel 处理方案选择流程图</h3>
+                <div class="mermaid">
+flowchart TD
+    A[需要处理 Excel?] --> B{处理场景？}
+
+    B -->|数据分析/ML| C[Python]
+    C --> D{数据量？}
+    D -->|小/中 | E[pandas + openpyxl]
+    D -->|大 | F[pandas + 分块处理]
+    D -->|超大 | G[polars 或 Dask]
+
+    B -->|高性能/并发 | H[Go]
+    H --> I{功能需求？}
+    I -->|读写简单 | J[excelize]
+    I -->|复杂格式 | K[unioffice]
+    I -->|超大规模 | L[并发处理]
+
+    B -->|快速脚本 | M[Python]
+    M --> N[openpyxl / xlrd]
+
+    B -->|Web 服务 | O[Go]
+    O --> P[excelize + Gin]
+
+    E --> Q[完成]
+    F --> Q
+    G --> Q
+    J --> Q
+    K --> Q
+    L --> Q
+    N --> Q
+    P --> Q
+                </div>
+            </div>
+
+            <h3 style="color:var(--excel-green);margin:2rem 0 1rem;">1. Python 处理 Excel</h3>
+            <p style="color:var(--text-secondary);line-height:1.8;">Python 是数据处理的首选，拥有丰富的 Excel 处理库。</p>
+
+            <h4 style="color:var(--text-primary);margin:1.5rem 0 1rem;">1.1 常用库对比</h4>
+            <div style="overflow-x:auto;margin:1.5rem 0;">
+                <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+                    <thead>
+                        <tr style="background:var(--bg-secondary);">
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">库</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">特点</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">适用场景</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">安装</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><strong>openpyxl</strong></td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">支持.xlsx 格式，功能全面</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">读写现代 Excel 文件</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;font-size:0.8rem;">pip install openpyxl</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><strong>pandas</strong></td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">数据分析强大，简洁易用</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">数据分析和转换</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;font-size:0.8rem;">pip install pandas</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><strong>xlsxwriter</strong></td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">只写，支持图表和格式</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">生成报表</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;font-size:0.8rem;">pip install xlsxwriter</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><strong>xlrd</strong></td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">支持.xls 旧格式</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">读取旧版 Excel</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;font-size:0.8rem;">pip install xlrd</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 style="color:var(--text-primary);margin:1.5rem 0 1rem;">1.2 基础操作示例</h4>
+            
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab python active" onclick="switchTab('#py-read', event)">📖 读取 Excel</button>
+                    <button class="code-tab python" onclick="switchTab('#py-write', event)">✍️ 写入 Excel</button>
+                    <button class="code-tab python" onclick="switchTab('#py-pandas', event)">📊 pandas 分析</button>
+                    <button class="code-tab python" onclick="switchTab('#py-format', event)">🎨 格式化样式</button>
+                </div>
+
+                <div id="py-read" class="tab-content active">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> load_workbook
+<span class="keyword" style="color:#569cd6;">import</span> pandas <span class="keyword" style="color:#569cd6;">as</span> pd
+
+<span class="comment" style="color:#6a9955;"># 方法 1: openpyxl 读取</span>
+wb = load_workbook(<span class="string" style="color:#ce9178;">"data.xlsx"</span>)
+ws = wb.active
+
+<span class="keyword" style="color:#569cd6;">for</span> row <span class="keyword" style="color:#569cd6;">in</span> ws.iter_rows(min_row=<span class="number" style="color:#b5cea8;">2</span>, values_only=<span class="keyword" style="color:#569cd6;">True</span>):
+    name, age, city = row
+    print(f<span class="string" style="color:#ce9178;">"{name} - {age}岁 - {city}"</span>)
+
+<span class="comment" style="color:#6a9955;"># 方法 2: pandas 读取 (推荐)</span>
+df = pd.read_excel(<span class="string" style="color:#ce9178;">"data.xlsx"</span>, sheet_name=<span class="string" style="color:#ce9178;">"Sheet1"</span>)
+print(df.head())
+print(df.describe())  <span class="comment" style="color:#6a9955;"># 统计信息</span></pre>
+                    </div>
+                </div>
+
+                <div id="py-write" class="tab-content">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
+<span class="keyword" style="color:#569cd6;">import</span> pandas <span class="keyword" style="color:#569cd6;">as</span> pd
+
+<span class="comment" style="color:#6a9955;"># 方法 1: openpyxl 写入</span>
+wb = Workbook()
+ws = wb.active
+ws.title = <span class="string" style="color:#ce9178;">"员工信息"</span>
+
+<span class="comment" style="color:#6a9955;"># 写入表头</span>
+ws.append([<span class="string" style="color:#ce9178;">"姓名"</span>, <span class="string" style="color:#ce9178;">"年龄"</span>, <span class="string" style="color:#ce9178;">"城市"</span>])
+
+<span class="comment" style="color:#6a9955;"># 写入数据</span>
+data = [
+    [<span class="string" style="color:#ce9178;">"张三"</span>, <span class="number" style="color:#b5cea8;">28</span>, <span class="string" style="color:#ce9178;">"北京"</span>],
+    [<span class="string" style="color:#ce9178;">"李四"</span>, <span class="number" style="color:#b5cea8;">32</span>, <span class="string" style="color:#ce9178;">"上海"</span>],
+    [<span class="string" style="color:#ce9178;">"王五"</span>, <span class="number" style="color:#b5cea8;">25</span>, <span class="string" style="color:#ce9178;">"广州"</span>]
+]
+<span class="keyword" style="color:#569cd6;">for</span> row <span class="keyword" style="color:#569cd6;">in</span> data:
+    ws.append(row)
+
+wb.save(<span class="string" style="color:#ce9178;">"output.xlsx"</span>)
+
+<span class="comment" style="color:#6a9955;"># 方法 2: pandas 写入 (推荐)</span>
+df = pd.DataFrame({
+    <span class="string" style="color:#ce9178;">"姓名"</span>: [<span class="string" style="color:#ce9178;">"张三"</span>, <span class="string" style="color:#ce9178;">"李四"</span>, <span class="string" style="color:#ce9178;">"王五"</span>],
+    <span class="string" style="color:#ce9178;">"年龄"</span>: [<span class="number" style="color:#b5cea8;">28</span>, <span class="number" style="color:#b5cea8;">32</span>, <span class="number" style="color:#b5cea8;">25</span>],
+    <span class="string" style="color:#ce9178;">"城市"</span>: [<span class="string" style="color:#ce9178;">"北京"</span>, <span class="string" style="color:#ce9178;">"上海"</span>, <span class="string" style="color:#ce9178;">"广州"</span>]
+})
+df.to_excel(<span class="string" style="color:#ce9178;">"output_pandas.xlsx"</span>, index=<span class="keyword" style="color:#569cd6;">False</span>)</pre>
+                    </div>
+                </div>
+
+                <div id="py-pandas" class="tab-content">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">import</span> pandas <span class="keyword" style="color:#569cd6;">as</span> pd
+
+<span class="comment" style="color:#6a9955;"># 读取数据</span>
+df = pd.read_excel(<span class="string" style="color:#ce9178;">"sales_data.xlsx"</span>)
+
+<span class="comment" style="color:#6a9955;"># 数据筛选</span>
+high_sales = df[df[<span class="string" style="color:#ce9178;">"销售额"</span>] > <span class="number" style="color:#b5cea8;">10000</span>]
+
+<span class="comment" style="color:#6a9955;"># 分组聚合</span>
+region_summary = df.groupby(<span class="string" style="color:#ce9178;">"地区"</span>).agg({
+    <span class="string" style="color:#ce9178;">"销售额"</span>: <span class="string" style="color:#ce9178;">"sum"</span>,
+    <span class="string" style="color:#ce9178;">"数量"</span>: <span class="string" style="color:#ce9178;">"mean"</span>
+}).reset_index()
+
+<span class="comment" style="color:#6a9955;"># 数据透视表</span>
+pivot = pd.pivot_table(
+    df,
+    values=<span class="string" style="color:#ce9178;">"销售额"</span>,
+    index=<span class="string" style="color:#ce9178;">"产品"</span>,
+    columns=<span class="string" style="color:#ce9178;">"地区"</span>,
+    aggfunc=<span class="string" style="color:#ce9178;">"sum"</span>,
+    fill_value=<span class="number" style="color:#b5cea8;">0</span>
+)
+
+<span class="comment" style="color:#6a9955;"># 数据排序</span>
+sorted_df = df.sort_values(<span class="string" style="color:#ce9178;">"销售额"</span>, ascending=<span class="keyword" style="color:#569cd6;">False</span>)
+
+<span class="comment" style="color:#6a9955;"># 保存结果</span>
+<span class="keyword" style="color:#569cd6;">with</span> pd.ExcelWriter(<span class="string" style="color:#ce9178;">"analysis_result.xlsx"</span>) <span class="keyword" style="color:#569cd6;">as</span> writer:
+    high_sales.to_excel(writer, sheet_name=<span class="string" style="color:#ce9178;">"高销售额"</span>, index=<span class="keyword" style="color:#569cd6;">False</span>)
+    region_summary.to_excel(writer, sheet_name=<span class="string" style="color:#ce9178;">"地区汇总"</span>, index=<span class="keyword" style="color:#569cd6;">False</span>)
+    pivot.to_excel(writer, sheet_name=<span class="string" style="color:#ce9178;">"产品透视"</span>)</pre>
+                    </div>
+                </div>
+
+                <div id="py-format" class="tab-content">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
+<span class="keyword" style="color:#569cd6;">from</span> openpyxl.styles <span class="keyword" style="color:#569cd6;">import</span> Font, PatternFill, Alignment, Border, Side
+
+wb = Workbook()
+ws = wb.active
+
+<span class="comment" style="color:#6a9955;"># 定义样式</span>
+header_font = Font(bold=<span class="keyword" style="color:#569cd6;">True</span>, color=<span class="string" style="color:#ce9178;">"FFFFFF"</span>, size=<span class="number" style="color:#b5cea8;">12</span>)
+header_fill = PatternFill(start_color=<span class="string" style="color:#ce9178;">"107c41"</span>, end_color=<span class="string" style="color:#ce9178;">"107c41"</span>, fill_type=<span class="string" style="color:#ce9178;">"solid"</span>)
+center_align = Alignment(horizontal=<span class="string" style="color:#ce9178;">"center"</span>, vertical=<span class="string" style="color:#ce9178;">"center"</span>)
+
+thin_border = Border(
+    left=Side(style=<span class="string" style="color:#ce9178;">"thin"</span>),
+    right=Side(style=<span class="string" style="color:#ce9178;">"thin"</span>),
+    top=Side(style=<span class="string" style="color:#ce9178;">"thin"</span>),
+    bottom=Side(style=<span class="string" style="color:#ce9178;">"thin"</span>)
+)
+
+<span class="comment" style="color:#6a9955;"># 写入数据并应用样式</span>
+headers = [<span class="string" style="color:#ce9178;">"姓名"</span>, <span class="string" style="color:#ce9178;">"销售额"</span>, <span class="string" style="color:#ce9178;">"完成率"</span>]
+<span class="keyword" style="color:#569cd6;">for</span> col, header <span class="keyword" style="color:#569cd6;">in</span> enumerate(headers, <span class="number" style="color:#b5cea8;">1</span>):
+    cell = ws.cell(row=<span class="number" style="color:#b5cea8;">1</span>, column=col, value=header)
+    cell.font = header_font
+    cell.fill = header_fill
+    cell.alignment = center_align
+    cell.border = thin_border
+
+data = [
+    [<span class="string" style="color:#ce9178;">"张三"</span>, <span class="number" style="color:#b5cea8;">150000</span>, <span class="string" style="color:#ce9178;">"120%"</span>],
+    [<span class="string" style="color:#ce9178;">"李四"</span>, <span class="number" style="color:#b5cea8;">120000</span>, <span class="string" style="color:#ce9178;">"96%"</span>],
+    [<span class="string" style="color:#ce9178;">"王五"</span>, <span class="number" style="color:#b5cea8;">98000</span>, <span class="string" style="color:#ce9178;">"78%"</span>]
+]
+
+<span class="keyword" style="color:#569cd6;">for</span> row_idx, row_data <span class="keyword" style="color:#569cd6;">in</span> enumerate(data, <span class="number" style="color:#b5cea8;">2</span>):
+    <span class="keyword" style="color:#569cd6;">for</span> col_idx, value <span class="keyword" style="color:#569cd6;">in</span> enumerate(row_data, <span class="number" style="color:#b5cea8;">1</span>):
+        cell = ws.cell(row=row_idx, column=col_idx, value=value)
+        cell.alignment = center_align
+        cell.border = thin_border
+        <span class="comment" style="color:#6a9955;"># 条件格式：完成率低于 90% 标红</span>
+        <span class="keyword" style="color:#569cd6;">if</span> col_idx == <span class="number" style="color:#b5cea8;">3</span> <span class="keyword" style="color:#569cd6;">and</span> float(value.rstrip(<span class="string" style="color:#ce9178;">"%"</span>)) < <span class="number" style="color:#b5cea8;">90</span>:
+            cell.font = Font(color=<span class="string" style="color:#ce9178;">"FF0000"</span>, bold=<span class="keyword" style="color:#569cd6;">True</span>)
+
+<span class="comment" style="color:#6a9955;"># 调整列宽</span>
+ws.column_dimensions[<span class="string" style="color:#ce9178;">"A"</span>].width = <span class="number" style="color:#b5cea8;">15</span>
+ws.column_dimensions[<span class="string" style="color:#ce9178;">"B"</span>].width = <span class="number" style="color:#b5cea8;">12</span>
+ws.column_dimensions[<span class="string" style="color:#ce9178;">"C"</span>].width = <span class="number" style="color:#b5cea8;">10</span>
+
+wb.save(<span class="string" style="color:#ce9178;">"formatted_report.xlsx"</span>)</pre>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="color:var(--text-primary);margin:2rem 0 1rem;">1.3 高级功能</h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:1.5rem;margin:1.5rem 0;">
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;overflow:hidden;">
+                    <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--border-color);background:linear-gradient(135deg,#3776ab 0%,#4b8bbe 100%);color:white;">
+                        <h4 style="margin:0;display:flex;align-items:center;gap:0.5rem;">📊 创建图表</h4>
+                    </div>
+                    <div style="padding:1rem 1.5rem;background:#1e1e1e;overflow-x:auto;">
+                        <pre style="margin:0;color:#d4d4d4;font-family:'Consolas',monospace;font-size:0.85rem;line-height:1.6;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl.chart <span class="keyword" style="color:#569cd6;">import</span> BarChart, Reference
+
+wb = Workbook()
+ws = wb.active
+
+<span class="comment" style="color:#6a9955;"># 准备数据</span>
+data = [
+    [<span class="string" style="color:#ce9178;">"产品"</span>, <span class="string" style="color:#ce9178;">"Q1"</span>, <span class="string" style="color:#ce9178;">"Q2"</span>, <span class="string" style="color:#ce9178;">"Q3"</span>, <span class="string" style="color:#ce9178;">"Q4"</span>],
+    [<span class="string" style="color:#ce9178;">"产品 A"</span>, <span class="number" style="color:#b5cea8;">100</span>, <span class="number" style="color:#b5cea8;">150</span>, <span class="number" style="color:#b5cea8;">200</span>, <span class="number" style="color:#b5cea8;">180</span>],
+    [<span class="string" style="color:#ce9178;">"产品 B"</span>, <span class="number" style="color:#b5cea8;">80</span>, <span class="number" style="color:#b5cea8;">120</span>, <span class="number" style="color:#b5cea8;">160</span>, <span class="number" style="color:#b5cea8;">140</span>],
+    [<span class="string" style="color:#ce9178;">"产品 C"</span>, <span class="number" style="color:#b5cea8;">60</span>, <span class="number" style="color:#b5cea8;">90</span>, <span class="number" style="color:#b5cea8;">130</span>, <span class="number" style="color:#b5cea8;">110</span>]
+]
+
+<span class="keyword" style="color:#569cd6;">for</span> row <span class="keyword" style="color:#569cd6;">in</span> data:
+    ws.append(row)
+
+<span class="comment" style="color:#6a9955;"># 创建柱状图</span>
+chart = BarChart()
+chart.type = <span class="string" style="color:#ce9178;">"col"</span>
+chart.style = <span class="number" style="color:#b5cea8;">10</span>
+chart.title = <span class="string" style="color:#ce9178;">"季度销售"</span>
+
+data_ref = Reference(ws, min_col=<span class="number" style="color:#b5cea8;">2</span>, min_row=<span class="number" style="color:#b5cea8;">1</span>, max_row=<span class="number" style="color:#b5cea8;">4</span>, max_col=<span class="number" style="color:#b5cea8;">5</span>)
+cats = Reference(ws, min_col=<span class="number" style="color:#b5cea8;">1</span>, min_row=<span class="number" style="color:#b5cea8;">2</span>, max_row=<span class="number" style="color:#b5cea8;">4</span>)
+
+chart.add_data(data_ref, titles_from_data=<span class="keyword" style="color:#569cd6;">True</span>)
+chart.set_categories(cats)
+chart.shape = <span class="number" style="color:#b5cea8;">4</span>
+
+ws.add_chart(chart, <span class="string" style="color:#ce9178;">"A10"</span>)
+wb.save(<span class="string" style="color:#ce9178;">"chart_example.xlsx"</span>)</pre>
+                    </div>
+                </div>
+
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;overflow:hidden;">
+                    <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--border-color);background:linear-gradient(135deg,#3776ab 0%,#4b8bbe 100%);color:white;">
+                        <h4 style="margin:0;display:flex;align-items:center;gap:0.5rem;">🔄 批量处理</h4>
+                    </div>
+                    <div style="padding:1rem 1.5rem;background:#1e1e1e;overflow-x:auto;">
+                        <pre style="margin:0;color:#d4d4d4;font-family:'Consolas',monospace;font-size:0.85rem;line-height:1.6;"><span class="keyword" style="color:#569cd6;">import</span> pandas <span class="keyword" style="color:#569cd6;">as</span> pd
+<span class="keyword" style="color:#569cd6;">from</span> pathlib <span class="keyword" style="color:#569cd6;">import</span> Path
+
+<span class="keyword" style="color:#569cd6;">def</span> <span class="function" style="color:#dcdcaa;">merge_excel_files</span>(folder_path, output_file):
+    <span class="string" style="color:#ce9178;">"""合并多个 Excel 文件"""</span>
+    all_data = []
+
+    <span class="keyword" style="color:#569cd6;">for</span> file <span class="keyword" style="color:#569cd6;">in</span> Path(folder_path).glob(<span class="string" style="color:#ce9178;">"*.xlsx"</span>):
+        df = pd.read_excel(file)
+        df[<span class="string" style="color:#ce9178;">"来源文件"</span>] = file.name
+        all_data.append(df)
+
+    merged = pd.concat(all_data, ignore_index=<span class="keyword" style="color:#569cd6;">True</span>)
+    merged.to_excel(output_file, index=<span class="keyword" style="color:#569cd6;">False</span>)
+    <span class="keyword" style="color:#569cd6;">return</span> merged
+
+<span class="keyword" style="color:#569cd6;">def</span> <span class="function" style="color:#dcdcaa;">split_excel_by_column</span>(input_file, column, output_folder):
+    <span class="string" style="color:#ce9178;">"""按列值拆分 Excel 文件"""</span>
+    df = pd.read_excel(input_file)
+
+    <span class="keyword" style="color:#569cd6;">for</span> value <span class="keyword" style="color:#569cd6;">in</span> df[column].unique():
+        subset = df[df[column] == value]
+        output = f<span class="string" style="color:#ce9178;">"{output_folder}/{column}_{value}.xlsx"</span>
+        subset.to_excel(output, index=<span class="keyword" style="color:#569cd6;">False</span>)
+
+<span class="comment" style="color:#6a9955;"># 使用示例</span>
+merge_excel_files(<span class="string" style="color:#ce9178;">"./monthly_reports"</span>, <span class="string" style="color:#ce9178;">"year_summary.xlsx"</span>)
+split_excel_by_column(<span class="string" style="color:#ce9178;">"sales.xlsx"</span>, <span class="string" style="color:#ce9178;">"地区"</span>, <span class="string" style="color:#ce9178;">"./regions"</span>)</pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color:var(--excel-green);margin:3rem 0 1rem;">2. Go 处理 Excel</h3>
+            <p style="color:var(--text-secondary);line-height:1.8;">Go 语言以高性能和并发著称，适合大规模 Excel 处理场景。</p>
+
+            <h4 style="color:var(--text-primary);margin:1.5rem 0 1rem;">2.1 常用库对比</h4>
+            <div style="overflow-x:auto;margin:1.5rem 0;">
+                <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+                    <thead>
+                        <tr style="background:var(--bg-secondary);">
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">库</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">特点</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">适用场景</th>
+                            <th style="padding:0.75rem 1rem;border:1px solid var(--border-color);text-align:left;">安装</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><strong>excelize</strong></td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">纯 Go 实现，性能好</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">读写.xlsx 文件</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;font-size:0.8rem;">go get github.com/xuri/excelize/v2</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><strong>unioffice</strong></td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">功能全面，支持 Office 所有格式</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">复杂文档处理</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;font-size:0.8rem;">go get github.com/unidoc/unioffice</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);"><strong>xlsx</strong></td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">轻量级，只读</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);">快速读取数据</td>
+                            <td style="padding:0.75rem 1rem;border:1px solid var(--border-color);font-family:'Consolas',monospace;font-size:0.8rem;">go get github.com/tealeg/xlsx</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 style="color:var(--text-primary);margin:1.5rem 0 1rem;">2.2 基础操作示例</h4>
+            
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab go active" onclick="switchTab('#go-read', event)">📖 读取 Excel</button>
+                    <button class="code-tab go" onclick="switchTab('#go-write', event)">✍️ 写入 Excel</button>
+                    <button class="code-tab go" onclick="switchTab('#go-format', event)">🎨 格式化样式</button>
+                    <button class="code-tab go" onclick="switchTab('#go-concurrent', event)">⚡ 并发处理</button>
+                </div>
+
+                <div id="go-read" class="tab-content active">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"log"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    <span class="comment" style="color:#6a9955;">// 打开 Excel 文件</span>
+    f, err := excelize.OpenFile(<span class="string" style="color:#ce9178;">"data.xlsx"</span>)
+    <span class="keyword" style="color:#c586c0;">if</span> err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        log.Fatal(err)
+    }
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+
+    <span class="comment" style="color:#6a9955;">// 获取默认工作表名</span>
+    sheetName := f.GetSheetName(<span class="number" style="color:#b5cea8;">0</span>)
+    fmt.Println(<span class="string" style="color:#ce9178;">"工作表:"</span>, sheetName)
+
+    <span class="comment" style="color:#6a9955;">// 读取单元格</span>
+    cellValue, _ := f.GetCellValue(sheetName, <span class="string" style="color:#ce9178;">"A1"</span>)
+    fmt.Println(<span class="string" style="color:#ce9178;">"A1 的值:"</span>, cellValue)
+
+    <span class="comment" style="color:#6a9955;">// 获取所有行</span>
+    rows, _ := f.GetRows(sheetName)
+    <span class="keyword" style="color:#c586c0;">for</span> _, row := <span class="keyword" style="color:#c586c0;">range</span> rows {
+        <span class="keyword" style="color:#c586c0;">for</span> _, colCell := <span class="keyword" style="color:#c586c0;">range</span> row {
+            fmt.Print(colCell, <span class="string" style="color:#ce9178;">"\t"</span>)
+        }
+        fmt.Println()
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <div id="go-write" class="tab-content">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    <span class="comment" style="color:#6a9955;">// 创建新工作簿</span>
+    f := excelize.NewFile()
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+
+    <span class="comment" style="color:#6a9955;">// 设置工作表名</span>
+    f.SetSheetName(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"员工信息"</span>)
+
+    <span class="comment" style="color:#6a9955;">// 写入表头</span>
+    headers := []<span class="keyword" style="color:#c586c0;">string</span>{<span class="string" style="color:#ce9178;">"姓名"</span>, <span class="string" style="color:#ce9178;">"年龄"</span>, <span class="string" style="color:#ce9178;">"城市"</span>}
+    <span class="keyword" style="color:#c586c0;">for</span> i, h := <span class="keyword" style="color:#c586c0;">range</span> headers {
+        cell, _ := excelize.CoordinatesToCellName(i+<span class="number" style="color:#b5cea8;">1</span>, <span class="number" style="color:#b5cea8;">1</span>)
+        f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, cell, h)
+    }
+
+    <span class="comment" style="color:#6a9955;">// 写入数据</span>
+    data := [][]<span class="keyword" style="color:#c586c0;">interface</span>{}{
+        {<span class="string" style="color:#ce9178;">"张三"</span>, <span class="number" style="color:#b5cea8;">28</span>, <span class="string" style="color:#ce9178;">"北京"</span>},
+        {<span class="string" style="color:#ce9178;">"李四"</span>, <span class="number" style="color:#b5cea8;">32</span>, <span class="string" style="color:#ce9178;">"上海"</span>},
+        {<span class="string" style="color:#ce9178;">"王五"</span>, <span class="number" style="color:#b5cea8;">25</span>, <span class="string" style="color:#ce9178;">"广州"</span>},
+    }
+
+    <span class="keyword" style="color:#c586c0;">for</span> i, row := <span class="keyword" style="color:#c586c0;">range</span> data {
+        <span class="keyword" style="color:#c586c0;">for</span> j, value := <span class="keyword" style="color:#c586c0;">range</span> row {
+            cell, _ := excelize.CoordinatesToCellName(j+<span class="number" style="color:#b5cea8;">1</span>, i+<span class="number" style="color:#b5cea8;">2</span>)
+            f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, cell, value)
+        }
+    }
+
+    <span class="comment" style="color:#6a9955;">// 保存文件</span>
+    <span class="keyword" style="color:#c586c0;">if</span> err := f.SaveAs(<span class="string" style="color:#ce9178;">"output.xlsx"</span>); err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"保存失败:"</span>, err)
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <div id="go-format" class="tab-content">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    f := excelize.NewFile()
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+
+    <span class="comment" style="color:#6a9955;">// 定义样式</span>
+    style, _ := f.NewStyle(&excelize.Style{
+        Font: &excelize.Font{
+            Bold:  <span class="keyword" style="color:#c586c0;">true</span>,
+            Color: <span class="string" style="color:#ce9178;">"#FFFFFF"</span>,
+            Size:  <span class="number" style="color:#b5cea8;">12</span>,
+        },
+        Fill: excelize.Fill{
+            Type:    <span class="string" style="color:#ce9178;">"pattern"</span>,
+            Color:   []<span class="keyword" style="color:#c586c0;">string</span>{<span class="string" style="color:#ce9178;">"#107C41"</span>},
+            Pattern: <span class="number" style="color:#b5cea8;">1</span>,
+        },
+        Alignment: &excelize.Alignment{
+            Horizontal: <span class="string" style="color:#ce9178;">"center"</span>,
+            Vertical:   <span class="string" style="color:#ce9178;">"center"</span>,
+        },
+    })
+
+    <span class="comment" style="color:#6a9955;">// 应用样式到表头</span>
+    headers := []<span class="keyword" style="color:#c586c0;">string</span>{<span class="string" style="color:#ce9178;">"姓名"</span>, <span class="string" style="color:#ce9178;">"销售额"</span>, <span class="string" style="color:#ce9178;">"完成率"</span>}
+    <span class="keyword" style="color:#c586c0;">for</span> i, h := <span class="keyword" style="color:#c586c0;">range</span> headers {
+        cell, _ := excelize.CoordinatesToCellName(i+<span class="number" style="color:#b5cea8;">1</span>, <span class="number" style="color:#b5cea8;">1</span>)
+        f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, cell, h)
+        f.SetCellStyle(<span class="string" style="color:#ce9178;">"Sheet1"</span>, cell, cell, style)
+    }
+
+    <span class="comment" style="color:#6a9955;">// 调整列宽</span>
+    f.SetColWidth(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A"</span>, <span class="string" style="color:#ce9178;">"C"</span>, <span class="number" style="color:#b5cea8;">15</span>)
+
+    <span class="keyword" style="color:#c586c0;">if</span> err := f.SaveAs(<span class="string" style="color:#ce9178;">"formatted.xlsx"</span>); err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"保存失败:"</span>, err)
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <div id="go-concurrent" class="tab-content">
+                    <div class="tab-panel">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"sync"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">processFile</span>(filename <span class="keyword" style="color:#c586c0;">string</span>, wg *sync.WaitGroup) {
+    <span class="keyword" style="color:#c586c0;">defer</span> wg.Done()
+
+    f, err := excelize.OpenFile(filename)
+    <span class="keyword" style="color:#c586c0;">if</span> err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Printf(<span class="string" style="color:#ce9178;">"打开失败 %s: %v\n"</span>, filename, err)
+        <span class="keyword" style="color:#c586c0;">return</span>
+    }
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+
+    <span class="comment" style="color:#6a9955;">// 处理数据...</span>
+    rows, _ := f.GetRows(<span class="string" style="color:#ce9178;">"Sheet1"</span>)
+    fmt.Printf(<span class="string" style="color:#ce9178;">"%s: %d 行数据\n"</span>, filename, len(rows))
+}
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    files := []<span class="keyword" style="color:#c586c0;">string</span>{
+        <span class="string" style="color:#ce9178;">"report1.xlsx"</span>,
+        <span class="string" style="color:#ce9178;">"report2.xlsx"</span>,
+        <span class="string" style="color:#ce9178;">"report3.xlsx"</span>,
+    }
+
+    <span class="keyword" style="color:#c586c0;">var</span> wg sync.WaitGroup
+    <span class="keyword" style="color:#c586c0;">for</span> _, file := <span class="keyword" style="color:#c586c0;">range</span> files {
+        wg.Add(<span class="number" style="color:#b5cea8;">1</span>)
+        <span class="keyword" style="color:#c586c0;">go</span> processFile(file, &wg)
+    }
+    wg.Wait()
+
+    fmt.Println(<span class="string" style="color:#ce9178;">"所有文件处理完成!"</span>)
 }</pre>
                     </div>
                 </div>
