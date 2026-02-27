@@ -748,12 +748,18 @@ flowchart LR
             <h2 class="section-title">快速开始</h2>
             <p class="section-desc">选择你的技术栈，5 分钟上手 Excel 编程</p>
 
-            <div class="lang-grid">
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--python-blue);color:white;">
-                        <h3 style="color:white;">Python 快速开始</h3>
-                    </div>
-                    <div class="topic-body">
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab python active" onclick="switchTab('#python-quick', event)">
+                        🐍 Python
+                    </button>
+                    <button class="code-tab go" onclick="switchTab('#go-quick', event)">
+                        🔷 Go
+                    </button>
+                </div>
+
+                <div id="python-quick" class="tab-content active">
+                    <div class="tab-panel">
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;"># 安装依赖</span>
 pip install pandas openpyxl
 
@@ -770,11 +776,8 @@ result.to_excel(<span class="string" style="color:#ce9178;">"output.xlsx"</span>
                     </div>
                 </div>
 
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
-                        <h3 style="color:white;">Go 快速开始</h3>
-                    </div>
-                    <div class="topic-body">
+                <div id="go-quick" class="tab-content">
+                    <div class="tab-panel">
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">// 安装依赖</span>
 go get github.com/xuri/excelize/v2
 
