@@ -6,8 +6,36 @@
     <title>图表制作 - Excel 学习中心</title>
     <link rel="stylesheet" href="../css/styles.css">
     <style>
+      :root {
+        --excel-green: #107c41;
+        --excel-green-light: #21a366;
+        --python-blue: #3776ab;
+        --go-cyan: #00add8;
+        --js-yellow: #f7df1e;
+        --code-bg: #1e1e1e;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f3f2f1;
+        --text-primary: #24292e;
+        --text-secondary: #586069;
+        --border-color: #e1dfdd;
+      }
+      .navbar {
+        background: rgba(255,255,255,0.98) !important;
+        border-bottom: 2px solid var(--excel-green) !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+      .navbar .logo { font-family: 'Consolas', monospace; font-weight: 700; }
+      .navbar .logo span { color: var(--excel-green); }
+      .nav-menu { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+      .nav-menu a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+      .nav-menu a:hover, .nav-menu a.active { color: var(--excel-green); }
+
       .tutorial-page {
-        padding-top: 100px;
+        padding-top: 80px;
         min-height: 100vh;
         background: linear-gradient(135deg, #f3f2f1 0%, #ffffff 100%);
       }
@@ -365,25 +393,19 @@
     </script>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <div class="logo">
-                <h1>📊 Excel 学习中心</h1>
+    <nav class="navbar">
+        <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;height:60px;">
+            <div class="nav-brand">
+                <span class="logo">&lt;Excel<span>Dev</span>/&gt;</span>
             </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="excel-structure.html">文件结构</a></li>
-                    <li><a href="introduction.html">快速入门</a></li>
-                    <li><a href="basics.html">基础操作</a></li>
-                    <li><a href="formatting.html">格式化美化</a></li>
-                    <li><a href="formulas.html">公式函数</a></li>
-                    <li><a href="charts.html" class="active">图表制作</a></li>
-                    <li><a href="pivottables.html">数据透视表</a></li>
-                    <li><a href="programming.html">编程处理</a></li>
-                </ul>
-            </nav>
+            <ul class="nav-menu">
+                <li><a href="#languages">编程语言</a></li>
+                <li><a href="#topics">技术主题</a></li>
+                <li><a href="#workflow">工作流程</a></li>
+                <li><a href="code-processing.html" style="color:var(--excel-green);font-weight:600;">代码示例 →</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
     <main class="tutorial-page">
         <div class="tutorial-header">
