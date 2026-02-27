@@ -1051,5 +1051,303 @@ df_sales = pd.DataFrame({
             </div>
         </div>
     </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">邮件发送 Excel</h2>
+            <p class="section-desc">使用 Python 和 Go 发送邮件，支持附件与非附件两种格式</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:2rem;margin-top:2rem;">
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--python-blue);color:white;">
+                        <h3 style="color:white;">🐍 Python - 邮件发送</h3>
+                    </div>
+                    <div class="topic-body">
+                        <h4 style="margin-top:0;color:var(--excel-green);">方式 1：带附件发送</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#569cd6;">import</span> smtplib
+<span class="keyword" style="color:#569cd6;">from</span> email.mime.multipart <span class="keyword" style="color:#569cd6;">import</span> MIMEMultipart
+<span class="keyword" style="color:#569cd6;">from</span> email.mime.text <span class="keyword" style="color:#569cd6;">import</span> MIMEText
+<span class="keyword" style="color:#569cd6;">from</span> email.mime.application <span class="keyword" style="color:#569cd6;">import</span> MIMEApplication
+<span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
+
+<span class="comment" style="color:#6a9955;"># 创建 Excel 报表</span>
+wb = Workbook()
+ws = wb.active
+ws.append([<span class="string" style="color:#ce9178;">"姓名"</span>, <span class="string" style="color:#ce9178;">"部门"</span>, <span class="string" style="color:#ce9178;">"工资"</span>])
+ws.append([<span class="string" style="color:#ce9178;">"张三"</span>, <span class="string" style="color:#ce9178;">"技术部"</span>, <span class="number" style="color:#b5cea8;">15000</span>])
+ws.append([<span class="string" style="color:#ce9178;">"李四"</span>, <span class="string" style="color:#ce9178;">"销售部"</span>, <span class="number" style="color:#b5cea8;">12000</span>])
+
+excel_file = <span class="string" style="color:#ce9178;">"report.xlsx"</span>
+wb.save(excel_file)
+
+<span class="comment" style="color:#6a9955;"># 配置邮件</span>
+msg = MIMEMultipart()
+msg[<span class="string" style="color:#ce9178;">"From"</span>] = <span class="string" style="color:#ce9178;">"sender@company.com"</span>
+msg[<span class="string" style="color:#ce9178;">"To"</span>] = <span class="string" style="color:#ce9178;">"receiver@company.com"</span>
+msg[<span class="string" style="color:#ce9178;">"Subject"</span>] = <span class="string" style="color:#ce9178;">"月度工资报表"</span>
+
+<span class="comment" style="color:#6a9955;"># 邮件正文</span>
+body = <span class="string" style="color:#ce9178;">"""
+&lt;html&gt;
+&lt;body&gt;
+    &lt;h2&gt;月度工资报表&lt;/h2&gt;
+    &lt;p&gt;您好，请查收本月的工资报表。&lt;/p&gt;
+    &lt;p style="color:#666;"&gt;此邮件由系统自动发送&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"""</span>
+msg.attach(MIMEText(body, <span class="string" style="color:#ce9178;">"html"</span>))
+
+<span class="comment" style="color:#6a9955;"># 添加 Excel 附件</span>
+<span class="keyword" style="color:#569cd6;">with</span> open(excel_file, <span class="string" style="color:#ce9178;">"rb"</span>) <span class="keyword" style="color:#569cd6;">as</span> f:
+    attachment = MIMEApplication(f.read(), Name=<span class="string" style="color:#ce9178;">"report.xlsx"</span>)
+attachment[<span class="string" style="color:#ce9178;">"Content-Disposition"</span>] = <span class="string" style="color:#ce9178;">'attachment; filename="report.xlsx"'</span>
+msg.attach(attachment)
+
+<span class="comment" style="color:#6a9955;"># 发送邮件</span>
+smtp = smtplib.SMTP(<span class="string" style="color:#ce9178;">"smtp.company.com"</span>, <span class="number" style="color:#b5cea8;">587</span>)
+smtp.starttls()
+smtp.login(<span class="string" style="color:#ce9178;">"sender@company.com"</span>, <span class="string" style="color:#ce9178;">"password"</span>)
+smtp.send_message(msg)
+smtp.quit()
+
+print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（带附件）"</span>)</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">方式 2：非附件（HTML 表格）</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#569cd6;">import</span> smtplib
+<span class="keyword" style="color:#569cd6;">from</span> email.mime.multipart <span class="keyword" style="color:#569cd6;">import</span> MIMEMultipart
+<span class="keyword" style="color:#569cd6;">from</span> email.mime.text <span class="keyword" style="color:#569cd6;">import</span> MIMEText
+<span class="keyword" style="color:#569cd6;">import</span> pandas <span class="keyword" style="color:#569cd6;">as</span> pd
+
+<span class="comment" style="color:#6a9955;"># 准备数据</span>
+data = {
+    <span class="string" style="color:#ce9178;">"姓名"</span>: [<span class="string" style="color:#ce9178;">"张三"</span>, <span class="string" style="color:#ce9178;">"李四"</span>, <span class="string" style="color:#ce9178;">"王五"</span>],
+    <span class="string" style="color:#ce9178;">"部门"</span>: [<span class="string" style="color:#ce9178;">"技术部"</span>, <span class="string" style="color:#ce9178;">"销售部"</span>, <span class="string" style="color:#ce9178;">"财务部"</span>],
+    <span class="string" style="color:#ce9178;">"工资"</span>: [<span class="number" style="color:#b5cea8;">15000</span>, <span class="number" style="color:#b5cea8;">12000</span>, <span class="number" style="color:#b5cea8;">13000</span>],
+}
+df = pd.DataFrame(data)
+
+<span class="comment" style="color:#6a9955;"># 创建 HTML 表格</span>
+html_table = df.to_html(index=<span class="keyword" style="color:#569cd6;">False</span>, border=<span class="number" style="color:#b5cea8;">0</span>)
+
+<span class="comment" style="color:#6a9955;"># 配置邮件</span>
+msg = MIMEMultipart(<span class="string" style="color:#ce9178;">"related"</span>)
+msg[<span class="string" style="color:#ce9178;">"From"</span>] = <span class="string" style="color:#ce9178;">"sender@company.com"</span>
+msg[<span class="string" style="color:#ce9178;">"To"</span>] = <span class="string" style="color:#ce9178;">"receiver@company.com"</span>
+msg[<span class="string" style="color:#ce9178;">"Subject"</span>] = <span class="string" style="color:#ce9178;">"员工工资明细"</span>
+
+<span class="comment" style="color:#6a9955;"># HTML 邮件正文（内嵌表格）</span>
+html_body = <span class="string" style="color:#ce9178;">f"""
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        table {{ border-collapse: collapse; width: 100%; }}
+        th, td {{ border: 1px solid #ddd; padding: 12px; text-align: left; }}
+        th {{ background-color: #107C41; color: white; }}
+        tr:nth-child(even) {{ background-color: #f2f2f2; }}
+        tr:hover {{ background-color: #e6f2ea; }}
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2 style="color:#107C41;"&gt;员工工资明细表&lt;/h2&gt;
+    {html_table}
+    &lt;p style="margin-top:20px;color:#666;font-size:12px;"&gt;
+        数据生成时间：{pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}
+    &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"""</span>
+msg.attach(MIMEText(html_body, <span class="string" style="color:#ce9178;">"html"</span>))
+
+<span class="comment" style="color:#6a9955;"># 发送邮件</span>
+smtp = smtplib.SMTP(<span class="string" style="color:#ce9178;">"smtp.company.com"</span>, <span class="number" style="color:#b5cea8;">587</span>)
+smtp.starttls()
+smtp.login(<span class="string" style="color:#ce9178;">"sender@company.com"</span>, <span class="string" style="color:#ce9178;">"password"</span>)
+smtp.send_message(msg)
+smtp.quit()
+
+print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML 表格）"</span>)</pre>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
+                        <h3 style="color:white;">🔷 Go - 邮件发送</h3>
+                    </div>
+                    <div class="topic-body">
+                        <h4 style="margin-top:0;color:var(--excel-green);">方式 1：带附件发送</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"bytes"</span>
+    <span class="string" style="color:#ce9178;">"encoding/base64"</span>
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"mime/multipart"</span>
+    <span class="string" style="color:#ce9178;">"net/smtp"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">sendEmailWithAttachment</span>() <span class="keyword" style="color:#c586c0;">error</span> {
+    <span class="comment" style="color:#6a9955;">// 创建 Excel 文件</span>
+    f := excelize.NewFile()
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+    
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"姓名"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="string" style="color:#ce9178;">"部门"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C1"</span>, <span class="string" style="color:#ce9178;">"工资"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A2"</span>, <span class="string" style="color:#ce9178;">"张三"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B2"</span>, <span class="string" style="color:#ce9178;">"技术部"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C2"</span>, <span class="number" style="color:#b5cea8;">15000</span>)
+    
+    <span class="comment" style="color:#6a9955;">// 保存到 buffer</span>
+    buf := <span class="keyword" style="color:#c586c0;">new</span>(bytes.Buffer)
+    <span class="keyword" style="color:#c586c0;">if</span> err := f.Write(buf); err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        <span class="keyword" style="color:#c586c0;">return</span> err
+    }
+
+    <span class="comment" style="color:#6a9955;">// 创建 MIME 邮件</span>
+    body := <span class="keyword" style="color:#c586c0;">new</span>(bytes.Buffer)
+    writer := multipart.NewWriter(body)
+    
+    <span class="comment" style="color:#6a9955;">// 添加 HTML 正文</span>
+    htmlPart, _ := writer.CreatePart(<span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>{
+        <span class="string" style="color:#ce9178;">"Content-Type"</span>: <span class="string" style="color:#ce9178;">"text/html; charset=utf-8"</span>,
+    })
+    htmlContent := <span class="string" style="color:#ce9178;">`&lt;html&gt;&lt;body&gt;
+        &lt;h2&gt;月度工资报表&lt;/h2&gt;
+        &lt;p&gt;您好，请查收本月的工资报表。&lt;/p&gt;
+    &lt;/body&gt;&lt;/html&gt;`</span>
+    htmlPart.Write([]<span class="keyword" style="color:#c586c0;">byte</span>(htmlContent))
+    
+    <span class="comment" style="color:#6a9955;">// 添加 Excel 附件</span>
+    attachment, _ := writer.CreatePart(<span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>{
+        <span class="string" style="color:#ce9178;">"Content-Type"</span>: <span class="string" style="color:#ce9178;">"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"</span>,
+        <span class="string" style="color:#ce9178;">"Content-Disposition"</span>: <span class="string" style="color:#ce9178;">`attachment; filename="report.xlsx"`</span>,
+        <span class="string" style="color:#ce9178;">"Content-Transfer-Encoding"</span>: <span class="string" style="color:#ce9178;">"base64"</span>,
+    })
+    encoder := base64.NewEncoder(base64.StdEncoding, attachment)
+    encoder.Write(buf.Bytes())
+    encoder.Close()
+    
+    writer.Close()
+
+    <span class="comment" style="color:#6a9955;">// 发送邮件</span>
+    auth := smtp.PlainAuth(<span class="string" style="color:#ce9178;">""</span>, <span class="string" style="color:#ce9178;">"sender@company.com"</span>, <span class="string" style="color:#ce9178;">"password"</span>, <span class="string" style="color:#ce9178;">"smtp.company.com"</span>)
+    
+    msg := <span class="keyword" style="color:#c586c0;">make</span>(<span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>)
+    msg[<span class="string" style="color:#ce9178;">"From"</span>] = <span class="string" style="color:#ce9178;">"sender@company.com"</span>
+    msg[<span class="string" style="color:#ce9178;">"To"</span>] = <span class="string" style="color:#ce9178;">"receiver@company.com"</span>
+    msg[<span class="string" style="color:#ce9178;">"Subject"</span>] = <span class="string" style="color:#ce9178;">"月度工资报表"</span>
+    msg[<span class="string" style="color:#ce9178;">"MIME-Version"</span>] = <span class="string" style="color:#ce9178;">"1.0"</span>
+    msg[<span class="string" style="color:#ce9178;">"Content-Type"</span>] = writer.FormDataContentType()
+    
+    <span class="keyword" style="color:#c586c0;">var</span> header <span class="keyword" style="color:#c586c0;">string</span>
+    <span class="keyword" style="color:#c586c0;">for</span> k, v := <span class="keyword" style="color:#c586c0;">range</span> msg {
+        header += fmt.Sprintf(<span class="string" style="color:#ce9178;">"%s: %s\r\n"</span>, k, v)
+    }
+    header += <span class="string" style="color:#ce9178;">"\r\n"</span>
+    
+    emailMsg := header + body.String()
+    
+    <span class="keyword" style="color:#c586c0;">return</span> smtp.SendMail(<span class="string" style="color:#ce9178;">"smtp.company.com:587"</span>, auth, 
+        msg[<span class="string" style="color:#ce9178;">"From"</span>], []<span class="keyword" style="color:#c586c0;">string</span>{msg[<span class="string" style="color:#ce9178;">"To"</span>]}, []<span class="keyword" style="color:#c586c0;">byte</span>(emailMsg))
+}
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    <span class="keyword" style="color:#c586c0;">if</span> err := sendEmailWithAttachment(); err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✗ 发送失败:"</span>, err)
+    } <span class="keyword" style="color:#c586c0;">else</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（带附件）"</span>)
+    }
+}</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">方式 2：非附件（HTML 表格）</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"bytes"</span>
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"net/smtp"</span>
+    <span class="string" style="color:#ce9178;">"time"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">type</span> Employee <span class="keyword" style="color:#c586c0;">struct</span> {
+    Name   <span class="keyword" style="color:#c586c0;">string</span>
+    Dept   <span class="keyword" style="color:#c586c0;">string</span>
+    Salary <span class="keyword" style="color:#c586c0;">float64</span>
+}
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">sendEmailWithHTMLTable</span>() <span class="keyword" style="color:#c586c0;">error</span> {
+    <span class="comment" style="color:#6a9955;">// 准备数据</span>
+    employees := []Employee{
+        {<span class="string" style="color:#ce9178;">"张三"</span>, <span class="string" style="color:#ce9178;">"技术部"</span>, <span class="number" style="color:#b5cea8;">15000</span>},
+        {<span class="string" style="color:#ce9178;">"李四"</span>, <span class="string" style="color:#ce9178;">"销售部"</span>, <span class="number" style="color:#b5cea8;">12000</span>},
+        {<span class="string" style="color:#ce9178;">"王五"</span>, <span class="string" style="color:#ce9178;">"财务部"</span>, <span class="number" style="color:#b5cea8;">13000</span>},
+    }
+
+    <span class="comment" style="color:#6a9955;">// 构建 HTML 表格</span>
+    <span class="keyword" style="color:#c586c0;">var</span> tableRows <span class="keyword" style="color:#c586c0;">string</span>
+    <span class="keyword" style="color:#c586c0;">for</span> _, emp := <span class="keyword" style="color:#c586c0;">range</span> employees {
+        tableRows += fmt.Sprintf(<span class="string" style="color:#ce9178;">`&lt;tr&gt;
+            &lt;td&gt;%s&lt;/td&gt;
+            &lt;td&gt;%s&lt;/td&gt;
+            &lt;td&gt;%.0f&lt;/td&gt;
+        &lt;/tr&gt;`</span>, emp.Name, emp.Dept, emp.Salary)
+    }
+
+    <span class="comment" style="color:#6a9955;">// HTML 邮件正文</span>
+    htmlBody := fmt.Sprintf(<span class="string" style="color:#ce9178;">`&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        table { border-collapse: collapse; width: 100%%; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #107C41; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        tr:hover { background-color: #e6f2ea; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2 style="color:#107C41;"&gt;员工工资明细表&lt;/h2&gt;
+    &lt;table&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;&lt;th&gt;姓名&lt;/th&gt;&lt;th&gt;部门&lt;/th&gt;&lt;th&gt;工资&lt;/th&gt;&lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;%s&lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;p style="margin-top:20px;color:#666;font-size:12px;"&gt;
+        数据生成时间：%s
+    &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;`</span>, tableRows, time.Now().Format(<span class="string" style="color:#ce9178;">"2006-01-02 15:04"</span>))
+
+    <span class="comment" style="color:#6a9955;">// 构建邮件</span>
+    <span class="keyword" style="color:#c586c0;">var</span> buf bytes.Buffer
+    buf.WriteString(<span class="string" style="color:#ce9178;">"From: sender@company.com\r\n"</span>)
+    buf.WriteString(<span class="string" style="color:#ce9178;">"To: receiver@company.com\r\n"</span>)
+    buf.WriteString(<span class="string" style="color:#ce9178;">"Subject: 员工工资明细\r\n"</span>)
+    buf.WriteString(<span class="string" style="color:#ce9178;">"MIME-Version: 1.0\r\n"</span>)
+    buf.WriteString(<span class="string" style="color:#ce9178;">"Content-Type: text/html; charset=utf-8\r\n"</span>)
+    buf.WriteString(<span class="string" style="color:#ce9178;">"\r\n"</span>)
+    buf.WriteString(htmlBody)
+
+    <span class="comment" style="color:#6a9955;">// 发送邮件</span>
+    auth := smtp.PlainAuth(<span class="string" style="color:#ce9178;">""</span>, <span class="string" style="color:#ce9178;">"sender@company.com"</span>, <span class="string" style="color:#ce9178;">"password"</span>, <span class="string" style="color:#ce9178;">"smtp.company.com"</span>)
+    
+    <span class="keyword" style="color:#c586c0;">return</span> smtp.SendMail(<span class="string" style="color:#ce9178;">"smtp.company.com:587"</span>, auth,
+        <span class="string" style="color:#ce9178;">"sender@company.com"</span>, []<span class="keyword" style="color:#c586c0;">string</span>{<span class="string" style="color:#ce9178;">"receiver@company.com"</span>}, buf.Bytes())
+}
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    <span class="keyword" style="color:#c586c0;">if</span> err := sendEmailWithHTMLTable(); err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✗ 发送失败:"</span>, err)
+    } <span class="keyword" style="color:#c586c0;">else</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML 表格）"</span>)
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
