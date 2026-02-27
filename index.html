@@ -1850,12 +1850,12 @@ wb.save(<span class="string" style="color:#ce9178;">"formatted_report.xlsx"</spa
 
             <h4 style="color:var(--text-primary);margin:2rem 0 1rem;">1.3 高级功能</h4>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:1.5rem;margin:1.5rem 0;">
-                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;overflow:hidden;">
+                <div style="border:1px solid var(--border-color);border-radius:8px;overflow:hidden;">
                     <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--border-color);background:linear-gradient(135deg,#3776ab 0%,#4b8bbe 100%);color:white;">
                         <h4 style="margin:0;display:flex;align-items:center;gap:0.5rem;">📊 创建图表</h4>
                     </div>
                     <div style="padding:1rem 1.5rem;background:#1e1e1e;overflow-x:auto;">
-                        <pre style="margin:0;color:#d4d4d4;font-family:'Consolas',monospace;font-size:0.85rem;line-height:1.6;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl.chart <span class="keyword" style="color:#569cd6;">import</span> BarChart, Reference
+                        <pre style="margin:0;font-family:'Consolas',monospace;font-size:0.85rem;line-height:1.6;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl.chart <span class="keyword" style="color:#569cd6;">import</span> BarChart, Reference
 
 wb = Workbook()
 ws = wb.active
@@ -1894,7 +1894,7 @@ wb.save(<span class="string" style="color:#ce9178;">"chart_example.xlsx"</span>)
                         <h4 style="margin:0;display:flex;align-items:center;gap:0.5rem;">🔄 批量处理</h4>
                     </div>
                     <div style="padding:1rem 1.5rem;background:#1e1e1e;overflow-x:auto;">
-                        <pre style="margin:0;color:#d4d4d4;font-family:'Consolas',monospace;font-size:0.85rem;line-height:1.6;"><span class="keyword" style="color:#569cd6;">import</span> pandas <span class="keyword" style="color:#569cd6;">as</span> pd
+                        <pre style="margin:0;font-family:'Consolas',monospace;font-size:0.85rem;line-height:1.6;"><span class="keyword" style="color:#569cd6;">import</span> pandas <span class="keyword" style="color:#569cd6;">as</span> pd
 <span class="keyword" style="color:#569cd6;">from</span> pathlib <span class="keyword" style="color:#569cd6;">import</span> Path
 
 <span class="keyword" style="color:#569cd6;">def</span> <span class="function" style="color:#dcdcaa;">merge_excel_files</span>(folder_path, output_file):
@@ -2149,6 +2149,209 @@ split_excel_by_column(<span class="string" style="color:#ce9178;">"sales.xlsx"</
 }</pre>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">🐍 Excel 内置 Python & AI 核心用法</h2>
+            <p class="section-desc">Microsoft 365 原生集成的 Python 和 AI 功能，无需安装任何库</p>
+
+            <div style="background:linear-gradient(135deg,#107c41 0%,#21a366 100%);color:white;padding:2rem;border-radius:8px;margin:2rem 0;">
+                <h3 style="margin-top:0;">💡 什么是 Excel 内置 Python？</h3>
+                <p style="line-height:1.8;margin-bottom:1rem;">
+                    Microsoft 365 用户现在可以直接在 Excel 中使用 Python，无需安装任何环境或库。
+                    基于 <strong>Pyodide</strong> 技术，Python 代码在浏览器中运行，数据不出 Excel。
+                </p>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+                    <span style="background:rgba(255,255,255,0.2);padding:0.5rem 1rem;border-radius:20px;font-size:0.9rem;">✅ 无需安装</span>
+                    <span style="background:rgba(255,255,255,0.2);padding:0.5rem 1rem;border-radius:20px;font-size:0.9rem;">✅ 数据安全</span>
+                    <span style="background:rgba(255,255,255,0.2);padding:0.5rem 1rem;border-radius:20px;font-size:0.9rem;">✅ 云端运行</span>
+                    <span style="background:rgba(255,255,255,0.2);padding:0.5rem 1rem;border-radius:20px;font-size:0.9rem;">✅ 自动保存</span>
+                </div>
+            </div>
+
+            <h3 style="color:var(--excel-green);margin:2rem 0 1rem;">1. 快速开始</h3>
+            
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin:1.5rem 0;">
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:1.5rem;">
+                    <h4 style="color:var(--excel-green);margin-top:0;">📌 如何插入 Python 代码</h4>
+                    <ol style="color:var(--text-secondary);line-height:2;">
+                        <li>在 Excel 功能区点击 <strong>"公式"</strong> 选项卡</li>
+                        <li>点击 <strong>"Python"</strong> 按钮（或按 <code>Alt + P</code>）</li>
+                        <li>在代码单元格中输入 Python 代码</li>
+                        <li>按 <code>Ctrl + Enter</code> 运行</li>
+                    </ol>
+                </div>
+
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:1.5rem;">
+                    <h4 style="color:var(--excel-green);margin-top:0;">🔑 核心对象</h4>
+                    <ul style="color:var(--text-secondary);line-height:2;">
+                        <li><code style="background:var(--bg-secondary);padding:0.2rem 0.5rem;border-radius:4px;">xl</code> - Excel 对象，访问工作表</li>
+                        <li><code style="background:var(--bg-secondary);padding:0.2rem 0.5rem;border-radius:4px;">pd</code> - pandas 库（已预装）</li>
+                        <li><code style="background:var(--bg-secondary);padding:0.2rem 0.5rem;border-radius:4px;">np</code> - numpy 库（已预装）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="color:var(--excel-green);margin:2rem 0 1rem;">2. 核心用法示例</h3>
+
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab python active" onclick="switchTab('#py-excel-read', event)">📖 读取数据</button>
+                    <button class="code-tab python" onclick="switchTab('#py-excel-analyze', event)">📊 数据分析</button>
+                    <button class="code-tab python" onclick="switchTab('#py-excel-chart', event)">📈 创建图表</button>
+                    <button class="code-tab python" onclick="switchTab('#py-excel-clean', event)">🧹 数据清洗</button>
+                </div>
+
+                <div id="py-excel-read" class="tab-content active">
+                    <div class="tab-panel">
+                        <h4 style="margin-top:0;color:var(--excel-green);">读取当前工作表数据</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="comment" style="color:#6a9955;"># 方法 1: 使用 xl 对象读取</span>
+df = xl(<span class="string" style="color:#ce9178;">"A1:D100"</span>)
+<span class="keyword" style="color:#569cd6;">print</span>(df.head())
+
+<span class="comment" style="color:#6a9955;"># 方法 2: 读取整个工作表</span>
+df = xl(<span class="string" style="color:#ce9178;">"SalesData"</span>)  <span class="comment" style="color:#6a9955;"># 按工作表名</span>
+
+<span class="comment" style="color:#6a9955;"># 方法 3: 读取命名区域</span>
+df = xl(<span class="string" style="color:#ce9178;">"MyRange"</span>)
+
+<span class="comment" style="color:#6a9955;"># 查看数据基本信息</span>
+<span class="keyword" style="color:#569cd6;">print</span>(df.info())
+<span class="keyword" style="color:#569cd6;">print</span>(df.describe())</pre>
+                    </div>
+                </div>
+
+                <div id="py-excel-analyze" class="tab-content">
+                    <div class="tab-panel">
+                        <h4 style="margin-top:0;color:var(--excel-green);">数据分析核心操作</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="comment" style="color:#6a9955;"># 读取数据</span>
+df = xl(<span class="string" style="color:#ce9178;">"A1:F500"</span>)
+
+<span class="comment" style="color:#6a9955;"># 分组聚合</span>
+summary = df.groupby(<span class="string" style="color:#ce9178;">"地区"</span>).agg({
+    <span class="string" style="color:#ce9178;">"销售额"</span>: <span class="string" style="color:#ce9178;">"sum"</span>,
+    <span class="string" style="color:#ce9178;">"数量"</span>: <span class="string" style="color:#ce9178;">"mean"</span>,
+    <span class="string" style="color:#ce9178;">"利润"</span>: <span class="string" style="color:#ce9178;">"mean"</span>
+}).reset_index()
+
+<span class="comment" style="color:#6a9955;"># 数据透视表</span>
+pivot = pd.pivot_table(
+    df,
+    values=<span class="string" style="color:#ce9178;">"销售额"</span>,
+    index=<span class="string" style="color:#ce9178;">"产品"</span>,
+    columns=<span class="string" style="color:#ce9178;">"季度"</span>,
+    aggfunc=<span class="string" style="color:#ce9178;">"sum"</span>,
+    fill_value=<span class="number" style="color:#b5cea8;">0</span>
+)
+
+<span class="comment" style="color:#6a9955;"># 排序和筛选</span>
+top10 = df.nlargest(<span class="number" style="color:#b5cea8;">10</span>, <span class="string" style="color:#ce9178;">"销售额"</span>)
+high_value = df[df[<span class="string" style="color:#ce9178;">"销售额"</span>] > <span class="number" style="color:#b5cea8;">10000</span>]
+
+<span class="comment" style="color:#6a9955;"># 输出结果到 Excel</span>
+summary  <span class="comment" style="color:#6a9955;"># 直接显示结果</span></pre>
+                    </div>
+                </div>
+
+                <div id="py-excel-chart" class="tab-content">
+                    <div class="tab-panel">
+                        <h4 style="margin-top:0;color:var(--excel-green);">创建可视化图表</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="comment" style="color:#6a9955;"># Excel 内置 Python 支持 matplotlib</span>
+<span class="keyword" style="color:#569cd6;">import</span> matplotlib.pyplot <span class="keyword" style="color:#569cd6;">as</span> plt
+
+<span class="comment" style="color:#6a9955;"># 读取数据</span>
+df = xl(<span class="string" style="color:#ce9178;">"A1:C13"</span>)
+
+<span class="comment" style="color:#6a9955;"># 创建柱状图</span>
+fig, ax = plt.subplots(figsize=(<span class="number" style="color:#b5cea8;">10</span>, <span class="number" style="color:#b5cea8;">6</span>))
+ax.bar(df[<span class="string" style="color:#ce9178;">"产品"</span>], df[<span class="string" style="color:#ce9178;">"销售额"</span>], color=<span class="string" style="color:#ce9178;">"#107c41"</span>)
+ax.set_title(<span class="string" style="color:#ce9178;">"产品销售对比"</span>)
+ax.set_xlabel(<span class="string" style="color:#ce9178;">"产品"</span>)
+ax.set_ylabel(<span class="string" style="color:#ce9178;">"销售额"</span>)
+plt.xticks(rotation=<span class="number" style="color:#b5cea8;">45</span>)
+plt.tight_layout()
+
+<span class="comment" style="color:#6a9955;"># 显示图表（自动嵌入 Excel）</span>
+fig</pre>
+                    </div>
+                </div>
+
+                <div id="py-excel-clean" class="tab-content">
+                    <div class="tab-panel">
+                        <h4 style="margin-top:0;color:var(--excel-green);">数据清洗核心操作</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="comment" style="color:#6a9955;"># 读取原始数据</span>
+df = xl(<span class="string" style="color:#ce9178;">"A1:F1000"</span>)
+
+<span class="comment" style="color:#6a9955;"># 删除重复值</span>
+df = df.drop_duplicates()
+
+<span class="comment" style="color:#6a9955;"># 处理缺失值</span>
+df[<span class="string" style="color:#ce9178;">"销售额"</span>] = df[<span class="string" style="color:#ce9178;">"销售额"</span>].fillna(<span class="number" style="color:#b5cea8;">0</span>)  <span class="comment" style="color:#6a9955;"># 填充 0</span>
+df[<span class="string" style="color:#ce9178;">"地区"</span>] = df[<span class="string" style="color:#ce9178;">"地区"</span>].fillna(<span class="string" style="color:#ce9178;">"未知"</span>)  <span class="comment" style="color:#6a9955;"># 填充默认值</span>
+
+<span class="comment" style="color:#6a9955;"># 删除空行</span>
+df = df.dropna()
+
+<span class="comment" style="color:#6a9955;"># 数据类型转换</span>
+df[<span class="string" style="color:#ce9178;">"日期"</span>] = pd.to_datetime(df[<span class="string" style="color:#ce9178;">"日期"</span>])
+df[<span class="string" style="color:#ce9178;">"销售额"</span>] = pd.to_numeric(df[<span class="string" style="color:#ce9178;">"销售额"</span>])
+
+<span class="comment" style="color:#6a9955;"># 字符串处理</span>
+df[<span class="string" style="color:#ce9178;">"产品名称"</span>] = df[<span class="string" style="color:#ce9178;">"产品名称"</span>].str.strip()
+df[<span class="string" style="color:#ce9178;">"产品名称"</span>] = df[<span class="string" style="color:#ce9178;">"产品名称"</span>].str.upper()
+
+<span class="comment" style="color:#6a9955;"># 添加计算列</span>
+df[<span class="string" style="color:#ce9178;">"利润率"</span>] = (df[<span class="string" style="color:#ce9178;">"利润"</span>] / df[<span class="string" style="color:#ce9178;">"销售额"</span>] * <span class="number" style="color:#b5cea8;">100</span>).round(<span class="number" style="color:#b5cea8;">2</span>)
+
+df  <span class="comment" style="color:#6a9955;"># 输出清洗后的数据</span></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color:var(--excel-green);margin:2rem 0 1rem;">3. AI 功能核心用法</h3>
+
+            <div style="background:linear-gradient(135deg,#0078d4 0%,#00bcf2 100%);color:white;padding:2rem;border-radius:8px;margin:2rem 0;">
+                <h3 style="margin-top:0;">🤖 Microsoft Copilot in Excel</h3>
+                <p style="line-height:1.8;">
+                    Copilot 是 Microsoft 365 的 AI 助手，可以直接在 Excel 中帮助你分析数据、创建公式、生成洞察。
+                </p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin:1.5rem 0;">
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:1.5rem;">
+                    <h4 style="color:#0078d4;margin-top:0;">💬 Copilot 核心功能</h4>
+                    <ul style="color:var(--text-secondary);line-height:2;">
+                        <li><strong>分析数据</strong> - "帮我分析销售趋势"</li>
+                        <li><strong>创建公式</strong> - "计算每个产品的利润率"</li>
+                        <li><strong>生成洞察</strong> - "找出销售额最高的地区"</li>
+                        <li><strong>数据可视化</strong> - "为这些数据创建图表"</li>
+                        <li><strong>假设分析</strong> - "如果价格上涨 10% 会怎样"</li>
+                    </ul>
+                </div>
+
+                <div style="background:white;border:1px solid var(--border-color);border-radius:8px;padding:1.5rem;">
+                    <h4 style="color:#0078d4;margin-top:0;">📝 常用 AI 提示词</h4>
+                    <div style="background:var(--bg-secondary);padding:1rem;border-radius:6px;font-family:'Consolas',monospace;font-size:0.85rem;">
+                        <div style="margin-bottom:0.5rem;">🔹 "Highlight the top 10 products by sales"</div>
+                        <div style="margin-bottom:0.5rem;">🔹 "Create a formula to calculate YoY growth"</div>
+                        <div style="margin-bottom:0.5rem;">🔹 "Show me insights about regional performance"</div>
+                        <div style="margin-bottom:0.5rem;">🔹 "Add conditional formatting for values > 10000"</div>
+                        <div style="margin-bottom:0.5rem;">🔹 "Summarize this data in 3 bullet points"</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:1.5rem;border-radius:0 8px 8px 0;margin:2rem 0;">
+                <h4 style="color:#856404;margin-top:0;">⚠️ 注意事项</h4>
+                <ul style="color:#856404;line-height:1.8;margin:0.5rem 0 0 1.5rem;">
+                    <li>Excel 内置 Python 需要 Microsoft 365 订阅</li>
+                    <li>部分功能仅在 Excel for Web 中可用</li>
+                    <li>Copilot 需要额外的 Copilot for Microsoft 365 订阅</li>
+                    <li>数据在云端处理，敏感数据请注意隐私</li>
+                </ul>
             </div>
         </div>
     </section>
