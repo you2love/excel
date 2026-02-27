@@ -139,6 +139,95 @@
       }
       .lang-card.python { border-top: 4px solid var(--python-blue); }
       .lang-card.go { border-top: 4px solid var(--go-cyan); }
+
+      .timeline {
+        position: relative;
+        max-width: 900px;
+        margin: 3rem auto;
+        padding: 2rem 0;
+      }
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(to bottom, var(--excel-green), var(--excel-green-light));
+        border-radius: 2px;
+      }
+      .timeline-item {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1.5rem 0;
+        position: relative;
+        width: 50%;
+      }
+      .timeline-item:nth-child(odd) {
+        align-self: flex-start;
+        padding-right: 3rem;
+      }
+      .timeline-item:nth-child(even) {
+        align-self: flex-end;
+        margin-left: 50%;
+        padding-left: 3rem;
+      }
+      .timeline-content {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.25rem;
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+      }
+      .timeline-content:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+      }
+      .timeline-year {
+        display: inline-block;
+        background: var(--excel-green);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+      .timeline-content h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        color: var(--text-primary);
+      }
+      .timeline-content p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      .timeline-dot {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: white;
+        border: 4px solid var(--excel-green);
+        border-radius: 50%;
+        top: 2rem;
+      }
+      .timeline-item:nth-child(odd) .timeline-dot {
+        right: -8px;
+      }
+      .timeline-item:nth-child(even) .timeline-dot {
+        left: -8px;
+      }
+
+      @media (max-width: 768px) {
+        .timeline::before { left: 20px; }
+        .timeline-item { width: 100%; margin-left: 0 !important; padding-left: 50px !important; padding-right: 0 !important; }
+        .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { justify-content: flex-start; }
+        .timeline-dot { left: 12px !important; right: auto !important; }
+      }
       
       .lang-card h3 {
         display: flex;
@@ -277,6 +366,7 @@
                 <span class="logo">Excel</span>
             </div>
             <ul class="nav-menu">
+                <li><a href="#history">发展历程</a></li>
                 <li><a href="#languages">编程语言</a></li>
                 <li><a href="#topics">技术主题</a></li>
                 <li><a href="#workflow">工作流程</a></li>
@@ -314,6 +404,87 @@ result.to_excel(<span class="string">"output.xlsx"</span>, index=<span class="ke
             <div style="margin-top:2rem;">
                 <a href="#languages" class="btn btn-primary">🚀 开始编程</a>
                 <a href="pages/excel-structure.html" class="btn btn-secondary">📁 xlsx 格式详解</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="history" class="section">
+        <div class="container">
+            <h2 class="section-title">Excel 发展历程</h2>
+            <p class="section-desc">从 1985 年到 2026 年，Excel 的演进之路</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1985</span>
+                        <h4>Excel 1.0 for Mac</h4>
+                        <p>Microsoft Excel 首次发布，专为 Macintosh 设计，引入图形界面和鼠标操作。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1987</span>
+                        <h4>Excel 2.0 for Windows</h4>
+                        <p>首个 Windows 版本发布，Excel 开始跨平台发展。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1993</span>
+                        <h4>Excel 5.0 - VBA 引入</h4>
+                        <p>首次引入 VBA（Visual Basic for Applications），开启自动化编程时代。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2007</span>
+                        <h4>Excel 2007 - OpenXML 格式</h4>
+                        <p>引入 xlsx 文件格式（基于 OpenXML），支持更大的数据量和更好的压缩。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2010</span>
+                        <h4>Excel 2010 - Sparklines</h4>
+                        <p>引入迷你图（Sparklines）、切片器和 Power Pivot 预览版。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2013</span>
+                        <h4>Excel 2013 - Power Query</h4>
+                        <p>引入 Power Query、Power Map 和 Power Formula 等强大数据分析工具。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2016</span>
+                        <h4>Excel 2016 - 云协作</h4>
+                        <p>增强 Office 365 云协作功能，支持实时共同编辑。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2026</span>
+                        <h4>Excel 2026 - AI 智能化</h4>
+                        <p>深度集成 AI 辅助功能，支持自然语言公式、智能数据分析和自动化建议。</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -516,7 +687,7 @@ flowchart LR
         <div class="container">
             <h2 class="section-title">快速开始</h2>
             <p class="section-desc">选择你的技术栈，5 分钟上手 Excel 编程</p>
-            
+
             <div class="lang-grid">
                 <div class="topic-card">
                     <div class="topic-header" style="background:var(--python-blue);color:white;">
@@ -538,7 +709,7 @@ result.to_excel(<span class="string" style="color:#ce9178;">"output.xlsx"</span>
                         <a href="pages/code-processing.html#python" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">查看完整示例</a>
                     </div>
                 </div>
-                
+
                 <div class="topic-card">
                     <div class="topic-header" style="background:var(--go-cyan);color:white;">
                         <h3 style="color:white;">Go 快速开始</h3>
@@ -557,6 +728,112 @@ go get github.com/xuri/excelize/v2
     f.SaveAs(<span class="string" style="color:#ce9178;">"output.xlsx"</span>)
 }</pre>
                         <a href="pages/code-processing.html#go" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">查看完整示例</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">代码示例</h2>
+            <p class="section-desc">创建、修改、删除、图表操作的完整代码示例</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:2rem;margin-top:2rem;">
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--python-blue);color:white;">
+                        <h3 style="color:white;">🐍 Python - openpyxl</h3>
+                    </div>
+                    <div class="topic-body">
+                        <h4 style="margin-top:0;color:var(--excel-green);">创建 Excel</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
+
+wb = Workbook()
+ws = wb.active
+ws.title = <span class="string" style="color:#ce9178;">"数据表"</span>
+
+<span class="comment" style="color:#6a9955;"># 写入数据</span>
+ws.append([<span class="string" style="color:#ce9178;">"姓名"</span>, <span class="string" style="color:#ce9178;">"年龄"</span>, <span class="string" style="color:#ce9178;">"城市"</span>])
+ws.append([<span class="string" style="color:#ce9178;">"张三"</span>, <span class="number" style="color:#b5cea8;">25</span>, <span class="string" style="color:#ce9178;">"北京"</span>])
+ws.append([<span class="string" style="color:#ce9178;">"李四"</span>, <span class="number" style="color:#b5cea8;">30</span>, <span class="string" style="color:#ce9178;">"上海"</span>])
+
+wb.save(<span class="string" style="color:#ce9178;">"created.xlsx"</span>)</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">修改 Excel</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> load_workbook
+
+wb = load_workbook(<span class="string" style="color:#ce9178;">"data.xlsx"</span>)
+ws = wb.active
+
+<span class="comment" style="color:#6a9955;"># 修改单元格</span>
+ws[<span class="string" style="color:#ce9178;">"B1"</span>] = <span class="number" style="color:#b5cea8;">26</span>
+
+<span class="comment" style="color:#6a9955;"># 删除行</span>
+ws.delete_rows(<span class="number" style="color:#b5cea8;">2</span>)
+
+wb.save(<span class="string" style="color:#ce9178;">"modified.xlsx"</span>)</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">插入图表</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl.chart <span class="keyword" style="color:#569cd6;">import</span> BarChart, Reference
+
+wb = load_workbook(<span class="string" style="color:#ce9178;">"data.xlsx"</span>)
+ws = wb.active
+
+<span class="comment" style="color:#6a9955;"># 创建柱状图</span>
+chart = BarChart()
+data = Reference(ws, min_col=<span class="number" style="color:#b5cea8;">2</span>, min_row=<span class="number" style="color:#b5cea8;">1</span>, max_row=<span class="number" style="color:#b5cea8;">5</span>)
+chart.add_data(data)
+ws.add_chart(chart, <span class="string" style="color:#ce9178;">"E1"</span>)
+
+wb.save(<span class="string" style="color:#ce9178;">"with_chart.xlsx"</span>)</pre>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
+                        <h3 style="color:white;">🔷 Go - excelize</h3>
+                    </div>
+                    <div class="topic-body">
+                        <h4 style="margin-top:0;color:var(--excel-green);">创建 Excel</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    f := excelize.NewFile()
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"姓名"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="string" style="color:#ce9178;">"年龄"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A2"</span>, <span class="string" style="color:#ce9178;">"张三"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B2"</span>, <span class="number" style="color:#b5cea8;">25</span>)
+    f.SaveAs(<span class="string" style="color:#ce9178;">"created.xlsx"</span>)
+}</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">修改 Excel</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;">f, err := excelize.OpenFile(<span class="string" style="color:#ce9178;">"data.xlsx"</span>)
+<span class="keyword" style="color:#c586c0;">if</span> err != <span class="keyword" style="color:#c586c0;">nil</span> { <span class="keyword" style="color:#c586c0;">return</span> }
+
+<span class="comment" style="color:#6a9955;">// 修改单元格</span>
+f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="number" style="color:#b5cea8;">26</span>)
+
+<span class="comment" style="color:#6a9955;">// 删除行</span>
+f.DeleteRow(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="number" style="color:#b5cea8;">2</span>)
+
+f.SaveAs(<span class="string" style="color:#ce9178;">"modified.xlsx"</span>)</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">插入图表</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;"><span class="keyword" style="color:#c586c0;">import</span> <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+
+f := excelize.NewFile()
+<span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+
+<span class="comment" style="color:#6a9955;">// 创建柱状图</span>
+f.AddChart(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"E1"</span>, &excelize.Chart{
+    Type: excelize.Col,
+    Series: []excelize.ChartSeries{
+        {Name: <span class="string" style="color:#ce9178;">"Sheet1!$A$1"</span>, Categories: <span class="string" style="color:#ce9178;">"Sheet1!$A$2:$A$5"</span>, Values: <span class="string" style="color:#ce9178;">"Sheet1!$B$2:$B$5"</span>},
+    },
+})
+f.SaveAs(<span class="string" style="color:#ce9178;">"with_chart.xlsx"</span>)</pre>
                     </div>
                 </div>
             </div>
