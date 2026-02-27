@@ -3,48 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Excel 完全学习指南 - 2026 最新版">
-    <title>Excel 完全指南 | 2026 版</title>
-    <link rel="stylesheet" href="css/styles.css?v=2026022605">
+    <meta name="description" content="开发者 Excel/xlsx 编程指南 - Python、Go、Node.js 处理 Excel 文件">
+    <title>Excel 开发者指南 | xlsx 编程处理</title>
+    <link rel="stylesheet" href="css/styles.css?v=2026022606">
     <style>
       :root {
         --excel-green: #107c41;
         --excel-green-light: #21a366;
         --excel-green-dark: #0b5a32;
+        --code-bg: #1e1e1e;
         --bg-primary: #ffffff;
         --bg-secondary: #f3f2f1;
         --text-primary: #24292e;
         --text-secondary: #586069;
         --border-color: #e1dfdd;
+        --python-blue: #3776ab;
+        --go-cyan: #00add8;
+        --js-yellow: #f7df1e;
+        --vba-purple: #5c2d91;
       }
-      html, body { background-color: #ffffff !important; }
+      html, body { background-color: #ffffff !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; }
+      
       .navbar {
-        background-color: rgba(255, 255, 255, 0.98) !important;
+        background: rgba(255,255,255,0.98) !important;
         border-bottom: 2px solid var(--excel-green) !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
       }
-      .navbar .logo, .nav-menu a { color: #24292e !important; }
+      .navbar .logo { font-family: 'Consolas', monospace; font-weight: 700; }
+      .navbar .logo span { color: var(--excel-green); }
+      .nav-menu { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+      .nav-menu a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+      .nav-menu a:hover, .nav-menu a.active { color: var(--excel-green); }
+      
       .hero {
-        padding: calc(100px + var(--safe-area-top)) 0 3rem;
-        background: linear-gradient(135deg, #f3f2f1 0%, #e6f2ea 100%);
+        padding: 120px 0 4rem;
+        background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+        color: white;
         text-align: center;
       }
       .hero-title {
-        font-size: clamp(2rem, 6vw, 3.5rem);
-        font-weight: 800;
-        color: var(--excel-green-dark);
-        margin-bottom: 0.5rem;
+        font-family: 'Consolas', monospace;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
       }
+      .hero-title .keyword { color: #569cd6; }
+      .hero-title .string { color: #ce9178; }
       .hero-subtitle {
-        font-size: clamp(1rem, 2vw, 1.5rem);
-        color: var(--text-secondary);
-        margin-bottom: 2rem;
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: #9cdcfe;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        font-family: 'Consolas', monospace;
       }
-      .hero-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
+      .hero-code {
+        background: var(--code-bg);
+        border-radius: 8px;
+        padding: 1.5rem;
+        max-width: 600px;
+        margin: 2rem auto;
+        text-align: left;
+        font-family: 'Consolas', monospace;
+        font-size: 0.9rem;
+        overflow-x: auto;
       }
+      .hero-code .keyword { color: #569cd6; }
+      .hero-code .string { color: #ce9178; }
+      .hero-code .function { color: #dcdcaa; }
+      .hero-code .comment { color: #6a9955; }
+      
       .btn {
         padding: 0.75rem 1.5rem;
         border-radius: 6px;
@@ -53,40 +84,47 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
+        margin: 0.5rem;
       }
       .btn-primary {
         background: linear-gradient(135deg, var(--excel-green) 0%, var(--excel-green-light) 100%);
         color: white;
       }
       .btn-secondary {
-        background-color: transparent;
+        background: transparent;
         color: var(--excel-green);
         border: 2px solid var(--excel-green);
       }
-      .section { padding: clamp(2rem, 5vw, 4rem) 0; }
-      .section-alt { background-color: var(--bg-secondary); }
+      
+      .section { padding: clamp(3rem, 6vw, 5rem) 0; }
+      .section-alt { background: var(--bg-secondary); }
       .section-title {
         text-align: center;
         font-size: clamp(1.5rem, 3vw, 2rem);
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         color: var(--text-primary);
       }
-      .section-title::after {
-        content: '';
-        display: block;
-        width: 60px;
-        height: 4px;
-        background: var(--excel-green);
-        margin: 1rem auto 0;
-        border-radius: 2px;
+      .section-title code {
+        background: var(--code-bg);
+        color: #d4d4d4;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-family: 'Consolas', monospace;
       }
-      .course-grid {
+      .section-desc {
+        text-align: center;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto 3rem;
+      }
+      
+      .lang-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
         margin: 2rem 0;
       }
-      .course-card {
+      .lang-card {
         background: white;
         border: 1px solid var(--border-color);
         border-radius: 8px;
@@ -94,85 +132,113 @@
         transition: all 0.3s;
         text-decoration: none;
         color: inherit;
-        display: block;
       }
-      .course-card:hover {
-        box-shadow: 0 4px 12px rgba(16, 124, 65, 0.15);
+      .lang-card:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         transform: translateY(-4px);
-        border-color: var(--excel-green);
         text-decoration: none;
       }
-      .course-card h3 {
-        color: var(--excel-green);
-        margin-bottom: 0.75rem;
+      .lang-card.python { border-top: 4px solid var(--python-blue); }
+      .lang-card.go { border-top: 4px solid var(--go-cyan); }
+      .lang-card.js { border-top: 4px solid var(--js-yellow); }
+      .lang-card.vba { border-top: 4px solid var(--vba-purple); }
+      
+      .lang-card h3 {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        margin-bottom: 0.75rem;
       }
-      .course-card p {
+      .lang-icon { font-size: 1.5rem; }
+      .lang-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; }
+      .lang-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+      .lang-tag {
+        background: var(--bg-secondary);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
         color: var(--text-secondary);
-        font-size: 0.95rem;
-        margin-bottom: 1rem;
       }
-      .course-icon { font-size: 1.5rem; }
+      
+      .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+      .topic-card {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .topic-header {
+        padding: 1rem 1.5rem;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .topic-header h3 {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+      .topic-body { padding: 1.5rem; }
+      .topic-body ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .topic-body li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--bg-secondary);
+      }
+      .topic-body li:last-child { border-bottom: none; }
+      .topic-body a {
+        color: var(--excel-green);
+        text-decoration: none;
+      }
+      .topic-body a:hover { text-decoration: underline; }
+      
       .mermaid-wrapper {
         background: white;
         border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 1.5rem;
         margin: 2rem 0;
-        text-align: center;
         overflow-x: auto;
       }
-      .timeline {
-        position: relative;
-        padding: 2rem 0;
-        max-width: 800px;
-        margin: 0 auto;
+      
+      .feature-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
       }
-      .timeline::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 4px;
-        height: 100%;
-        background: var(--excel-green);
-      }
-      .timeline-item {
+      .feature-item {
         display: flex;
-        justify-content: flex-end;
-        padding-right: 50%;
-        position: relative;
-        margin-bottom: 1.5rem;
-      }
-      .timeline-item:nth-child(even) {
-        justify-content: flex-start;
-        padding-right: 0;
-        padding-left: 50%;
-      }
-      .timeline-content {
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
         background: white;
         border: 1px solid var(--border-color);
         border-radius: 8px;
-        padding: 1rem;
-        margin-right: 1.5rem;
-        max-width: 300px;
       }
-      .timeline-item:nth-child(even) .timeline-content {
-        margin-right: 0;
-        margin-left: 1.5rem;
+      .feature-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
       }
-      .timeline-dot {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 14px;
-        height: 14px;
-        background: var(--excel-green);
-        border-radius: 50%;
-        border: 3px solid white;
+      .feature-content h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
       }
+      .feature-content p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+      
       .footer {
         background: linear-gradient(135deg, var(--excel-green-dark) 0%, var(--excel-green) 100%);
         color: white;
@@ -184,21 +250,17 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 2rem;
       }
-      .footer-section h4 {
-        color: white;
-        margin-bottom: 1rem;
-      }
-      .footer-section ul {
-        list-style: none;
-        padding: 0;
-      }
-      .footer-section a {
-        color: rgba(255,255,255,0.8);
-        text-decoration: none;
-      }
-      .footer-section a:hover {
-        color: white;
-        text-decoration: underline;
+      .footer-section h4 { color: white; margin-bottom: 1rem; font-size: 0.95rem; }
+      .footer-section ul { list-style: none; padding: 0; margin: 0; }
+      .footer-section li { margin-bottom: 0.5rem; }
+      .footer-section a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; }
+      .footer-section a:hover { color: white; text-decoration: underline; }
+      
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+      
+      @media (max-width: 768px) {
+        .nav-menu { flex-wrap: wrap; gap: 0.5rem; }
+        .hero-code { font-size: 0.8rem; padding: 1rem; }
       }
     </style>
     <script src="lib/mermaid.min.js"></script>
@@ -215,151 +277,345 @@
     <nav class="navbar">
         <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;height:60px;">
             <div class="nav-brand">
-                <span class="logo">📊 Excel<span style="color:var(--excel-green)">Learn</span></span>
+                <span class="logo">&lt;Excel<span>Dev</span>/&gt;</span>
             </div>
-            <ul class="nav-menu" style="display:flex;gap:1.5rem;list-style:none;margin:0;padding:0;">
-                <li><a href="#courses" style="color:var(--text-secondary);text-decoration:none;font-weight:500;">课程目录</a></li>
-                <li><a href="#timeline" style="color:var(--text-secondary);text-decoration:none;font-weight:500;">学习路线</a></li>
-                <li><a href="pages/code-processing.html" style="color:var(--excel-green);text-decoration:none;font-weight:600;">Python/Go 处理</a></li>
+            <ul class="nav-menu">
+                <li><a href="#languages">编程语言</a></li>
+                <li><a href="#topics">技术主题</a></li>
+                <li><a href="#workflow">工作流程</a></li>
+                <li><a href="pages/code-processing.html" style="color:var(--excel-green);font-weight:600;">代码示例 →</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="hero">
         <div class="container">
-            <h1 class="hero-title">Excel 完全指南</h1>
-            <p class="hero-subtitle">从入门到精通 · 2026 最新版</p>
-            <div class="hero-buttons">
-                <a href="#courses" class="btn btn-primary">📚 开始学习</a>
-                <a href="pages/introduction.html" class="btn btn-secondary">📖 入门教程</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="courses" class="section">
-        <div class="container">
-            <h2 class="section-title">课程目录</h2>
-            <p style="text-align:center;color:var(--text-secondary);max-width:600px;margin:0 auto 2rem;">
-                系统化的 Excel 学习路径，从基础操作到高级编程处理
+            <h1 class="hero-title">
+                <span class="keyword">import</span> <span class="string">"excel"</span>
+            </h1>
+            <p class="hero-subtitle">
+                面向开发者的 Excel/xlsx 编程指南<br/>
+                Python · Go · Node.js · VBA · 自动化 · 数据处理
             </p>
-            <div class="course-grid">
-                <a href="pages/excel-structure.html" class="course-card">
-                    <h3><span class="course-icon">📁</span> Excel 文件结构</h3>
-                    <p>了解 Excel 文件的内部结构、XML 格式和 OpenXML 标准</p>
+            
+            <div class="hero-code">
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">from</span> openpyxl <span class="keyword">import</span> load_workbook
+
+<span class="comment"># 读取 Excel 数据</span>
+df = pd.read_excel(<span class="string">"data.xlsx"</span>)
+
+<span class="comment"># 数据处理</span>
+result = df.groupby(<span class="string">"category"</span>).agg({
+    <span class="string">"value"</span>: <span class="string">"sum"</span>
+})
+
+<span class="comment"># 导出结果</span>
+result.to_excel(<span class="string">"output.xlsx"</span>, index=<span class="keyword">False</span>)
+            </div>
+            
+            <div style="margin-top:2rem;">
+                <a href="#languages" class="btn btn-primary">🚀 开始编程</a>
+                <a href="pages/excel-structure.html" class="btn btn-secondary">📁 xlsx 格式详解</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="languages" class="section">
+        <div class="container">
+            <h2 class="section-title">选择编程语言</h2>
+            <p class="section-desc">根据你的技术栈和项目需求选择合适的工具</p>
+            
+            <div class="lang-grid">
+                <a href="pages/code-processing.html#python" class="lang-card python">
+                    <h3><span class="lang-icon">🐍</span> Python</h3>
+                    <p>数据分析、机器学习、自动化脚本的首选</p>
+                    <div class="lang-tags">
+                        <span class="lang-tag">pandas</span>
+                        <span class="lang-tag">openpyxl</span>
+                        <span class="lang-tag">xlsxwriter</span>
+                        <span class="lang-tag">xlrd</span>
+                    </div>
                 </a>
-                <a href="pages/introduction.html" class="course-card">
-                    <h3><span class="course-icon">🚀</span> 快速入门</h3>
-                    <p>Excel 界面介绍、基本操作和常用功能快速上手</p>
+                
+                <a href="pages/code-processing.html#go" class="lang-card go">
+                    <h3><span class="lang-icon">🔷</span> Go</h3>
+                    <p>高性能服务、并发处理、微服务架构</p>
+                    <div class="lang-tags">
+                        <span class="lang-tag">excelize</span>
+                        <span class="lang-tag">unioffice</span>
+                        <span class="lang-tag">高并发</span>
+                    </div>
                 </a>
-                <a href="pages/basics.html" class="course-card">
-                    <h3><span class="course-icon">📝</span> 基础操作</h3>
-                    <p>数据输入、编辑、单元格选择、移动复制等基础技能</p>
+                
+                <a href="pages/code-processing.html#nodejs" class="lang-card js">
+                    <h3><span class="lang-icon">📦</span> Node.js</h3>
+                    <p>Web 服务、前后端一体化、Express/Nest</p>
+                    <div class="lang-tags">
+                        <span class="lang-tag">exceljs</span>
+                        <span class="lang-tag">xlsx</span>
+                        <span class="lang-tag">SheetJS</span>
+                    </div>
                 </a>
-                <a href="pages/formatting.html" class="course-card">
-                    <h3><span class="course-icon">🎨</span> 格式化美化</h3>
-                    <p>单元格格式、条件格式、样式设置让数据更美观</p>
-                </a>
-                <a href="pages/formulas.html" class="course-card">
-                    <h3><span class="course-icon">🧮</span> 公式函数</h3>
-                    <p>常用函数、逻辑函数、查找函数、动态数组函数</p>
-                </a>
-                <a href="pages/charts.html" class="course-card">
-                    <h3><span class="course-icon">📊</span> 图表制作</h3>
-                    <p>柱状图、折线图、饼图等各类图表创建和美化</p>
-                </a>
-                <a href="pages/pivottables.html" class="course-card">
-                    <h3><span class="course-icon">🔄</span> 数据透视表</h3>
-                    <p>强大的数据汇总、分析和透视表制作技巧</p>
-                </a>
-                <a href="pages/programming.html" class="course-card">
-                    <h3><span class="course-icon">💻</span> VBA 编程</h3>
-                    <p>宏录制、VBA 代码编写实现自动化处理</p>
-                </a>
-                <a href="pages/code-processing.html" class="course-card">
-                    <h3><span class="course-icon">🐍</span> Python/Go 处理</h3>
-                    <p>使用 Python 和 Go 编程语言高效处理 Excel 文件</p>
+                
+                <a href="pages/programming.html" class="lang-card vba">
+                    <h3><span class="lang-icon">📊</span> VBA</h3>
+                    <p>Office 内置自动化、快速原型、业务报表</p>
+                    <div class="lang-tags">
+                        <span class="lang-tag">宏录制</span>
+                        <span class="lang-tag">UserForm</span>
+                        <span class="lang-tag">COM 自动化</span>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="timeline" class="section section-alt">
+    <section id="topics" class="section section-alt">
         <div class="container">
-            <h2 class="section-title">Excel 版本演进史</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <strong>1985</strong>
-                        <p>Excel 诞生 (Mac)</p>
+            <h2 class="section-title">技术主题 <code>&lt;topics/&gt;</code></h2>
+            <p class="section-desc">覆盖 Excel 编程的完整知识体系</p>
+            
+            <div class="topic-grid">
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <h3>📁 xlsx 文件格式</h3>
+                    </div>
+                    <div class="topic-body">
+                        <ul>
+                            <li><a href="pages/excel-structure.html">OpenXML 规范详解</a></li>
+                            <li><a href="pages/excel-structure.html">XML 结构分析</a></li>
+                            <li><a href="pages/excel-structure.html">[Content_Types].xml</a></li>
+                            <li><a href="pages/excel-structure.html">workbook.xml / worksheet.xml</a></li>
+                            <li><a href="pages/excel-structure.html">共享字符串表 (sharedStrings.xml)</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <strong>1987</strong>
-                        <p>Excel 2.0 (Windows)</p>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <h3>📖 基础操作</h3>
+                    </div>
+                    <div class="topic-body">
+                        <ul>
+                            <li><a href="pages/basics.html">读取/写入单元格</a></li>
+                            <li><a href="pages/basics.html">行列操作</a></li>
+                            <li><a href="pages/basics.html">数据验证</a></li>
+                            <li><a href="pages/basics.html">公式处理</a></li>
+                            <li><a href="pages/formatting.html">样式格式化</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <strong>1993</strong>
-                        <p>Excel 5.0 - VBA 编程</p>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <h3>📊 数据处理</h3>
+                    </div>
+                    <div class="topic-body">
+                        <ul>
+                            <li><a href="pages/formulas.html">公式与函数</a></li>
+                            <li><a href="pages/pivottables.html">数据透视表</a></li>
+                            <li><a href="pages/charts.html">图表生成</a></li>
+                            <li><a href="pages/code-processing.html">批量处理</a></li>
+                            <li><a href="pages/code-processing.html">数据转换 ETL</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <strong>2007</strong>
-                        <p>Ribbon 界面革新</p>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <h3>🤖 自动化</h3>
+                    </div>
+                    <div class="topic-body">
+                        <ul>
+                            <li><a href="pages/programming.html">VBA 宏编程</a></li>
+                            <li><a href="pages/code-processing.html">Python 脚本自动化</a></li>
+                            <li><a href="pages/code-processing.html">Go 并发处理</a></li>
+                            <li><a href="pages/code-processing.html">定时任务调度</a></li>
+                            <li><a href="pages/code-processing.html">API 服务集成</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <strong>2019</strong>
-                        <p>动态数组函数</p>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <h3>🌐 Web 集成</h3>
+                    </div>
+                    <div class="topic-body">
+                        <ul>
+                            <li><a href="pages/code-processing.html">Excel 导出 API</a></li>
+                            <li><a href="pages/code-processing.html">文件上传解析</a></li>
+                            <li><a href="pages/code-processing.html">在线预览</a></li>
+                            <li><a href="pages/code-processing.html">模板引擎</a></li>
+                            <li><a href="pages/code-processing.html">报表生成服务</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <strong>2021</strong>
-                        <p>LAMBDA 函数</p>
+                
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <h3>⚡ 性能优化</h3>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <strong>2026</strong>
-                        <p>AI 驱动、Python 集成</p>
+                    <div class="topic-body">
+                        <ul>
+                            <li><a href="pages/code-processing.html">大文件处理</a></li>
+                            <li><a href="pages/code-processing.html">流式读写</a></li>
+                            <li><a href="pages/code-processing.html">内存优化</a></li>
+                            <li><a href="pages/code-processing.html">并发处理</a></li>
+                            <li><a href="pages/code-processing.html">缓存策略</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
+    <section id="workflow" class="section">
+        <div class="container">
+            <h2 class="section-title">典型工作流程</h2>
+            <p class="section-desc">开发者处理 Excel 的常见场景和解决方案</p>
+            
             <div class="mermaid-wrapper">
-                <h3 style="margin-bottom:1rem;color:var(--text-primary);">Excel 生态系统</h3>
                 <div class="mermaid">
-flowchart TB
-    subgraph Core[核心功能]
-        A[数据录入] --> B[公式计算]
-        B --> C[数据分析]
-        C --> D[可视化]
+flowchart LR
+    subgraph Input[数据输入]
+        A[数据库查询]
+        B[API 响应]
+        C[用户上传]
+        D[系统日志]
     end
-    subgraph Apps[应用场景]
-        E[财务报表]
-        F[数据仪表板]
-        G[项目管理]
-        H[预算规划]
+    
+    subgraph Process[处理流程]
+        E[数据清洗]
+        F[格式转换]
+        G[计算聚合]
+        H[样式应用]
     end
-    subgraph AI[AI 增强]
-        I[Copilot 助手]
-        J[智能公式]
-        K[自动洞察]
+    
+    subgraph Output[输出结果]
+        I[报表文件]
+        J[邮件附件]
+        K[云存储]
+        L[下载链接]
     end
-    Core --> Apps
-    AI --> Core
+    
+    Input --> Process
+    Process --> Output
+                </div>
+            </div>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">📤</div>
+                    <div class="feature-content">
+                        <h4>数据导出</h4>
+                        <p>数据库 → Excel 报表，支持大数据量分页导出</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📥</div>
+                    <div class="feature-content">
+                        <h4>数据导入</h4>
+                        <p>Excel 上传 → 数据验证 → 批量入库</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-content">
+                        <h4>报表生成</h4>
+                        <p>模板填充 → 数据计算 → 格式美化 → 输出</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-content">
+                        <h4>数据迁移</h4>
+                        <p>Excel ↔ CSV ↔ JSON ↔ 数据库 互转</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📧</div>
+                    <div class="feature-content">
+                        <h4>邮件报表</h4>
+                        <p>定时生成 → 邮件附件 → 自动发送</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-content">
+                        <h4>Web API</h4>
+                        <p>RESTful API 提供 Excel 导出/导入服务</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">快速开始</h2>
+            <p class="section-desc">选择你的技术栈，5 分钟上手 Excel 编程</p>
+            
+            <div class="lang-grid">
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--python-blue);color:white;">
+                        <h3 style="color:white;">Python 快速开始</h3>
+                    </div>
+                    <div class="topic-body">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;"># 安装依赖</span>
+pip install pandas openpyxl
+
+<span class="keyword" style="color:#569cd6;"># 读取 Excel</span>
+<span class="keyword" style="color:#c586c0;">import</span> pandas <span class="keyword" style="color:#c586c0;">as</span> pd
+df = pd.read_excel(<span class="string" style="color:#ce9178;">"input.xlsx"</span>)
+
+<span class="keyword" style="color:#569cd6;"># 数据处理</span>
+result = df.groupby(<span class="string" style="color:#ce9178;">"category"</span>)[<span class="string" style="color:#ce9178;">"value"</span>].sum()
+
+<span class="keyword" style="color:#569cd6;"># 导出结果</span>
+result.to_excel(<span class="string" style="color:#ce9178;">"output.xlsx"</span>, index=<span class="keyword" style="color:#569cd6;">False</span>)</pre>
+                        <a href="pages/code-processing.html#python" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">查看完整示例</a>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
+                        <h3 style="color:white;">Go 快速开始</h3>
+                    </div>
+                    <div class="topic-body">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">// 安装依赖</span>
+go get github.com/xuri/excelize/v2
+
+<span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    f := excelize.NewFile()
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"Hello"</span>)
+    f.SaveAs(<span class="string" style="color:#ce9178;">"output.xlsx"</span>)
+}</pre>
+                        <a href="pages/code-processing.html#go" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">查看完整示例</a>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--js-yellow);color:#1e1e1e;">
+                        <h3 style="color:#1e1e1e;">Node.js 快速开始</h3>
+                    </div>
+                    <div class="topic-body">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.85rem;"><span class="keyword" style="color:#569cd6;">// 安装依赖</span>
+npm install exceljs
+
+<span class="keyword" style="color:#c586c0;">const</span> ExcelJS = <span class="function" style="color:#dcdcaa;">require</span>(<span class="string" style="color:#ce9178;">'exceljs'</span>);
+
+<span class="keyword" style="color:#c586c0;">const</span> workbook = <span class="keyword" style="color:#c586c0;">new</span> <span class="type" style="color:#4ec9b0;">ExcelJS.Workbook</span>();
+<span class="keyword" style="color:#c586c0;">const</span> worksheet = workbook.<span class="function" style="color:#dcdcaa;">addWorksheet</span>(<span class="string" style="color:#ce9178;">'Sheet1'</span>);
+
+worksheet.<span class="function" style="color:#dcdcaa;">getRow</span>(<span class="number" style="color:#b5cea8;">1</span>).values = [<span class="string" style="color:#ce9178;">'Hello'</span>, <span class="string" style="color:#ce9178;">'World'</span>];
+workbook.<span class="function" style="color:#dcdcaa;">xlsx</span>.writeFile(<span class="string" style="color:#ce9178;">'output.xlsx'</span>);</pre>
+                        <a href="pages/code-processing.html#nodejs" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">查看完整示例</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -369,39 +625,42 @@ flowchart TB
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>📊 ExcelLearn</h4>
+                    <h4>&lt;ExcelDev/&gt;</h4>
                     <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;">
-                        全面的 Excel 学习资源，帮助你从入门到精通
+                        面向开发者的 Excel 编程指南
                     </p>
                 </div>
                 <div class="footer-section">
-                    <h4>快速链接</h4>
+                    <h4>编程语言</h4>
                     <ul>
-                        <li><a href="#courses">课程目录</a></li>
-                        <li><a href="#timeline">学习路线</a></li>
-                        <li><a href="pages/introduction.html">入门教程</a></li>
+                        <li><a href="pages/code-processing.html#python">Python</a></li>
+                        <li><a href="pages/code-processing.html#go">Go</a></li>
+                        <li><a href="pages/code-processing.html#nodejs">Node.js</a></li>
+                        <li><a href="pages/programming.html">VBA</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>学习资源</h4>
+                    <h4>技术主题</h4>
                     <ul>
+                        <li><a href="pages/excel-structure.html">xlsx 格式</a></li>
                         <li><a href="pages/basics.html">基础操作</a></li>
                         <li><a href="pages/formulas.html">公式函数</a></li>
-                        <li><a href="pages/charts.html">图表制作</a></li>
-                        <li><a href="pages/pivottables.html">数据透视表</a></li>
+                        <li><a href="pages/charts.html">图表生成</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>编程处理</h4>
+                    <h4>应用场景</h4>
                     <ul>
-                        <li><a href="pages/programming.html">VBA 编程</a></li>
-                        <li><a href="pages/code-processing.html">Python/Go 处理</a></li>
+                        <li><a href="pages/code-processing.html">数据导出</a></li>
+                        <li><a href="pages/code-processing.html">报表生成</a></li>
+                        <li><a href="pages/code-processing.html">Web API</a></li>
+                        <li><a href="pages/code-processing.html">自动化</a></li>
                     </ul>
                 </div>
             </div>
             <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.2);text-align:center;">
-                <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;">
-                    最后更新：2026 年 2 月 | 基于 Excel 2026 最新版本
+                <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;font-family:'Consolas',monospace;">
+                    &lt;!-- Last Updated: 2026-02 --&gt;
                 </p>
             </div>
         </div>

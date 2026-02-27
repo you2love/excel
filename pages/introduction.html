@@ -3,164 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel界面介绍 - Excel学习中心</title>
+    <title>开发者快速上手 - Excel 编程指南</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <!-- Mermaid 图表库 -->
-    <script src="../lib/mermaid.min.js"></script>
-    <script type="module">
-      window.mermaid.initialize({
-        startOnLoad: true,
-        theme: 'default',
-        securityLevel: 'loose',
-        flowchart: { curve: 'basis', useMaxWidth: true }
-      });
-    </script>
+    <style>
+      :root {
+        --excel-green: #107c41;
+        --code-bg: #1e1e1e;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f3f2f1;
+        --text-primary: #24292e;
+        --text-secondary: #586069;
+        --border-color: #e1dfdd;
+        --python-blue: #3776ab;
+        --go-cyan: #00add8;
+        --js-yellow: #f7df1e;
+      }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; background: var(--bg-secondary); margin: 0; }
+      
+      .navbar {
+        background: rgba(255,255,255,0.98);
+        border-bottom: 2px solid var(--excel-green);
+        padding: 1rem 1.5rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+      .navbar .logo { font-family: 'Consolas', monospace; font-weight: 700; font-size: 1.25rem; }
+      .navbar .logo span { color: var(--excel-green); }
+      .nav-menu { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; float: right; }
+      .nav-menu a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+      .nav-menu a:hover, .nav-menu a.active { color: var(--excel-green); }
+      
+      .page-header {
+        background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+        color: white;
+        padding: 100px 0 3rem;
+        margin-top: 60px;
+      }
+      .page-header h1 { font-family: 'Consolas', monospace; font-size: clamp(1.5rem, 4vw, 2.5rem); margin: 0 0 1rem 0; }
+      .page-header h1 .keyword { color: #569cd6; }
+      .page-header h1 .function { color: #dcdcaa; }
+      .page-header p { color: #9cdcfe; max-width: 700px; margin: 0; }
+      
+      .content { max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; }
+      
+      .section { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; border: 1px solid var(--border-color); }
+      .section h2 { font-family: 'Consolas', monospace; color: var(--excel-green); border-bottom: 2px solid var(--excel-green); padding-bottom: 0.5rem; margin-top: 0; }
+      .section h3 { color: var(--text-primary); margin-top: 1.5rem; }
+      .section p { color: var(--text-secondary); line-height: 1.7; }
+      
+      .code-block {
+        background: var(--code-bg);
+        border-radius: 8px;
+        padding: 1.5rem;
+        font-family: 'Consolas', monospace;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+        color: #d4d4d4;
+        line-height: 1.6;
+      }
+      .code-block .keyword { color: #569cd6; }
+      .code-block .string { color: #ce9178; }
+      .code-block .comment { color: #6a9955; }
+      .code-block .function { color: #dcdcaa; }
+      .code-block .type { color: #4ec9b0; }
+      
+      .lang-tabs { display: flex; gap: 0; margin: 1.5rem 0; border-bottom: 2px solid var(--border-color); }
+      .lang-tab {
+        padding: 0.75rem 1.5rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-bottom: none;
+        border-radius: 8px 8px 0 0;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+      .lang-tab:hover { background: #e6f2ea; }
+      .lang-tab.active { background: white; border-bottom: 2px solid white; margin-bottom: -2px; color: var(--excel-green); }
+      .lang-tab.python.active { color: var(--python-blue); }
+      .lang-tab.go.active { color: var(--go-cyan); }
+      .lang-tab.js.active { color: #b7950b; }
+      
+      .code-example { display: none; }
+      .code-example.active { display: block; }
+      
+      .info-box {
+        background: linear-gradient(135deg, #e6f2ea 0%, #f3f2f1 100%);
+        border-left: 4px solid var(--excel-green);
+        padding: 1.5rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1.5rem 0;
+      }
+      .info-box h4 { color: var(--excel-green); margin-top: 0; }
+      
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+      
+      .quickstart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+      .quickstart-card {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+      }
+      .quickstart-card h4 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0;
+      }
+      .quickstart-card .icon { font-size: 1.5rem; }
+      .quickstart-card code {
+        background: var(--code-bg);
+        color: #d4d4d4;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'Consolas', monospace;
+        font-size: 0.85rem;
+      }
+    </style>
 </head>
 <body>
-    <header class="site-header">
+    <nav class="navbar">
+        <div class="container" style="max-width:1200px;margin:0 auto;">
+            <span class="logo">&lt;Excel<span>Dev</span>/&gt;</span>
+            <ul class="nav-menu">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="excel-structure.html">xlsx 格式</a></li>
+                <li><a href="code-processing.html">代码示例</a></li>
+                <li><a href="programming.html">VBA 编程</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
         <div class="container">
-            <div class="logo">
-                <h1>Excel 学习中心</h1>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="excel-structure.html">文件结构</a></li>
-                    <li><a href="introduction.html" class="active">快速入门</a></li>
-                    <li><a href="basics.html">基础操作</a></li>
-                    <li><a href="formatting.html">格式化美化</a></li>
-                    <li><a href="formulas.html">公式函数</a></li>
-                    <li><a href="charts.html">图表制作</a></li>
-                    <li><a href="pivottables.html">数据透视表</a></li>
-                    <li><a href="programming.html">编程处理</a></li>
-                </ul>
-            </nav>
+            <h1><span class="keyword">async function</span> <span class="function">getStarted</span>()</h1>
+            <p>5 分钟快速上手 Excel 编程，选择你的技术栈开始</p>
         </div>
     </header>
 
-    <main class="tutorial-page">
-        <div class="tutorial-header">
-            <h1>第一章：Excel界面介绍</h1>
+    <div class="content">
+        <div class="section">
+            <h2>🚀 选择你的技术栈</h2>
+            <div class="quickstart-grid">
+                <div class="quickstart-card" style="border-top:4px solid var(--python-blue);">
+                    <h4><span class="icon">🐍</span> Python</h4>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">适合数据分析、自动化脚本、机器学习</p>
+                    <code>pip install pandas openpyxl</code>
+                </div>
+                <div class="quickstart-card" style="border-top:4px solid var(--go-cyan);">
+                    <h4><span class="icon">🔷</span> Go</h4>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">适合高性能服务、并发处理、微服务</p>
+                    <code>go get github.com/xuri/excelize/v2</code>
+                </div>
+                <div class="quickstart-card" style="border-top:4px solid var(--js-yellow);">
+                    <h4><span class="icon">📦</span> Node.js</h4>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">适合 Web 服务、前后端一体化</p>
+                    <code>npm install exceljs</code>
+                </div>
+            </div>
         </div>
 
-        <div class="tutorial-content">
-            <h2>1.1 Excel工作区概览</h2>
-            <p>Excel的工作界面经过设计，更加现代化和直观。了解各个部分的功能是学习Excel的第一步。</p>
-
-            <h3>主要组成部分</h3>
-            <ul>
-                <li><strong>快速访问工具栏</strong>：位于界面左上角，提供最常用的命令快捷方式，如保存、撤销、重做等</li>
-                <li><strong>标题栏</strong>：显示当前工作簿名称，包含窗口控制按钮</li>
-                <li><strong>功能区（Ribbon）</strong>：包含所有Excel命令，按选项卡组织</li>
-                <li><strong>名称框</strong>：显示当前选中单元格或区域的名称</li>
-                <li><strong>编辑栏</strong>：显示和编辑单元格内容</li>
-                <li><strong>工作表标签</strong>：显示工作簿中所有工作表</li>
-                <li><strong>状态栏</strong>：显示当前操作状态和计算结果</li>
-            </ul>
-
-            <div class="tip-box">
-                <strong>小技巧：</strong>你可以自定义快速访问工具栏，右键点击任何功能区按钮选择"添加到快速访问工具栏"。
+        <div class="section">
+            <h2>📖 Hello World</h2>
+            
+            <div class="lang-tabs">
+                <div class="lang-tab python active" onclick="showCode('py-hello', this)">Python</div>
+                <div class="lang-tab go" onclick="showCode('go-hello', this)">Go</div>
+                <div class="lang-tab js" onclick="showCode('js-hello', this)">Node.js</div>
             </div>
 
-            <h2>1.2 功能区详解</h2>
-            <p>功能区是Excel 2026的核心操作区域，包含多个选项卡，每个选项卡下有相关的命令按钮。</p>
+            <div id="py-hello" class="code-example active">
+                <div class="code-block"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
 
-            <h3>主要选项卡</h3>
-            <ol>
-                <li><strong>开始</strong>：最常用的格式设置和编辑命令</li>
-                <li><strong>插入</strong>：插入表格、图片、图表、函数等对象</li>
-                <li><strong>页面布局</strong>：设置页面大小、方向、主题等打印设置</li>
-                <li><strong>公式</strong>：插入函数、计算和公式工具</li>
-                <li><strong>数据</strong>：数据获取、排序、筛选、分析工具</li>
-                <li><strong>审阅</strong>：拼写检查、批注、保护工作表</li>
-                <li><strong>视图</strong>：切换不同视图模式、显示设置</li>
-            </ol>
+<span class="comment"># 创建 DataFrame</span>
+df = pd.DataFrame({
+    <span class="string">"姓名"</span>: [<span class="string">"张三"</span>, <span class="string">"李四"</span>, <span class="string">"王五"</span>],
+    <span class="string">"年龄"</span>: [28, 32, 25],
+    <span class="string">"城市"</span>: [<span class="string">"北京"</span>, <span class="string">"上海"</span>, <span class="string">"广州"</span>]
+})
 
-            <div class="note-box">
-                <strong>注意：</strong>Excel新增了"AI助手"选项卡，提供智能数据分析和公式生成功能。
+<span class="comment"># 导出到 Excel</span>
+df.to_excel(<span class="string">"output.xlsx"</span>, index=<span class="keyword">False</span>)
+
+<span class="comment"># 读取 Excel</span>
+df = pd.read_excel(<span class="string">"output.xlsx"</span>)
+print(df)</div>
             </div>
 
-            <h2>1.3 工作簿和工作表</h2>
-            <p>在Excel中，工作簿和工作表是两个基本概念，理解它们的区别很重要。</p>
+            <div id="go-hello" class="code-example">
+                <div class="code-block"><span class="keyword">package</span> main
 
-            <h3>工作簿（Workbook）</h3>
-            <p>工作簿就是一个Excel文件（.xlsx），可以包含多个工作表。每个工作簿文件默认包含一个工作表，你可以添加更多。</p>
+<span class="keyword">import</span> (
+    <span class="string">"github.com/xuri/excelize/v2"</span>
+)
 
-            <h3>工作表（Worksheet）</h3>
-            <p>工作表是工作簿中的单个页面，由行、列和单元格组成。Excel支持每个工作簿最多包含1,048,576行和16,384列。</p>
+<span class="keyword">func</span> <span class="function">main</span>() {
+    <span class="comment">// 创建新工作簿</span>
+    f := excelize.NewFile()
+    <span class="keyword">defer</span> f.Close()
 
-            <h3>单元格（Cell）</h3>
-            <p>单元格是工作表的基本组成单位，由行号和列号标识，例如A1、B2等。每个单元格可以存储数据、公式或函数。</p>
+    <span class="comment">// 设置单元格值</span>
+    f.SetCellValue(<span class="string">"Sheet1"</span>, <span class="string">"A1"</span>, <span class="string">"姓名"</span>)
+    f.SetCellValue(<span class="string">"Sheet1"</span>, <span class="string">"B1"</span>, <span class="string">"年龄"</span>)
+    f.SetCellValue(<span class="string">"Sheet1"</span>, <span class="string">"A2"</span>, <span class="string">"张三"</span>)
+    f.SetCellValue(<span class="string">"Sheet1"</span>, <span class="string">"B2"</span>, 28)
 
-            <h2>1.4 自定义界面</h2>
-            <p>Excel允许你根据工作习惯自定义界面设置。</p>
-
-            <h3>显示/隐藏功能区</h3>
-            <p>双击任何选项卡可以展开或折叠功能区，按Ctrl+F1快捷键也可以切换功能区显示状态。</p>
-
-            <h3>自定义快速访问工具栏</h3>
-            <p>右键点击快速访问工具栏，选择"自定义快速访问工具栏"，可以添加或删除常用命令。</p>
-
-            <h3>调整视图</h3>
-            <p>在"视图"选项卡中，你可以：</p>
-            <ul>
-                <li>切换普通视图、页面布局视图、分页预览视图</li>
-                <li>显示或隐藏网格线、标题栏</li>
-                <li>冻结窗格以固定行列</li>
-                <li>拆分窗口同时查看工作表不同部分</li>
-            </ul>
-
-            <h2>1.5 Excel新特性概览</h2>
-            <p>Excel引入了许多令人兴奋的新功能，提升工作效率：</p>
-
-            <h3>AI智能功能</h3>
-            <ul>
-                <li><strong>智能公式建议</strong>：基于上下文自动推荐合适的函数和公式</li>
-                <li><strong>数据模式识别</strong>：自动识别数据类型和模式，提供格式化建议</li>
-                <li><strong>自然语言查询</strong>：用自然语言描述想要执行的操作，Excel自动生成相应操作</li>
-            </ul>
-
-            <h3>增强的动态数组</h3>
-            <ul>
-                <li>新增多个动态数组函数用于高级数据分析</li>
-                <li>改进的数组公式编辑体验</li>
-                <li>更灵活的数据溢出处理</li>
-            </ul>
-
-            <h3>协作改进</h3>
-            <ul>
-                <li>实时协作编辑支持更多用户</li>
-                <li>增强的版本控制和历史记录</li>
-                <li>改进的评论和批注功能</li>
-            </ul>
-
-            <h2>1.6 实践练习</h2>
-            <p>现在让我们通过一些简单的操作来熟悉Excel界面：</p>
-
-            <ol>
-                <li>打开Excel，创建一个新的空白工作簿</li>
-                <li>浏览各个选项卡，了解其中的命令</li>
-                <li>尝试在工作表中输入一些数据</li>
-                <li>练习使用快速访问工具栏添加常用命令</li>
-                <li>切换不同的视图模式，观察变化</li>
-            </ol>
-
-            <div class="warning-box">
-                <strong>提示：</strong>如果你是Excel新手，建议先花时间熟悉界面，然后再进入实际的数据操作。
+    <span class="comment">// 保存文件</span>
+    <span class="keyword">if</span> err := f.SaveAs(<span class="string">"output.xlsx"</span>); err != <span class="keyword">nil</span> {
+        panic(err)
+    }
+}</div>
             </div>
 
-            <h2>1.7 本章小结</h2>
-            <p>本章介绍了Excel的基本界面组成和各个功能区域。你现在应该：</p>
-            <ul>
-                <li>了解Excel工作区的主要组成部分</li>
-                <li>熟悉功能区的基本操作</li>
-                <li>理解工作簿、工作表和单元格的关系</li>
-                <li>知道如何自定义界面设置</li>
-                <li>了解Excel的新特性</li>
-            </ul>
+            <div id="js-hello" class="code-example">
+                <div class="code-block"><span class="keyword">const</span> ExcelJS = <span class="function">require</span>(<span class="string">'exceljs'</span>);
 
-            <p>在下一章中，我们将学习Excel的基础操作，包括数据输入、编辑和管理等内容。</p>
+<span class="keyword">async function</span> <span class="function">helloWorld</span>() {
+    <span class="comment">// 创建工作簿</span>
+    <span class="keyword">const</span> workbook = <span class="keyword">new</span> ExcelJS.<span class="type">Workbook</span>();
+    <span class="keyword">const</span> worksheet = workbook.<span class="function">addWorksheet</span>(<span class="string">'Sheet1'</span>);
+
+    <span class="comment">// 设置表头</span>
+    worksheet.<span class="function">getRow</span>(1).values = [<span class="string">'姓名'</span>, <span class="string">'年龄'</span>, <span class="string">'城市'</span>];
+    
+    <span class="comment">// 添加数据</span>
+    worksheet.<span class="function">addRows</span>([
+        [<span class="string">'张三'</span>, 28, <span class="string">'北京'</span>],
+        [<span class="string">'李四'</span>, 32, <span class="string">'上海'</span>]
+    ]);
+
+    <span class="comment">// 保存文件</span>
+    <span class="keyword">await</span> workbook.xlsx.<span class="function">writeFile</span>(<span class="string">'output.xlsx'</span>);
+}
+
+<span class="function">helloWorld</span>();</div>
+            </div>
         </div>
-    </main>
 
+        <div class="section">
+            <h2>📋 常见任务速查</h2>
+            
+            <h3>读取 Excel 文件</h3>
+            <div class="lang-tabs">
+                <div class="lang-tab python active" onclick="showCode('py-read', this)">Python</div>
+                <div class="lang-tab go" onclick="showCode('go-read', this)">Go</div>
+                <div class="lang-tab js" onclick="showCode('js-read', this)">Node.js</div>
+            </div>
+            
+            <div id="py-read" class="code-example active">
+                <div class="code-block"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+<span class="comment"># 读取整个工作表</span>
+df = pd.read_excel(<span class="string">"data.xlsx"</span>, sheet_name=<span class="string">"Sheet1"</span>)
+
+<span class="comment"># 读取特定列</span>
+df = pd.read_excel(<span class="string">"data.xlsx"</span>, usecols=<span class="string">"A:C"</span>)
+
+<span class="comment"># 读取特定行</span>
+df = pd.read_excel(<span class="string">"data.xlsx"</span>, skiprows=10, nrows=100)
+
+<span class="comment"># 访问数据</span>
+print(df[<span class="string">"列名"</span>].values)  <span class="comment"># 获取列</span>
+print(df.iloc[0])          <span class="comment"># 获取第一行</span></div>
+            </div>
+
+            <div id="go-read" class="code-example">
+                <div class="code-block"><span class="keyword">package</span> main
+
+<span class="keyword">import</span> <span class="string">"github.com/xuri/excelize/v2"</span>
+
+<span class="keyword">func</span> <span class="function">readExcel</span>() {
+    f, _ := excelize.OpenFile(<span class="string">"data.xlsx"</span>)
+    <span class="keyword">defer</span> f.Close()
+
+    <span class="comment">// 获取单元格值</span>
+    val, _ := f.GetCellValue(<span class="string">"Sheet1"</span>, <span class="string">"A1"</span>)
+    
+    <span class="comment">// 获取整行</span>
+    row, _ := f.GetRow(<span class="string">"Sheet1"</span>, <span class="string">"1"</span>)
+    
+    <span class="comment">// 获取所有行</span>
+    rows, _ := f.GetRows(<span class="string">"Sheet1"</span>)
+    <span class="keyword">for</span> _, row := <span class="keyword">range</span> rows {
+        <span class="keyword">for</span> _, colCell := <span class="keyword">range</span> row {
+            fmt.Print(colCell, <span class="string">"\t"</span>)
+        }
+        fmt.Println()
+    }
+}</div>
+            </div>
+
+            <div id="js-read" class="code-example">
+                <div class="code-block"><span class="keyword">const</span> ExcelJS = <span class="function">require</span>(<span class="string">'exceljs'</span>);
+
+<span class="keyword">async function</span> <span class="function">readExcel</span>() {
+    <span class="keyword">const</span> workbook = <span class="keyword">new</span> ExcelJS.<span class="type">Workbook</span>();
+    <span class="keyword">await</span> workbook.xlsx.<span class="function">readFile</span>(<span class="string">'data.xlsx'</span>);
+    
+    <span class="keyword">const</span> worksheet = workbook.<span class="function">getWorksheet</span>(<span class="string">'Sheet1'</span>);
+    
+    <span class="comment">// 遍历行</span>
+    worksheet.<span class="function">eachRow</span>({ includeEmpty: <span class="keyword">true</span> }, (row, rowNumber) => {
+        console.log(<span class="string">`Row ${rowNumber}:`</span>, row.values);
+    });
+    
+    <span class="comment">// 获取特定单元格</span>
+    <span class="keyword">const</span> cell = worksheet.<span class="function">getCell</span>(<span class="string">'A1'</span>);
+    console.log(cell.value);
+}
+
+<span class="function">readExcel</span>();</div>
+            </div>
+
+            <h3>写入 Excel 文件</h3>
+            <div class="lang-tabs">
+                <div class="lang-tab python active" onclick="showCode('py-write', this)">Python</div>
+                <div class="lang-tab go" onclick="showCode('go-write', this)">Go</div>
+                <div class="lang-tab js" onclick="showCode('js-write', this)">Node.js</div>
+            </div>
+
+            <div id="py-write" class="code-example active">
+                <div class="code-block"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook
+
+<span class="comment"># 方法 1: pandas 快速导出</span>
+df = pd.DataFrame({
+    <span class="string">"A"</span>: [1, 2, 3],
+    <span class="string">"B"</span>: [<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>]
+})
+df.to_excel(<span class="string">"output.xlsx"</span>, index=<span class="keyword">False</span>)
+
+<span class="comment"># 方法 2: openpyxl 精细控制</span>
+wb = Workbook()
+ws = wb.active
+
+ws[<span class="string">"A1"</span>] = <span class="string">"姓名"</span>
+ws.append([<span class="string">"张三"</span>, 28, <span class="string">"北京"</span>])
+
+wb.save(<span class="string">"output.xlsx"</span>)</div>
+            </div>
+
+            <div id="go-write" class="code-example">
+                <div class="code-block"><span class="keyword">package</span> main
+
+<span class="keyword">import</span> <span class="string">"github.com/xuri/excelize/v2"</span>
+
+<span class="keyword">func</span> <span class="function">writeExcel</span>() {
+    f := excelize.NewFile()
+    <span class="keyword">defer</span> f.Close()
+
+    <span class="comment">// 设置单元格值</span>
+    f.SetCellValue(<span class="string">"Sheet1"</span>, <span class="string">"A1"</span>, <span class="string">"姓名"</span>)
+    f.SetCellValue(<span class="string">"Sheet1"</span>, <span class="string">"B1"</span>, <span class="string">"年龄"</span>)
+
+    <span class="comment">// 批量添加数据</span>
+    data := [][]<span class="keyword">interface</span>{}{
+        {<span class="string">"张三"</span>, 28},
+        {<span class="string">"李四"</span>, 32},
+    }
+    <span class="keyword">for</span> i, row := <span class="keyword">range</span> data {
+        <span class="keyword">for</span> j, val := <span class="keyword">range</span> row {
+            cell, _ := excelize.CoordinatesToCellName(j+<span class="number">1</span>, i+<span class="number">2</span>)
+            f.SetCellValue(<span class="string">"Sheet1"</span>, cell, val)
+        }
+    }
+
+    <span class="comment">// 保存</span>
+    f.SaveAs(<span class="string">"output.xlsx"</span>)
+}</div>
+            </div>
+
+            <div id="js-write" class="code-example">
+                <div class="code-block"><span class="keyword">const</span> ExcelJS = <span class="function">require</span>(<span class="string">'exceljs'</span>);
+
+<span class="keyword">async function</span> <span class="function">writeExcel</span>() {
+    <span class="keyword">const</span> workbook = <span class="keyword">new</span> ExcelJS.<span class="type">Workbook</span>();
+    <span class="keyword">const</span> worksheet = workbook.<span class="function">addWorksheet</span>(<span class="string">'Sheet1'</span>);
+
+    <span class="comment">// 设置表头</span>
+    worksheet.<span class="function">getRow</span>(1).values = [<span class="string">'姓名'</span>, <span class="string">'年龄'</span>, <span class="string">'城市'</span>];
+
+    <span class="comment">// 添加数据行</span>
+    worksheet.<span class="function">addRows</span>([
+        [<span class="string">'张三'</span>, 28, <span class="string">'北京'</span>],
+        [<span class="string">'李四'</span>, 32, <span class="string">'上海'</span>]
+    ]);
+
+    <span class="comment">// 设置列宽</span>
+    worksheet.columns = [
+        { key: <span class="string">'name'</span>, width: 15 },
+        { key: <span class="string">'age'</span>, width: 10 },
+        { key: <span class="string">'city'</span>, width: 15 }
+    ];
+
+    <span class="keyword">await</span> workbook.xlsx.<span class="function">writeFile</span>(<span class="string">'output.xlsx'</span>);
+}</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 下一步学习</h2>
+            <div class="info-box">
+                <h4>📚 推荐学习路径</h4>
+                <ol>
+                    <li><strong>基础操作</strong> - 掌握读写单元格、行列操作</li>
+                    <li><strong>样式格式化</strong> - 学习设置字体、颜色、边框</li>
+                    <li><strong>公式处理</strong> - 理解公式存储和计算</li>
+                    <li><strong>图表生成</strong> - 创建可视化图表</li>
+                    <li><strong>性能优化</strong> - 大文件处理、流式读写</li>
+                </ol>
+            </div>
+            
+            <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;">
+                <a href="excel-structure.html" class="btn" style="background:var(--excel-green);color:white;padding:0.75rem 1.5rem;border-radius:6px;text-decoration:none;">📁 学习 xlsx 格式</a>
+                <a href="code-processing.html" class="btn" style="background:transparent;color:var(--excel-green);border:2px solid var(--excel-green);padding:0.75rem 1.5rem;border-radius:6px;text-decoration:none;">💻 更多代码示例</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      function showCode(codeId, tab) {
+        // 隐藏同组所有代码
+        const parent = tab.parentElement;
+        parent.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+        parent.nextElementSibling.querySelectorAll('.code-example').forEach(e => e.classList.remove('active'));
+        
+        // 显示选中的代码
+        tab.classList.add('active');
+        document.getElementById(codeId).classList.add('active');
+      }
+    </script>
 </body>
 </html>
