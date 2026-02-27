@@ -1349,5 +1349,255 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
             </div>
         </div>
     </section>
+
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">公式计算</h2>
+            <p class="section-desc">使用 Python 和 Go 处理 Excel 公式与计算</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:2rem;margin-top:2rem;">
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--python-blue);color:white;">
+                        <h3 style="color:white;">🐍 Python - 公式计算</h3>
+                    </div>
+                    <div class="topic-body">
+                        <h4 style="margin-top:0;color:var(--excel-green);">示例 1：写入公式</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
+<span class="keyword" style="color:#569cd6;">from</span> openpyxl.formula.translate <span class="keyword" style="color:#569cd6;">import</span> Translator
+
+<span class="comment" style="color:#6a9955;"># 创建工作簿</span>
+wb = Workbook()
+ws = wb.active
+ws.title = <span class="string" style="color:#ce9178;">"公式示例"</span>
+
+<span class="comment" style="color:#6a9955;"># 基础数据</span>
+ws.append([<span class="string" style="color:#ce9178;">"产品"</span>, <span class="string" style="color:#ce9178;">"单价"</span>, <span class="string" style="color:#ce9178;">"数量"</span>, <span class="string" style="color:#ce9178;">"金额"</span>])
+ws.append([<span class="string" style="color:#ce9178;">"苹果"</span>, <span class="number" style="color:#b5cea8;">10</span>, <span class="number" style="color:#b5cea8;">5</span>, <span class="string" style="color:#ce9178;">"=B2*C2"</span>])
+ws.append([<span class="string" style="color:#ce9178;">"香蕉"</span>, <span class="number" style="color:#b5cea8;">8</span>, <span class="number" style="color:#b5cea8;">10</span>, <span class="string" style="color:#ce9178;">"=B3*C3"</span>])
+ws.append([<span class="string" style="color:#ce9178;">"橙子"</span>, <span class="number" style="color:#b5cea8;">12</span>, <span class="number" style="color:#b5cea8;">8</span>, <span class="string" style="color:#ce9178;">"=B4*C4"</span>])
+
+<span class="comment" style="color:#6a9955;"># 合计公式</span>
+ws.cell(row=<span class="number" style="color:#b5cea8;">5</span>, column=<span class="number" style="color:#b5cea8;">1</span>, value=<span class="string" style="color:#ce9178;">"合计"</span>)
+ws.cell(row=<span class="number" style="color:#b5cea8;">5</span>, column=<span class="number" style="color:#b5cea8;">4</span>, value=<span class="string" style="color:#ce9178;">"=SUM(D2:D4)"</span>)
+
+<span class="comment" style="color:#6a9955;"># 平均值</span>
+ws.cell(row=<span class="number" style="color:#b5cea8;">6</span>, column=<span class="number" style="color:#b5cea8;">1</span>, value=<span class="string" style="color:#ce9178;">"平均"</span>)
+ws.cell(row=<span class="number" style="color:#b5cea8;">6</span>, column=<span class="number" style="color:#b5cea8;">4</span>, value=<span class="string" style="color:#ce9178;">"=AVERAGE(D2:D4)"</span>)
+
+<span class="comment" style="color:#6a9955;"># 使用 Translator 转换公式（兼容不同语言版本）</span>
+translator = Translator(<span class="string" style="color:#ce9178;">"=SUM(D2:D4)"</span>, origin=<span class="string" style="color:#ce9178;">"D5"</span>)
+ws[<span class="string" style="color:#ce9178;">"D7"</span>] = translator.translate_formula(<span class="string" style="color:#ce9178;">"=SUM(D2:D4)"</span>)
+
+wb.save(<span class="string" style="color:#ce9178;">"formulas.xlsx"</span>)
+print(<span class="string" style="color:#ce9178;">"✓ 公式已写入"</span>)</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">示例 2：计算公式结果</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> load_workbook
+<span class="keyword" style="color:#569cd6;">from</span> openpyxl.utils.exceptions <span class="keyword" style="color:#569cd6;">import</span> InvalidFormulaException
+
+<span class="comment" style="color:#6a9955;"># 加载工作簿</span>
+wb = load_workbook(<span class="string" style="color:#ce9178;">"formulas.xlsx"</span>, data_only=<span class="keyword" style="color:#569cd6;">True</span>)
+ws = wb.active
+
+<span class="comment" style="color:#6a9955;"># 读取公式计算结果（data_only=True 时读取缓存值）</span>
+<span class="keyword" style="color:#569cd6;">for</span> row <span class="keyword" style="color:#569cd6;">in</span> ws.iter_rows(min_row=<span class="number" style="color:#b5cea8;">2</span>, max_row=<span class="number" style="color:#b5cea8;">5</span>, max_col=<span class="number" style="color:#b5cea8;">4</span>):
+    <span class="keyword" style="color:#569cd6;">for</span> cell <span class="keyword" style="color:#569cd6;">in</span> row:
+        print(<span class="string" style="color:#ce9178;">f"{cell.coordinate}: {cell.value}"</span>)
+
+<span class="comment" style="color:#6a9955;"># 使用 xlwings 执行公式计算（需要安装 Excel）</span>
+<span class="keyword" style="color:#569cd6;">try</span>:
+    <span class="keyword" style="color:#569cd6;">import</span> xlwings <span class="keyword" style="color:#569cd6;">as</span> xw
+    
+    app = xw.App(visible=<span class="keyword" style="color:#569cd6;">False</span>)
+    wb_xw = app.books.open(<span class="string" style="color:#ce9178;">"formulas.xlsx"</span>)
+    ws_xw = wb_xw.sheets[<span class="number" style="color:#b5cea8;">0</span>]
+    
+    <span class="comment" style="color:#6a9955;"># 强制重新计算</span>
+    app.api.Calculate()
+    
+    <span class="comment" style="color:#6a9955;"># 读取计算结果</span>
+    total = ws_xw.range(<span class="string" style="color:#ce9178;">"D5"</span>).value
+    avg = ws_xw.range(<span class="string" style="color:#ce9178;">"D6"</span>).value
+    print(<span class="string" style="color:#ce9178;">f"合计：{total}, 平均：{avg}"</span>)
+    
+    wb_xw.close()
+    app.quit()
+<span class="keyword" style="color:#569cd6;">except</span> ImportError:
+    print(<span class="string" style="color:#ce9178;">"xlwings 未安装，无法执行实时计算"</span>)</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">示例 3：常用公式</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="comment" style="color:#6a9955;"># 常用 Excel 公式示例</span>
+formulas = {
+    <span class="string" style="color:#ce9178;">"求和"</span>: <span class="string" style="color:#ce9178;">"=SUM(A1:A10)"</span>,
+    <span class="string" style="color:#ce9178;">"平均值"</span>: <span class="string" style="color:#ce9178;">"=AVERAGE(A1:A10)"</span>,
+    <span class="string" style="color:#ce9178;">"计数"</span>: <span class="string" style="color:#ce9178;">"=COUNT(A1:A10)"</span>,
+    <span class="string" style="color:#ce9178;">"最大值"</span>: <span class="string" style="color:#ce9178;">"=MAX(A1:A10)"</span>,
+    <span class="string" style="color:#ce9178;">"最小值"</span>: <span class="string" style="color:#ce9178;">"=MIN(A1:A10)"</span>,
+    <span class="string" style="color:#ce9178;">"条件求和"</span>: <span class="string" style="color:#ce9178;">"=SUMIF(A1:A10, \"&gt;100\")"</span>,
+    <span class="string" style="color:#ce9178;">"条件计数"</span>: <span class="string" style="color:#ce9178;">"=COUNTIF(A1:A10, \"&gt;100\")"</span>,
+    <span class="string" style="color:#ce9178;">"VLOOKUP"</span>: <span class="string" style="color:#ce9178;">"=VLOOKUP(E1, A1:B10, 2, FALSE)"</span>,
+    <span class="string" style="color:#ce9178;">"XLOOKUP"</span>: <span class="string" style="color:#ce9178;">"=XLOOKUP(E1, A1:A10, B1:B10)"</span>,
+    <span class="string" style="color:#ce9178;">"IF 条件"</span>: <span class="string" style="color:#ce9178;">"=IF(A1&gt;100, \"达标\", \"未达标\")"</span>,
+    <span class="string" style="color:#ce9178;">"CONCATENATE"</span>: <span class="string" style="color:#ce9178;">"=CONCATENATE(A1, \" \", B1)"</span>,
+    <span class="string" style="color:#ce9178;">"TEXT 格式化"</span>: <span class="string" style="color:#ce9178;">"=TEXT(A1, \"¥0.00\")"</span>,
+}
+
+wb = Workbook()
+ws = wb.active
+
+ws.append([<span class="string" style="color:#ce9178;">"公式名称"</span>, <span class="string" style="color:#ce9178;">"公式"</span>])
+<span class="keyword" style="color:#569cd6;">for</span> name, formula <span class="keyword" style="color:#569cd6;">in</span> formulas.items():
+    ws.append([name, formula])
+
+wb.save(<span class="string" style="color:#ce9178;">"common_formulas.xlsx"</span>)
+print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</span>)</pre>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
+                        <h3 style="color:white;">🔷 Go - 公式计算</h3>
+                    </div>
+                    <div class="topic-body">
+                        <h4 style="margin-top:0;color:var(--excel-green);">示例 1：写入公式</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    <span class="comment" style="color:#6a9955;">// 创建工作簿</span>
+    f := excelize.NewFile()
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+    
+    <span class="comment" style="color:#6a9955;">// 设置表头</span>
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"产品"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="string" style="color:#ce9178;">"单价"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C1"</span>, <span class="string" style="color:#ce9178;">"数量"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D1"</span>, <span class="string" style="color:#ce9178;">"金额"</span>)
+    
+    <span class="comment" style="color:#6a9955;">// 基础数据</span>
+    products := []<span class="keyword" style="color:#c586c0;">struct</span> {
+        Name  <span class="keyword" style="color:#c586c0;">string</span>
+        Price <span class="keyword" style="color:#c586c0;">float64</span>
+        Qty   <span class="keyword" style="color:#c586c0;">int</span>
+    }{
+        {<span class="string" style="color:#ce9178;">"苹果"</span>, <span class="number" style="color:#b5cea8;">10</span>, <span class="number" style="color:#b5cea8;">5</span>},
+        {<span class="string" style="color:#ce9178;">"香蕉"</span>, <span class="number" style="color:#b5cea8;">8</span>, <span class="number" style="color:#b5cea8;">10</span>},
+        {<span class="string" style="color:#ce9178;">"橙子"</span>, <span class="number" style="color:#b5cea8;">12</span>, <span class="number" style="color:#b5cea8;">8</span>},
+    }
+    
+    <span class="keyword" style="color:#c586c0;">for</span> i, p := <span class="keyword" style="color:#c586c0;">range</span> products {
+        row := i + <span class="number" style="color:#b5cea8;">2</span>
+        f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"A%d"</span>, row), p.Name)
+        f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"B%d"</span>, row), p.Price)
+        f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"C%d"</span>, row), p.Qty)
+        <span class="comment" style="color:#6a9955;">// 写入公式：单价 × 数量</span>
+        f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"D%d"</span>, row), 
+            fmt.Sprintf(<span class="string" style="color:#ce9178;">"=B%d*C%d"</span>, row, row))
+    }
+    
+    <span class="comment" style="color:#6a9955;">// 合计公式</span>
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A5"</span>, <span class="string" style="color:#ce9178;">"合计"</span>)
+    f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D5"</span>, <span class="string" style="color:#ce9178;">"=SUM(D2:D4)"</span>)
+    
+    <span class="comment" style="color:#6a9955;">// 平均值公式</span>
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A6"</span>, <span class="string" style="color:#ce9178;">"平均"</span>)
+    f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D6"</span>, <span class="string" style="color:#ce9178;">"=AVERAGE(D2:D4)"</span>)
+    
+    <span class="comment" style="color:#6a9955;">// 最大值/最小值</span>
+    f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D7"</span>, <span class="string" style="color:#ce9178;">"=MAX(D2:D4)"</span>)
+    f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D8"</span>, <span class="string" style="color:#ce9178;">"=MIN(D2:D4)"</span>)
+    
+    <span class="keyword" style="color:#c586c0;">if</span> err := f.SaveAs(<span class="string" style="color:#ce9178;">"formulas.xlsx"</span>); err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✗ 保存失败:"</span>, err)
+    } <span class="keyword" style="color:#c586c0;">else</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✓ 公式已写入"</span>)
+    }
+}</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">示例 2：读取公式</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    <span class="comment" style="color:#6a9955;">// 加载工作簿</span>
+    f, err := excelize.OpenFile(<span class="string" style="color:#ce9178;">"formulas.xlsx"</span>)
+    <span class="keyword" style="color:#c586c0;">if</span> err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✗ 打开失败:"</span>, err)
+        <span class="keyword" style="color:#c586c0;">return</span>
+    }
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+    
+    <span class="comment" style="color:#6a9955;">// 读取公式（返回公式字符串）</span>
+    formula, _ := f.GetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D5"</span>)
+    fmt.Printf(<span class="string" style="color:#ce9178;">"D5 公式：%s\n"</span>, formula)
+    
+    <span class="comment" style="color:#6a9955;">// 读取计算结果（需要设置 calc_param）</span>
+    result, _ := f.GetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D5"</span>, 
+        excelize.Options{UnzipSizeLimit: <span class="number" style="color:#b5cea8;">100</span> &lt;&lt; <span class="number" style="color:#b5cea8;">20</span>})
+    fmt.Printf(<span class="string" style="color:#ce9178;">"D5 结果：%s\n"</span>, result)
+    
+    <span class="comment" style="color:#6a9955;">// 遍历所有单元格</span>
+    rows, _ := f.GetRows(<span class="string" style="color:#ce9178;">"Sheet1"</span>)
+    <span class="keyword" style="color:#c586c0;">for</span> i, row := <span class="keyword" style="color:#c586c0;">range</span> rows {
+        <span class="keyword" style="color:#c586c0;">for</span> j, cell := <span class="keyword" style="color:#c586c0;">range</span> row {
+            fmt.Printf(<span class="string" style="color:#ce9178;">"[%d,%d]: %s  "</span>, i+<span class="number" style="color:#b5cea8;">1</span>, j+<span class="number" style="color:#b5cea8;">1</span>, cell)
+        }
+        fmt.Println()
+    }
+}</pre>
+
+                        <h4 style="margin-top:1.5rem;color:var(--excel-green);">示例 3：常用公式</h4>
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
+
+<span class="keyword" style="color:#c586c0;">import</span> (
+    <span class="string" style="color:#ce9178;">"fmt"</span>
+    <span class="string" style="color:#ce9178;">"github.com/xuri/excelize/v2"</span>
+)
+
+<span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
+    f := excelize.NewFile()
+    <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
+    
+    <span class="comment" style="color:#6a9955;">// 常用公式示例</span>
+    formulas := <span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>{
+        <span class="string" style="color:#ce9178;">"A1"</span>: <span class="string" style="color:#ce9178;">"=SUM(A1:A10)"</span>,           <span class="comment" style="color:#6a9955;">// 求和</span>
+        <span class="string" style="color:#ce9178;">"A2"</span>: <span class="string" style="color:#ce9178;">"=AVERAGE(A1:A10)"</span>,      <span class="comment" style="color:#6a9955;">// 平均值</span>
+        <span class="string" style="color:#ce9178;">"A3"</span>: <span class="string" style="color:#ce9178;">"=COUNT(A1:A10)"</span>,        <span class="comment" style="color:#6a9955;">// 计数</span>
+        <span class="string" style="color:#ce9178;">"A4"</span>: <span class="string" style="color:#ce9178;">"=MAX(A1:A10)"</span>,          <span class="comment" style="color:#6a9955;">// 最大值</span>
+        <span class="string" style="color:#ce9178;">"A5"</span>: <span class="string" style="color:#ce9178;">"=MIN(A1:A10)"</span>,          <span class="comment" style="color:#6a9955;">// 最小值</span>
+        <span class="string" style="color:#ce9178;">"A6"</span>: <span class="string" style="color:#ce9178;">"=SUMIF(A1:A10, \"&gt;100\")"</span>, <span class="comment" style="color:#6a9955;">// 条件求和</span>
+        <span class="string" style="color:#ce9178;">"A7"</span>: <span class="string" style="color:#ce9178;">"=COUNTIF(A1:A10, \"&gt;100\")"</span>, <span class="comment" style="color:#6a9955;">// 条件计数</span>
+        <span class="string" style="color:#ce9178;">"A8"</span>: <span class="string" style="color:#ce9178;">"=IF(A1&gt;100, \"达标\", \"未达标\")"</span>, <span class="comment" style="color:#6a9955;">// IF 条件</span>
+    }
+    
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="string" style="color:#ce9178;">"公式名称"</span>)
+    f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C1"</span>, <span class="string" style="color:#ce9178;">"公式"</span>)
+    
+    row := <span class="number" style="color:#b5cea8;">2</span>
+    <span class="keyword" style="color:#c586c0;">for</span> cell, formula := <span class="keyword" style="color:#c586c0;">range</span> formulas {
+        f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"B%d"</span>, row), cell)
+        f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"C%d"</span>, row), formula)
+        row++
+    }
+    
+    <span class="keyword" style="color:#c586c0;">if</span> err := f.SaveAs(<span class="string" style="color:#ce9178;">"common_formulas.xlsx"</span>); err != <span class="keyword" style="color:#c586c0;">nil</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✗ 保存失败:"</span>, err)
+    } <span class="keyword" style="color:#c586c0;">else</span> {
+        fmt.Println(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</span>)
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
