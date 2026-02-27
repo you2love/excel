@@ -228,7 +228,55 @@
         .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { justify-content: flex-start; }
         .timeline-dot { left: 12px !important; right: auto !important; }
       }
-      
+
+      .code-tabs {
+        display: flex;
+        gap: 0;
+        margin-bottom: 0;
+        border-bottom: 2px solid var(--border-color);
+      }
+      .code-tab {
+        padding: 0.75rem 1.5rem;
+        background: var(--bg-secondary);
+        border: none;
+        border-radius: 8px 8px 0 0;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .code-tab:hover {
+        background: var(--border-color);
+      }
+      .code-tab.active {
+        background: white;
+        color: var(--excel-green);
+        border-bottom: 2px solid white;
+        margin-bottom: -2px;
+      }
+      .code-tab.python.active {
+        color: var(--python-blue);
+      }
+      .code-tab.go.active {
+        color: var(--go-cyan);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .tab-panel {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0 8px 8px 8px;
+        padding: 1.5rem;
+      }
+
       .lang-card h3 {
         display: flex;
         align-items: center;
@@ -357,6 +405,18 @@
         securityLevel: 'loose',
         flowchart: { curve: 'basis', useMaxWidth: true }
       });
+    </script>
+    <script>
+      function switchTab(tabId, event) {
+        const tabButton = event.currentTarget;
+        const tabContainer = tabButton.closest('.code-example-container');
+        
+        tabContainer.querySelectorAll('.code-tab').forEach(tab => tab.classList.remove('active'));
+        tabContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        tabButton.classList.add('active');
+        tabContainer.querySelector(tabId).classList.add('active');
+      }
     </script>
 </head>
 <body>
@@ -739,12 +799,18 @@ go get github.com/xuri/excelize/v2
             <h2 class="section-title">代码示例</h2>
             <p class="section-desc">创建、修改、删除、图表操作的完整代码示例</p>
 
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:2rem;margin-top:2rem;">
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--python-blue);color:white;">
-                        <h3 style="color:white;">🐍 Python - openpyxl</h3>
-                    </div>
-                    <div class="topic-body">
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab python active" onclick="switchTab('#python-crud', event)">
+                        🐍 Python
+                    </button>
+                    <button class="code-tab go" onclick="switchTab('#go-crud', event)">
+                        🔷 Go
+                    </button>
+                </div>
+                
+                <div id="python-crud" class="tab-content active">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">创建 Excel</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
 
@@ -788,12 +854,9 @@ ws.add_chart(chart, <span class="string" style="color:#ce9178;">"E1"</span>)
 wb.save(<span class="string" style="color:#ce9178;">"with_chart.xlsx"</span>)</pre>
                     </div>
                 </div>
-
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
-                        <h3 style="color:white;">🔷 Go - excelize</h3>
-                    </div>
-                    <div class="topic-body">
+                
+                <div id="go-crud" class="tab-content">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">创建 Excel</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.8rem;"><span class="keyword" style="color:#c586c0;">package</span> main
 
@@ -845,12 +908,18 @@ f.SaveAs(<span class="string" style="color:#ce9178;">"with_chart.xlsx"</span>)</
             <h2 class="section-title">批量生成报表</h2>
             <p class="section-desc">使用 Python 和 Go 批量生成 Excel 报表的完整示例</p>
 
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:2rem;margin-top:2rem;">
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--python-blue);color:white;">
-                        <h3 style="color:white;">🐍 Python - 批量生成报表</h3>
-                    </div>
-                    <div class="topic-body">
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab python active" onclick="switchTab('#python-batch', event)">
+                        🐍 Python
+                    </button>
+                    <button class="code-tab go" onclick="switchTab('#go-batch', event)">
+                        🔷 Go
+                    </button>
+                </div>
+
+                <div id="python-batch" class="tab-content active">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">示例 1：批量生成部门报表</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
 <span class="keyword" style="color:#569cd6;">from</span> openpyxl.styles <span class="keyword" style="color:#569cd6;">import</span> Font, Alignment, PatternFill
@@ -868,18 +937,18 @@ data = {
     wb = Workbook()
     ws = wb.active
     ws.title = dept_name
-    
+
     <span class="comment" style="color:#6a9955;"># 标题样式</span>
     title_font = Font(size=<span class="number" style="color:#b5cea8;">16</span>, bold=<span class="keyword" style="color:#569cd6;">True</span>, color=<span class="string" style="color:#ce9178;">"107C41"</span>)
     header_fill = PatternFill(start_color=<span class="string" style="color:#ce9178;">"107C41"</span>, end_color=<span class="string" style="color:#ce9178;">"107C41"</span>, fill_type=<span class="string" style="color:#ce9178;">"solid"</span>)
     header_font = Font(bold=<span class="keyword" style="color:#569cd6;">True</span>, color=<span class="string" style="color:#ce9178;">"FFFFFF"</span>)
-    
+
     <span class="comment" style="color:#6a9955;"># 添加标题</span>
     ws.merge_cells(<span class="string" style="color:#ce9178;">"A1:C1"</span>)
     ws[<span class="string" style="color:#ce9178;">"A1"</span>] = <span class="string" style="color:#ce9178;">f"{dept_name} - 月度销售报表"</span>
     ws[<span class="string" style="color:#ce9178;">"A1"</span>].font = title_font
     ws[<span class="string" style="color:#ce9178;">"A1"</span>].alignment = Alignment(horizontal=<span class="string" style="color:#ce9178;">"center"</span>)
-    
+
     <span class="comment" style="color:#6a9955;"># 添加表头</span>
     headers = [<span class="string" style="color:#ce9178;">"产品"</span>, <span class="string" style="color:#ce9178;">"销量"</span>, <span class="string" style="color:#ce9178;">"金额"</span>]
     <span class="keyword" style="color:#569cd6;">for</span> col, header <span class="keyword" style="color:#569cd6;">in</span> enumerate(headers, <span class="number" style="color:#b5cea8;">1</span>):
@@ -887,19 +956,19 @@ data = {
         cell.fill = header_fill
         cell.font = header_font
         cell.alignment = Alignment(horizontal=<span class="string" style="color:#ce9178;">"center"</span>)
-    
+
     <span class="comment" style="color:#6a9955;"># 添加数据</span>
     <span class="keyword" style="color:#569cd6;">for</span> row, item <span class="keyword" style="color:#569cd6;">in</span> enumerate(dept_data, <span class="number" style="color:#b5cea8;">3</span>):
         ws.cell(row=row, column=<span class="number" style="color:#b5cea8;">1</span>, value=item[<span class="string" style="color:#ce9178;">"产品"</span>])
         ws.cell(row=row, column=<span class="number" style="color:#b5cea8;">2</span>, value=item[<span class="string" style="color:#ce9178;">"销量"</span>])
         ws.cell(row=row, column=<span class="number" style="color:#b5cea8;">3</span>, value=item[<span class="string" style="color:#ce9178;">"金额"</span>])
-    
+
     <span class="comment" style="color:#6a9955;"># 添加合计</span>
     total_row = len(dept_data) + <span class="number" style="color:#b5cea8;">3</span>
     ws.cell(row=total_row, column=<span class="number" style="color:#b5cea8;">1</span>, value=<span class="string" style="color:#ce9178;">"合计"</span>)
     ws.cell(row=total_row, column=<span class="number" style="color:#b5cea8;">2</span>, value=<span class="string" style="color:#ce9178;">f"=SUM(B3:B{total_row-1})"</span>)
     ws.cell(row=total_row, column=<span class="number" style="color:#b5cea8;">3</span>, value=<span class="string" style="color:#ce9178;">f"=SUM(C3:C{total_row-1})"</span>)
-    
+
     wb.save(<span class="string" style="color:#ce9178;">f"reports/{dept_name}_报表.xlsx"</span>)
     print(<span class="string" style="color:#ce9178;">f"✓ {dept_name} 报表已生成"</span>)
 
@@ -923,20 +992,17 @@ df_sales = pd.DataFrame({
 <span class="keyword" style="color:#569cd6;">for</span> product, group <span class="keyword" style="color:#569cd6;">in</span> df_sales.groupby(<span class="string" style="color:#ce9178;">"产品"</span>):
     <span class="keyword" style="color:#569cd6;">with</span> pd.ExcelWriter(<span class="string" style="color:#ce9178;">f"reports/{product}_详细报表.xlsx"</span>, engine=<span class="string" style="color:#ce9178;">"openpyxl"</span>) <span class="keyword" style="color:#569cd6;">as</span> writer:
         group.to_excel(writer, sheet_name=<span class="string" style="color:#ce9178;">"销售明细"</span>, index=<span class="keyword" style="color:#569cd6;">False</span>)
-        
+
         <span class="comment" style="color:#6a9955;"># 添加统计 sheet</span>
         summary = group.describe()
         summary.to_excel(writer, sheet_name=<span class="string" style="color:#ce9178;">"统计分析"</span>)
-    
+
     print(<span class="string" style="color:#ce9178;">f"✓ {product} 报表已生成"</span>)</pre>
                     </div>
                 </div>
 
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
-                        <h3 style="color:white;">🔷 Go - 批量生成报表</h3>
-                    </div>
-                    <div class="topic-body">
+                <div id="go-batch" class="tab-content">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">示例 1：批量生成部门报表</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
 
@@ -954,18 +1020,18 @@ df_sales = pd.DataFrame({
 <span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">createReport</span>(deptName <span class="keyword" style="color:#c586c0;">string</span>, data []Product) <span class="keyword" style="color:#c586c0;">error</span> {
     f := excelize.NewFile()
     <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
-    
+
     <span class="comment" style="color:#6a9955;">// 设置标题</span>
     f.MergeCell(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"C1"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, deptName+<span class="string" style="color:#ce9178;">" - 月度销售报表"</span>)
-    
+
     <span class="comment" style="color:#6a9955;">// 设置表头样式</span>
     style, _ := f.NewStyle(&excelize.Style{
         Font:      &excelize.Font{Bold: <span class="keyword" style="color:#c586c0;">true</span>, Color: <span class="string" style="color:#ce9178;">"#FFFFFF"</span>},
         Fill:      excelize.Fill{Type: <span class="string" style="color:#ce9178;">"pattern"</span>, Color: []<span class="keyword" style="color:#c586c0;">string</span>{<span class="string" style="color:#ce9178;">"#107C41"</span>}, Pattern: <span class="number" style="color:#b5cea8;">1</span>},
         Alignment: &excelize.Alignment{Horizontal: <span class="string" style="color:#ce9178;">"center"</span>},
     })
-    
+
     <span class="comment" style="color:#6a9955;">// 添加表头</span>
     headers := []<span class="keyword" style="color:#c586c0;">string</span>{<span class="string" style="color:#ce9178;">"产品"</span>, <span class="string" style="color:#ce9178;">"销量"</span>, <span class="string" style="color:#ce9178;">"金额"</span>}
     <span class="keyword" style="color:#c586c0;">for</span> col, header := <span class="keyword" style="color:#c586c0;">range</span> headers {
@@ -973,7 +1039,7 @@ df_sales = pd.DataFrame({
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, cell, header)
         f.SetCellStyle(<span class="string" style="color:#ce9178;">"Sheet1"</span>, cell, cell, style)
     }
-    
+
     <span class="comment" style="color:#6a9955;">// 添加数据</span>
     <span class="keyword" style="color:#c586c0;">for</span> row, item := <span class="keyword" style="color:#c586c0;">range</span> data {
         rowNum := row + <span class="number" style="color:#b5cea8;">3</span>
@@ -981,7 +1047,7 @@ df_sales = pd.DataFrame({
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">fmt.Sprintf</span>(<span class="string" style="color:#ce9178;">"B%d"</span>, rowNum), item.Sales)
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">fmt.Sprintf</span>(<span class="string" style="color:#ce9178;">"C%d"</span>, rowNum), item.Amount)
     }
-    
+
     <span class="keyword" style="color:#c586c0;">return</span> f.SaveAs(<span class="string" style="color:#ce9178;">fmt.Sprintf</span>(<span class="string" style="color:#ce9178;">"reports/%s_报表.xlsx"</span>, deptName))
 }
 
@@ -990,7 +1056,7 @@ df_sales = pd.DataFrame({
         <span class="string" style="color:#ce9178;">"销售部"</span>: {{<span class="string" style="color:#ce9178;">"A"</span>, <span class="number" style="color:#b5cea8;">100</span>, <span class="number" style="color:#b5cea8;">5000</span>}, {<span class="string" style="color:#ce9178;">"B"</span>, <span class="number" style="color:#b5cea8;">150</span>, <span class="number" style="color:#b5cea8;">7500</span>}},
         <span class="string" style="color:#ce9178;">"技术部"</span>: {{<span class="string" style="color:#ce9178;">"C"</span>, <span class="number" style="color:#b5cea8;">80</span>, <span class="number" style="color:#b5cea8;">4000</span>}, {<span class="string" style="color:#ce9178;">"D"</span>, <span class="number" style="color:#b5cea8;">120</span>, <span class="number" style="color:#b5cea8;">6000</span>}},
     }
-    
+
     <span class="keyword" style="color:#c586c0;">for</span> dept, deptData := <span class="keyword" style="color:#c586c0;">range</span> data {
         <span class="keyword" style="color:#c586c0;">if</span> err := createReport(dept, deptData); err != <span class="keyword" style="color:#c586c0;">nil</span> {
             fmt.Println(<span class="string" style="color:#ce9178;">"✗"</span>, dept, <span class="string" style="color:#ce9178;">"报表生成失败:"</span>, err)
@@ -1011,18 +1077,18 @@ df_sales = pd.DataFrame({
 
 <span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">generateReportConcurrent</span>(deptName <span class="keyword" style="color:#c586c0;">string</span>, data []Product, wg *sync.WaitGroup) {
     <span class="keyword" style="color:#c586c0;">defer</span> wg.Done()
-    
+
     f := excelize.NewFile()
     <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
-    
+
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, deptName+<span class="string" style="color:#ce9178;">" 报表"</span>)
-    
+
     <span class="keyword" style="color:#c586c0;">for</span> i, item := <span class="keyword" style="color:#c586c0;">range</span> data {
         row := i + <span class="number" style="color:#b5cea8;">2</span>
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">fmt.Sprintf</span>(<span class="string" style="color:#ce9178;">"A%d"</span>, row), item.Name)
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">fmt.Sprintf</span>(<span class="string" style="color:#ce9178;">"B%d"</span>, row), item.Sales)
     }
-    
+
     <span class="keyword" style="color:#c586c0;">if</span> err := f.SaveAs(<span class="string" style="color:#ce9178;">fmt.Sprintf</span>(<span class="string" style="color:#ce9178;">"reports/%s_报表.xlsx"</span>, deptName)); err != <span class="keyword" style="color:#c586c0;">nil</span> {
         fmt.Println(<span class="string" style="color:#ce9178;">"✗"</span>, deptName, err)
     } <span class="keyword" style="color:#c586c0;">else</span> {
@@ -1037,7 +1103,7 @@ df_sales = pd.DataFrame({
         <span class="string" style="color:#ce9178;">"华南区"</span>: {{<span class="string" style="color:#ce9178;">"C"</span>, <span class="number" style="color:#b5cea8;">80</span>, <span class="number" style="color:#b5cea8;">4000</span>}},
         <span class="string" style="color:#ce9178;">"西南区"</span>: {{<span class="string" style="color:#ce9178;">"D"</span>, <span class="number" style="color:#b5cea8;">120</span>, <span class="number" style="color:#b5cea8;">6000</span>}},
     }
-    
+
     <span class="keyword" style="color:#c586c0;">var</span> wg sync.WaitGroup
     <span class="keyword" style="color:#c586c0;">for</span> dept, deptData := <span class="keyword" style="color:#c586c0;">range</span> data {
         wg.Add(<span class="number" style="color:#b5cea8;">1</span>)
@@ -1057,12 +1123,18 @@ df_sales = pd.DataFrame({
             <h2 class="section-title">邮件发送 Excel</h2>
             <p class="section-desc">使用 Python 和 Go 发送邮件，支持附件与非附件两种格式</p>
 
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:2rem;margin-top:2rem;">
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--python-blue);color:white;">
-                        <h3 style="color:white;">🐍 Python - 邮件发送</h3>
-                    </div>
-                    <div class="topic-body">
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab python active" onclick="switchTab('#python-email', event)">
+                        🐍 Python
+                    </button>
+                    <button class="code-tab go" onclick="switchTab('#go-email', event)">
+                        🔷 Go
+                    </button>
+                </div>
+
+                <div id="python-email" class="tab-content active">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">方式 1：带附件发送</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#569cd6;">import</span> smtplib
 <span class="keyword" style="color:#569cd6;">from</span> email.mime.multipart <span class="keyword" style="color:#569cd6;">import</span> MIMEMultipart
@@ -1170,11 +1242,8 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
                     </div>
                 </div>
 
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
-                        <h3 style="color:white;">🔷 Go - 邮件发送</h3>
-                    </div>
-                    <div class="topic-body">
+                <div id="go-email" class="tab-content">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">方式 1：带附件发送</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
 
@@ -1191,14 +1260,14 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
     <span class="comment" style="color:#6a9955;">// 创建 Excel 文件</span>
     f := excelize.NewFile()
     <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
-    
+
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"姓名"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="string" style="color:#ce9178;">"部门"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C1"</span>, <span class="string" style="color:#ce9178;">"工资"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A2"</span>, <span class="string" style="color:#ce9178;">"张三"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B2"</span>, <span class="string" style="color:#ce9178;">"技术部"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C2"</span>, <span class="number" style="color:#b5cea8;">15000</span>)
-    
+
     <span class="comment" style="color:#6a9955;">// 保存到 buffer</span>
     buf := <span class="keyword" style="color:#c586c0;">new</span>(bytes.Buffer)
     <span class="keyword" style="color:#c586c0;">if</span> err := f.Write(buf); err != <span class="keyword" style="color:#c586c0;">nil</span> {
@@ -1208,7 +1277,7 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
     <span class="comment" style="color:#6a9955;">// 创建 MIME 邮件</span>
     body := <span class="keyword" style="color:#c586c0;">new</span>(bytes.Buffer)
     writer := multipart.NewWriter(body)
-    
+
     <span class="comment" style="color:#6a9955;">// 添加 HTML 正文</span>
     htmlPart, _ := writer.CreatePart(<span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>{
         <span class="string" style="color:#ce9178;">"Content-Type"</span>: <span class="string" style="color:#ce9178;">"text/html; charset=utf-8"</span>,
@@ -1218,7 +1287,7 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
         &lt;p&gt;您好，请查收本月的工资报表。&lt;/p&gt;
     &lt;/body&gt;&lt;/html&gt;`</span>
     htmlPart.Write([]<span class="keyword" style="color:#c586c0;">byte</span>(htmlContent))
-    
+
     <span class="comment" style="color:#6a9955;">// 添加 Excel 附件</span>
     attachment, _ := writer.CreatePart(<span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>{
         <span class="string" style="color:#ce9178;">"Content-Type"</span>: <span class="string" style="color:#ce9178;">"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"</span>,
@@ -1228,28 +1297,28 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
     encoder := base64.NewEncoder(base64.StdEncoding, attachment)
     encoder.Write(buf.Bytes())
     encoder.Close()
-    
+
     writer.Close()
 
     <span class="comment" style="color:#6a9955;">// 发送邮件</span>
     auth := smtp.PlainAuth(<span class="string" style="color:#ce9178;">""</span>, <span class="string" style="color:#ce9178;">"sender@company.com"</span>, <span class="string" style="color:#ce9178;">"password"</span>, <span class="string" style="color:#ce9178;">"smtp.company.com"</span>)
-    
+
     msg := <span class="keyword" style="color:#c586c0;">make</span>(<span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>)
     msg[<span class="string" style="color:#ce9178;">"From"</span>] = <span class="string" style="color:#ce9178;">"sender@company.com"</span>
     msg[<span class="string" style="color:#ce9178;">"To"</span>] = <span class="string" style="color:#ce9178;">"receiver@company.com"</span>
     msg[<span class="string" style="color:#ce9178;">"Subject"</span>] = <span class="string" style="color:#ce9178;">"月度工资报表"</span>
     msg[<span class="string" style="color:#ce9178;">"MIME-Version"</span>] = <span class="string" style="color:#ce9178;">"1.0"</span>
     msg[<span class="string" style="color:#ce9178;">"Content-Type"</span>] = writer.FormDataContentType()
-    
+
     <span class="keyword" style="color:#c586c0;">var</span> header <span class="keyword" style="color:#c586c0;">string</span>
     <span class="keyword" style="color:#c586c0;">for</span> k, v := <span class="keyword" style="color:#c586c0;">range</span> msg {
         header += fmt.Sprintf(<span class="string" style="color:#ce9178;">"%s: %s\r\n"</span>, k, v)
     }
     header += <span class="string" style="color:#ce9178;">"\r\n"</span>
-    
+
     emailMsg := header + body.String()
-    
-    <span class="keyword" style="color:#c586c0;">return</span> smtp.SendMail(<span class="string" style="color:#ce9178;">"smtp.company.com:587"</span>, auth, 
+
+    <span class="keyword" style="color:#c586c0;">return</span> smtp.SendMail(<span class="string" style="color:#ce9178;">"smtp.company.com:587"</span>, auth,
         msg[<span class="string" style="color:#ce9178;">"From"</span>], []<span class="keyword" style="color:#c586c0;">string</span>{msg[<span class="string" style="color:#ce9178;">"To"</span>]}, []<span class="keyword" style="color:#c586c0;">byte</span>(emailMsg))
 }
 
@@ -1332,7 +1401,7 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
 
     <span class="comment" style="color:#6a9955;">// 发送邮件</span>
     auth := smtp.PlainAuth(<span class="string" style="color:#ce9178;">""</span>, <span class="string" style="color:#ce9178;">"sender@company.com"</span>, <span class="string" style="color:#ce9178;">"password"</span>, <span class="string" style="color:#ce9178;">"smtp.company.com"</span>)
-    
+
     <span class="keyword" style="color:#c586c0;">return</span> smtp.SendMail(<span class="string" style="color:#ce9178;">"smtp.company.com:587"</span>, auth,
         <span class="string" style="color:#ce9178;">"sender@company.com"</span>, []<span class="keyword" style="color:#c586c0;">string</span>{<span class="string" style="color:#ce9178;">"receiver@company.com"</span>}, buf.Bytes())
 }
@@ -1355,12 +1424,18 @@ print(<span class="string" style="color:#ce9178;">"✓ 邮件已发送（HTML �
             <h2 class="section-title">公式计算</h2>
             <p class="section-desc">使用 Python 和 Go 处理 Excel 公式与计算</p>
 
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:2rem;margin-top:2rem;">
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--python-blue);color:white;">
-                        <h3 style="color:white;">🐍 Python - 公式计算</h3>
-                    </div>
-                    <div class="topic-body">
+            <div class="code-example-container" style="max-width:900px;margin:2rem auto;">
+                <div class="code-tabs">
+                    <button class="code-tab python active" onclick="switchTab('#python-formula', event)">
+                        🐍 Python
+                    </button>
+                    <button class="code-tab go" onclick="switchTab('#go-formula', event)">
+                        🔷 Go
+                    </button>
+                </div>
+
+                <div id="python-formula" class="tab-content active">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">示例 1：写入公式</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#569cd6;">from</span> openpyxl <span class="keyword" style="color:#569cd6;">import</span> Workbook
 <span class="keyword" style="color:#569cd6;">from</span> openpyxl.formula.translate <span class="keyword" style="color:#569cd6;">import</span> Translator
@@ -1407,19 +1482,19 @@ ws = wb.active
 <span class="comment" style="color:#6a9955;"># 使用 xlwings 执行公式计算（需要安装 Excel）</span>
 <span class="keyword" style="color:#569cd6;">try</span>:
     <span class="keyword" style="color:#569cd6;">import</span> xlwings <span class="keyword" style="color:#569cd6;">as</span> xw
-    
+
     app = xw.App(visible=<span class="keyword" style="color:#569cd6;">False</span>)
     wb_xw = app.books.open(<span class="string" style="color:#ce9178;">"formulas.xlsx"</span>)
     ws_xw = wb_xw.sheets[<span class="number" style="color:#b5cea8;">0</span>]
-    
+
     <span class="comment" style="color:#6a9955;"># 强制重新计算</span>
     app.api.Calculate()
-    
+
     <span class="comment" style="color:#6a9955;"># 读取计算结果</span>
     total = ws_xw.range(<span class="string" style="color:#ce9178;">"D5"</span>).value
     avg = ws_xw.range(<span class="string" style="color:#ce9178;">"D6"</span>).value
     print(<span class="string" style="color:#ce9178;">f"合计：{total}, 平均：{avg}"</span>)
-    
+
     wb_xw.close()
     app.quit()
 <span class="keyword" style="color:#569cd6;">except</span> ImportError:
@@ -1454,11 +1529,8 @@ print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</s
                     </div>
                 </div>
 
-                <div class="topic-card">
-                    <div class="topic-header" style="background:var(--go-cyan);color:white;">
-                        <h3 style="color:white;">🔷 Go - 公式计算</h3>
-                    </div>
-                    <div class="topic-body">
+                <div id="go-formula" class="tab-content">
+                    <div class="tab-panel">
                         <h4 style="margin-top:0;color:var(--excel-green);">示例 1：写入公式</h4>
                         <pre style="background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:6px;overflow-x:auto;font-family:'Consolas',monospace;font-size:0.75rem;"><span class="keyword" style="color:#c586c0;">package</span> main
 
@@ -1471,13 +1543,13 @@ print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</s
     <span class="comment" style="color:#6a9955;">// 创建工作簿</span>
     f := excelize.NewFile()
     <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
-    
+
     <span class="comment" style="color:#6a9955;">// 设置表头</span>
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A1"</span>, <span class="string" style="color:#ce9178;">"产品"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="string" style="color:#ce9178;">"单价"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C1"</span>, <span class="string" style="color:#ce9178;">"数量"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D1"</span>, <span class="string" style="color:#ce9178;">"金额"</span>)
-    
+
     <span class="comment" style="color:#6a9955;">// 基础数据</span>
     products := []<span class="keyword" style="color:#c586c0;">struct</span> {
         Name  <span class="keyword" style="color:#c586c0;">string</span>
@@ -1488,29 +1560,29 @@ print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</s
         {<span class="string" style="color:#ce9178;">"香蕉"</span>, <span class="number" style="color:#b5cea8;">8</span>, <span class="number" style="color:#b5cea8;">10</span>},
         {<span class="string" style="color:#ce9178;">"橙子"</span>, <span class="number" style="color:#b5cea8;">12</span>, <span class="number" style="color:#b5cea8;">8</span>},
     }
-    
+
     <span class="keyword" style="color:#c586c0;">for</span> i, p := <span class="keyword" style="color:#c586c0;">range</span> products {
         row := i + <span class="number" style="color:#b5cea8;">2</span>
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"A%d"</span>, row), p.Name)
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"B%d"</span>, row), p.Price)
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"C%d"</span>, row), p.Qty)
         <span class="comment" style="color:#6a9955;">// 写入公式：单价 × 数量</span>
-        f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"D%d"</span>, row), 
+        f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"D%d"</span>, row),
             fmt.Sprintf(<span class="string" style="color:#ce9178;">"=B%d*C%d"</span>, row, row))
     }
-    
+
     <span class="comment" style="color:#6a9955;">// 合计公式</span>
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A5"</span>, <span class="string" style="color:#ce9178;">"合计"</span>)
     f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D5"</span>, <span class="string" style="color:#ce9178;">"=SUM(D2:D4)"</span>)
-    
+
     <span class="comment" style="color:#6a9955;">// 平均值公式</span>
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"A6"</span>, <span class="string" style="color:#ce9178;">"平均"</span>)
     f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D6"</span>, <span class="string" style="color:#ce9178;">"=AVERAGE(D2:D4)"</span>)
-    
+
     <span class="comment" style="color:#6a9955;">// 最大值/最小值</span>
     f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D7"</span>, <span class="string" style="color:#ce9178;">"=MAX(D2:D4)"</span>)
     f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D8"</span>, <span class="string" style="color:#ce9178;">"=MIN(D2:D4)"</span>)
-    
+
     <span class="keyword" style="color:#c586c0;">if</span> err := f.SaveAs(<span class="string" style="color:#ce9178;">"formulas.xlsx"</span>); err != <span class="keyword" style="color:#c586c0;">nil</span> {
         fmt.Println(<span class="string" style="color:#ce9178;">"✗ 保存失败:"</span>, err)
     } <span class="keyword" style="color:#c586c0;">else</span> {
@@ -1534,16 +1606,16 @@ print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</s
         <span class="keyword" style="color:#c586c0;">return</span>
     }
     <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
-    
+
     <span class="comment" style="color:#6a9955;">// 读取公式（返回公式字符串）</span>
     formula, _ := f.GetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D5"</span>)
     fmt.Printf(<span class="string" style="color:#ce9178;">"D5 公式：%s\n"</span>, formula)
-    
+
     <span class="comment" style="color:#6a9955;">// 读取计算结果（需要设置 calc_param）</span>
-    result, _ := f.GetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D5"</span>, 
+    result, _ := f.GetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"D5"</span>,
         excelize.Options{UnzipSizeLimit: <span class="number" style="color:#b5cea8;">100</span> &lt;&lt; <span class="number" style="color:#b5cea8;">20</span>})
     fmt.Printf(<span class="string" style="color:#ce9178;">"D5 结果：%s\n"</span>, result)
-    
+
     <span class="comment" style="color:#6a9955;">// 遍历所有单元格</span>
     rows, _ := f.GetRows(<span class="string" style="color:#ce9178;">"Sheet1"</span>)
     <span class="keyword" style="color:#c586c0;">for</span> i, row := <span class="keyword" style="color:#c586c0;">range</span> rows {
@@ -1565,7 +1637,7 @@ print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</s
 <span class="keyword" style="color:#c586c0;">func</span> <span class="function" style="color:#dcdcaa;">main</span>() {
     f := excelize.NewFile()
     <span class="keyword" style="color:#c586c0;">defer</span> f.Close()
-    
+
     <span class="comment" style="color:#6a9955;">// 常用公式示例</span>
     formulas := <span class="keyword" style="color:#c586c0;">map</span>[<span class="keyword" style="color:#c586c0;">string</span>]<span class="keyword" style="color:#c586c0;">string</span>{
         <span class="string" style="color:#ce9178;">"A1"</span>: <span class="string" style="color:#ce9178;">"=SUM(A1:A10)"</span>,           <span class="comment" style="color:#6a9955;">// 求和</span>
@@ -1577,17 +1649,17 @@ print(<span class="string" style="color:#ce9178;">"✓ 常用公式已保存"</s
         <span class="string" style="color:#ce9178;">"A7"</span>: <span class="string" style="color:#ce9178;">"=COUNTIF(A1:A10, \"&gt;100\")"</span>, <span class="comment" style="color:#6a9955;">// 条件计数</span>
         <span class="string" style="color:#ce9178;">"A8"</span>: <span class="string" style="color:#ce9178;">"=IF(A1&gt;100, \"达标\", \"未达标\")"</span>, <span class="comment" style="color:#6a9955;">// IF 条件</span>
     }
-    
+
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"B1"</span>, <span class="string" style="color:#ce9178;">"公式名称"</span>)
     f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, <span class="string" style="color:#ce9178;">"C1"</span>, <span class="string" style="color:#ce9178;">"公式"</span>)
-    
+
     row := <span class="number" style="color:#b5cea8;">2</span>
     <span class="keyword" style="color:#c586c0;">for</span> cell, formula := <span class="keyword" style="color:#c586c0;">range</span> formulas {
         f.SetCellValue(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"B%d"</span>, row), cell)
         f.SetCellFormula(<span class="string" style="color:#ce9178;">"Sheet1"</span>, fmt.Sprintf(<span class="string" style="color:#ce9178;">"C%d"</span>, row), formula)
         row++
     }
-    
+
     <span class="keyword" style="color:#c586c0;">if</span> err := f.SaveAs(<span class="string" style="color:#ce9178;">"common_formulas.xlsx"</span>); err != <span class="keyword" style="color:#c586c0;">nil</span> {
         fmt.Println(<span class="string" style="color:#ce9178;">"✗ 保存失败:"</span>, err)
     } <span class="keyword" style="color:#c586c0;">else</span> {
